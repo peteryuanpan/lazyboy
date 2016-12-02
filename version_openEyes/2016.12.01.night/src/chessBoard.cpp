@@ -4,23 +4,29 @@ ChessBoard::ChessBoard()
 {
 	this->turnWho = RED;
 	this->move.clear();
-	get_origin_whatOn();
-	get_whereIs();
-	get_row();
-	get_col();
+	this->get_origin_whatOn();
+	this->get_whereIs();
+	this->get_row();
+	this->get_col();
 }
 
-ChessBoard::ChessBoard(ChessBoard &x, int move)
+ChessBoard::ChessBoard(const ChessBoard &x, const int move_val)
 {
-
+	this->turnWho = x.turnRed() ? BLACK : RED;
+	this->move.clear();
+	copy_array(this->whatOn, x.whatOn, 256);
+	this->get_whatOn_by_move(move_val);
+	this->get_whereIs();
+	this->get_row();
+	this->get_col();
 }
 
-bool ChessBoard::turnRed()
+bool ChessBoard::turnRed() const
 {
 	return this->turnWho == RED;
 }
 
-bool ChessBoard::turnBlack()
+bool ChessBoard::turnBlack() const
 {
 	return this->turnWho == BLACK;
 }
@@ -34,6 +40,14 @@ void ChessBoard::get_origin_whatOn()
 			this->whatOn[ i * 16 + j ] = ORIGIN_CHESSBOARD[i][j];
 		}
 	}
+}
+
+void ChessBoard::get_whatOn_by_move(const int move_val)
+{
+	int from = move_val / 256;
+	int to = move_val % 256;
+	this->whatOn[to] = this->whatOn[from];
+	this->whatOn[from] = EMPTY;
 }
 
 void ChessBoard::get_whereIs()
@@ -67,7 +81,7 @@ void ChessBoard::get_col()
 {
 	for (int j = 0; j < 16; j ++)
 	{
-		this -> col[j] = 0;
+		this->col[j] = 0;
 		for (int i = 0; i < 16; i ++)
 		{
 			int w = this->whatOn[ i * 16 + j ];
