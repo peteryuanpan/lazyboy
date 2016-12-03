@@ -11,7 +11,6 @@ using namespace std;
 
 int main()
 {
-	ChessBoard x;
-	cout << x.OppSideColor << endl;
+	cout << "just test" << endl;
 	return 0;
 }

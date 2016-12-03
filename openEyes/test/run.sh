@@ -1,4 +1,4 @@
-g++ -o test -I../include main.cpp ../cpp/* 
+g++ -o ./bin/test -I../include main.cpp ../cpp/* 
 echo -------- compile done --------
-./test
+./bin/test
 echo -------- run done --------
