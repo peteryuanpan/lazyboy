@@ -1,0 +1,12 @@
+/*
+ * lazyboy.cpp
+ *
+ *  Created on: 2017年3月25日
+ *      Author: peteryuanpan
+ */
+
+#include "base.h"
+
+int main ( int argc, char *argv[] ) {
+	return 0;
+}

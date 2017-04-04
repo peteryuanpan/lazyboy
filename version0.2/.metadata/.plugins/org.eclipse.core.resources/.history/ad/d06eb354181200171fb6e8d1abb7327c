@@ -1,0 +1,38 @@
+/*
+ * position.cpp
+ *
+ *  Created on: 2017年3月25日
+ *      Author: peteryuanpan
+ */
+
+#include "base.h"
+
+// 执棋方将军
+bool PositionStruct::Check ( void ) const {
+
+}
+
+// 执棋方被将军
+bool PositionStruct::Checked ( void ) const {
+
+}
+
+// 走一步棋
+void MakeMove ( const unint16 mv ) {
+
+}
+
+// 撤回走法
+void UndoMakeMove ( const unint16 mv ) {
+
+}
+
+// 生成吃子着法
+void GenCapMove ( unint16 *move ) const {
+
+}
+
+// 生成非吃子着法
+void GenNonCapMove ( unint16 *move ) const {
+
+}

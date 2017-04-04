@@ -1,0 +1,17 @@
+/*
+ * hash.h
+ *
+ *  Created on: 2017年3月25日
+ *      Author: peteryuanpan
+ */
+
+#ifndef HASH_H_
+#define HASH_H_
+
+#include "base.h"
+
+//int64 rand64 () {
+//	return rand() ^ ((int64)rand()<<15) ^ ((int64)rand()<<30) ^ ((int64)rand()<<45) ^ ((int64)rand()<<60);
+//}
+
+#endif /* HASH_H_ */

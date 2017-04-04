@@ -1,0 +1,21 @@
+/*
+ * move.h
+ *
+ *  Created on: 2017年3月25日
+ *      Author: peteryuanpan
+ */
+
+#ifndef MOVE_H_
+#define MOVE_H_
+
+#include "base.h"
+
+unint8 MoveBgnPoint ( const unint16 mv ) {
+
+}
+
+unint8 MoveEndPoint ( const unint16 mv ) {
+
+}
+
+#endif /* MOVE_H_ */

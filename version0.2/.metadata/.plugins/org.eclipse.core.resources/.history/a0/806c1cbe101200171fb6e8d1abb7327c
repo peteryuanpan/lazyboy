@@ -1,0 +1,32 @@
+/*
+ * search.cpp
+ *
+ *  Created on: 2017年3月25日
+ *      Author: peteryuanpan
+ */
+
+#include "base.h"
+
+SearchStruct search;
+
+int16 EndSearch ( unint8 depth) {
+	MoveSortStruct mvsort;
+	unint16 mv;
+
+	if ( depth <= 0 ) {
+		return search.pos.PlayerRed () ? MIN_VALUE : MAX_VALUE;
+	}
+
+	mvsort.InitEnd ();
+
+	while ( (mv = mvsort.NextEnd()) != 0 ) {
+		search.pos.MakeMove ( mv );
+		int16 score = - EndSearch ( depth - 1);
+		search.pos.UndoMakeMove ( mv );
+		if ( score == MAX_VALUE ) {
+			return MAX_VALUE;
+		}
+	}
+
+	return MIN_VALUE;
+}

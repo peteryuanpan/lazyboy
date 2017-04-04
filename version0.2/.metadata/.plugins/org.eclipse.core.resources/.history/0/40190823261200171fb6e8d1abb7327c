@@ -1,0 +1,18 @@
+/*
+ * move.cpp
+ *
+ *  Created on: 2017年3月25日
+ *      Author: peteryuanpan
+ */
+
+#include "base.h"
+
+// 生成吃子着法
+unint8 GenCapMove ( unint16 *move ) const {
+
+}
+
+// 生成非吃子着法
+unint8 GenNonCapMove ( unint16 *move ) const {
+
+}

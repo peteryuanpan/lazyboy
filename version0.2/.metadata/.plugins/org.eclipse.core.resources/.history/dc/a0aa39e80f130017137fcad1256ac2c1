@@ -1,0 +1,24 @@
+/*
+ * search.h
+ *
+ *  Created on: 2017年3月25日
+ *      Author: peteryuanpan
+ */
+
+#ifndef SEARCH_H_
+#define SEARCH_H_
+
+#include "base.h"
+
+struct SearchStruct {
+	PositionStruct pos;
+	bool debug;
+
+	//  ..
+};
+
+extern SearchStruct search;
+
+int EndSearch ( int depth);
+
+#endif /* SEARCH_H_ */

@@ -1,0 +1,13 @@
+/*
+ * lazyboy.cpp
+ *
+ *  Created on: 2017年3月25日
+ *      Author: peteryuanpan
+ */
+
+#include "base.h"
+
+int main ( int argc, char *argv[] ) {
+	//std::cout << rand64 () << std::endl;
+	return 0;
+}

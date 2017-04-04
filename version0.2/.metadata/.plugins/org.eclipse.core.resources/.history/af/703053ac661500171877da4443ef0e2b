@@ -1,0 +1,65 @@
+/*
+ * search.cpp
+ *
+ *  Created on: 2017年3月25日
+ *      Author: peteryuanpan
+ */
+
+#include "base.h"
+
+SearchStruct search;
+
+int Evaluate ( void ) {
+	return search.pos.playerRed () ? -MATE_VALUE : MATE_VALUE;
+}
+
+// 无害裁剪
+int HarmlessPruning ( int beta ) {
+	int vRep;
+
+	if ( search.pos.IsDraw() ) {
+		return 0; // eleeye上表示，为了安全起见，不用pos.DrawValue()
+	}
+
+	vRep = search.pos.RepStatus ();
+	if ( vRep > 0 ) {
+		return search.pos.RepValue ( vRep );
+	}
+
+	return -MATE_VALUE;
+}
+
+// 静态搜索
+int SearchQuiesc ( int alpha, int beta ) {
+	int v;
+
+	v = HarmlessPruning ( beta );
+	if ( v > -MATE_VALUE ) {
+		return v;
+	}
+
+	if ( search.pos.nDistance == LIMIT_DEPTH ) {
+
+	}
+}
+
+int Search ( int depth, int alpha, int beta ) {
+	MoveSortStruct mvsort;
+	int mv;
+	int bestv = -MATE_VALUE;
+
+	if ( depth <= 0 ) {
+		return
+	}
+
+	mvsort.InitEnd ();
+
+	while ( (mv = mvsort.NextEnd()) != 0 ) {
+		search.pos.MakeMove ( mv ); // 走一步
+		int v = - Search ( depth - 1, -beta, -alpha ); // 搜下一层
+		search.pos.UndoMakeMove ( mv ); // 回一步
+
+	}
+
+	return bestv;
+}

@@ -1,0 +1,22 @@
+/*
+ * hash.cpp
+ *
+ *  Created on: 2017年3月25日
+ *      Author: peteryuanpan
+ */
+
+#include "base.h"
+
+unint64 ZobristSP [256][14];
+unint64 ZobristPlayer;
+
+unint64 rand64 ( void ) {
+	return ((unint64)rand()) ^ ((unint64)rand() << 15) ^ ((unint64)rand() << 30) ^ ((unint64)rand() << 45);
+}
+
+void InitZobrist () {
+	srand (time(NULL));
+	for ( unint8 i = 0; i < 256; i ++ ) {
+
+	}
+}

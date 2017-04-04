@@ -27,8 +27,7 @@ void OrderDeal::First(){
     spfa_GamePath(f, in, Ansto);//求出每个必胜红点的最佳走向点
 }
 
-//go / go ponder: 进入思考状态，最后返回走法
-void OrderDeal::GoPrint(){
+void OrderDeal::GoPrint(){ //go / go ponder: 进入思考状态，最后返回走法
     int id = Hash.find(0);
     if(id == 0) printf("nobestmove\n");
     else{
@@ -65,7 +64,7 @@ void OrderDeal::Bye(){
 void OrderDeal::PreparePrint(){
 	// 显示引擎的名称、版本、作者和使用者
 	print("id name Lazy Boy");
-    print("id version 2.0");
+    	print("id version 0.1");
 	print("id copyright Open Source");
 	print("id author peterpan");
 	print("id user Lazier Boy\n");

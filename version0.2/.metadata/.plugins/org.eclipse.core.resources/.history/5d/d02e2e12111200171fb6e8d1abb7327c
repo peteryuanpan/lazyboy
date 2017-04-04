@@ -1,0 +1,30 @@
+/*
+ * movesort.h
+ *
+ *  Created on: 2017年3月25日
+ *      Author: peteryuanpan
+ */
+
+#ifndef MOVESORT_H_
+#define MOVESORT_H_
+
+#include "base.h"
+
+struct MoveSortStruct {
+	unint16 move[128];
+	unint8 nMoveIndex;
+	unint8 nMoveNum;
+
+	// 为EndSearch生成move
+	void InitEnd ( void ) {
+		nMoveIndex = 0;
+		nMoveNum = 0;
+	}
+
+	// 为NextSearch提供下一个着法
+	unint16 NextEnd ( void );
+};
+
+
+
+#endif /* MOVESORT_H_ */

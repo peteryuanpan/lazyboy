@@ -15,10 +15,11 @@ string get16 ( unsigned char c ) {
 
 int main ( ) {
 	unsigned char a, b, c;
-	for ( int i = 0; i < 100; i ++ ) {
+	for ( int i = 0; i < 255; i ++ ) {
 		// c = i;
 		// cout << c << " " << i << "\n";
-		cout << i << " " << get16 ( i ) << endl;
+		int t = i;
+		cout << i << " " << get16 ( i ) << " " << t << endl;
 	}
 	//a = 16;
 	// b = 17;

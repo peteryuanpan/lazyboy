@@ -1,0 +1,15 @@
+/*
+ * lazyboy.cpp
+ *
+ *  Created on: 2017年3月25日
+ *      Author: peteryuanpan
+ */
+
+#include "base.h"
+
+int main ( int argc, char *argv[] ) {
+	for ( int i = 0; i < 256; i ++ ) {
+		std::cout << i << std::endl;
+	}
+	return 0;
+}

@@ -1,0 +1,18 @@
+/*
+ * fuck.cpp
+ *
+ *  Created on: 2017年3月24日
+ *      Author: peteryuanpan
+ */
+
+#include "fuck.h"
+
+fuck::fuck() {
+	// TODO Auto-generated constructor stub
+
+}
+
+fuck::~fuck() {
+	// TODO Auto-generated destructor stub
+}
+
