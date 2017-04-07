@@ -1,0 +1,13 @@
+/*
+ * temp.cpp
+ *
+ *  Created on: 2017年3月24日
+ *      Author: peteryuanpan
+ */
+
+#include <iostream>
+
+int main () {
+	std::cout << 1 << std::endl;
+	return 0;
+}

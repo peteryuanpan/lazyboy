@@ -1,0 +1,17 @@
+/*
+ * PositionStruct.h
+ *
+ *  Created on: 2017年3月24日
+ *      Author: peteryuanpan
+ */
+
+#ifndef POSITIONSTRUCT_H_
+#define POSITIONSTRUCT_H_
+
+class PositionStruct {
+public:
+	PositionStruct();
+	virtual ~PositionStruct();
+};
+
+#endif /* POSITIONSTRUCT_H_ */

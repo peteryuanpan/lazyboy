@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.cdt.launch.applicationLaunchType">
+<stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_START_MODE" value="run"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="Debug/lazyboy"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="lazyboy"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="cdt.managedbuild.config.gnu.macosx.exe.debug.704698669"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/lazyboy"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.linuxtools.valgrind.launch.FULLPATH_AFTER" value="true"/>
+<booleanAttribute key="org.eclipse.linuxtools.valgrind.launch.GENERAL_BELOWMAIN" value="false"/>
+<booleanAttribute key="org.eclipse.linuxtools.valgrind.launch.GENERAL_DEMANGLE" value="true"/>
+<booleanAttribute key="org.eclipse.linuxtools.valgrind.launch.GENERAL_DSYMUTIL" value="true"/>
+<booleanAttribute key="org.eclipse.linuxtools.valgrind.launch.GENERAL_ERRLIMIT" value="true"/>
+<booleanAttribute key="org.eclipse.linuxtools.valgrind.launch.GENERAL_FREERES" value="true"/>
+<intAttribute key="org.eclipse.linuxtools.valgrind.launch.GENERAL_MAINSTACK" value="0"/>
+<booleanAttribute key="org.eclipse.linuxtools.valgrind.launch.GENERAL_MAINSTACK_BOOL" value="false"/>
+<intAttribute key="org.eclipse.linuxtools.valgrind.launch.GENERAL_MAXFRAME" value="2000000"/>
+<intAttribute key="org.eclipse.linuxtools.valgrind.launch.GENERAL_NUMCALLERS" value="12"/>
+<listAttribute key="org.eclipse.linuxtools.valgrind.launch.GENERAL_SUPPFILES"/>
+<booleanAttribute key="org.eclipse.linuxtools.valgrind.launch.GENERAL_TRACECHILD" value="false"/>
+<stringAttribute key="org.eclipse.linuxtools.valgrind.launch.TOOL" value="org.eclipse.linuxtools.valgrind.launch.cachegrind"/>
+<stringAttribute key="process_factory_id" value="org.eclipse.cdt.dsf.gdb.GdbProcessFactory"/>
+</launchConfiguration>

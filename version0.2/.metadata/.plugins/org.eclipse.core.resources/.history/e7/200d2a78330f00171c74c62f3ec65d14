@@ -1,0 +1,17 @@
+/*
+ * ChessTemp.h
+ *
+ *  Created on: 2017年3月23日
+ *      Author: peteryuanpan
+ */
+
+#ifndef CHESSTEMP_H_
+#define CHESSTEMP_H_
+
+class ChessTemp {
+public:
+	ChessTemp();
+	virtual ~ChessTemp();
+};
+
+#endif /* CHESSTEMP_H_ */

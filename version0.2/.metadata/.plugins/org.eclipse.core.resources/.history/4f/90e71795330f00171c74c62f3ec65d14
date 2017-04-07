@@ -1,0 +1,18 @@
+/*
+ * ChessTemp.cpp
+ *
+ *  Created on: 2017年3月23日
+ *      Author: peteryuanpan
+ */
+
+#include "ChessTemp.h"
+
+ChessTemp::ChessTemp() {
+	// TODO Auto-generated constructor stub
+
+}
+
+ChessTemp::~ChessTemp() {
+	// TODO Auto-generated destructor stub
+}
+

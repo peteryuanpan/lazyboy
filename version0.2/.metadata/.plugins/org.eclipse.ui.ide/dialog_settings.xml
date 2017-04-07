@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="/Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/version0.2.1"/>
+	</list>
+	<section name="ExternalProjectImportWizard">
+	</section>
+	<section name="org.eclipse.ui.internal.ide.dialogs.ProjectContentsLocationArea">
+		<item value="/Users/peteryuanpan/Desktop/毕业设计/eleeye" key="OUTSIDE_LOCATION"/>
+	</section>
+</section>
