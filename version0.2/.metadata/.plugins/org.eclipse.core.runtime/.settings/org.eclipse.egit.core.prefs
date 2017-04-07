@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 GitRepositoriesView.GitDirectories=/Users/peteryuanpan/Desktop/\u6BD5\u4E1A\u8BBE\u8BA1/lazyboy-master/.git\:/Users/peteryuanpan/Desktop/\u6BD5\u4E1A\u8BBE\u8BA1/lazyboy/.git\:
 GitRepositoriesView.GitDirectories.relative=/Users/peteryuanpan/Desktop/\u6BD5\u4E1A\u8BBE\u8BA1/lazyboy-master/.git\:/Users/peteryuanpan/Desktop/\u6BD5\u4E1A\u8BBE\u8BA1/lazyboy/.git\:
+=======
+GitRepositoriesView.GitDirectories=/Users/peteryuanpan/Desktop/\u6BD5\u4E1A\u8BBE\u8BA1/lazyboy/.git\:
+GitRepositoriesView.GitDirectories.relative=/Users/peteryuanpan/Desktop/\u6BD5\u4E1A\u8BBE\u8BA1/lazyboy/.git\:
+>>>>>>> a0b421694024b2ef4a276effd1b09e1a16a60408
 eclipse.preferences.version=1

@@ -1,0 +1,35 @@
+/*
+ * movesort.cpp
+ *
+ *  Created on: 2017年3月25日
+ *      Author: peteryuanpan
+ */
+
+#include "base.h"
+
+void MoveSortStruct::InitEnd ( void ) {
+	nMoveIndex = 0;
+	nMoveNum = 0;
+
+	nMoveNum += search.pos.GenCapMove ( move + nMoveNum ); // 生成吃子着法
+	nMoveNum += search.pos.GenNonCapMove ( move + nMoveNum ); // 生成非吃子着法
+
+	for ( unint8 i = 0; i < nMoveNum; i ++ ) {
+		sortKey[i] = 0;
+	}
+	for ( unint8 i = 0; i < nMoveNum; i ++ ) {
+		search.pos.MakeMove ( move[i] );
+		if ( search.pos.Check() ) { // 将军着法
+			sortKey[i] = 3;
+		}
+		search.pos.UndoMakeMove ( move[i] );
+		if ( sortKey[i] != 3 ) {
+			if ( search.pos.NonEmptySquare(MoveEndSquare(move[i])) ) { // 吃子着法
+				sortKey[i] = 2;
+			}
+			else { // 非吃子着法
+				sortKey[i] = 1;
+			}
+		}
+	}
+}

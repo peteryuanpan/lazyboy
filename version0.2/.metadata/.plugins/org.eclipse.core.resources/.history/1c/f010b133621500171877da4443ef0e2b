@@ -1,0 +1,16 @@
+/*
+ * evaluate.h
+ *
+ *  Created on: 2017年3月25日
+ *      Author: peteryuanpan
+ */
+
+#ifndef EVALUATE_H_
+#define EVALUATE_H_
+
+#include "base.h"
+
+const int MAX_VALUE = 9999;
+const int MIN_VALUE = - MAX_VALUE;
+
+#endif /* EVALUATE_H_ */

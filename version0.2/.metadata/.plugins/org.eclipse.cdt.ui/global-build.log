@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 10:55:10 **** Build of configuration Debug for project version0.2.1 ****
 make all 
 Building file: ../evaluate.cpp
@@ -54,5 +55,11 @@ Finished building target: version0.2.1
 make all 
 make: Nothing to be done for `all'.
 10:56:49 **** Incremental Build of configuration Debug for project version0.2.1 ****
+=======
+23:39:46 **** Incremental Build of configuration Debug for project eleeye ****
+make all 
+make: Nothing to be done for `all'.
+23:39:52 **** Incremental Build of configuration Debug for project lazyboy ****
+>>>>>>> a0b421694024b2ef4a276effd1b09e1a16a60408
 make all 
 make: Nothing to be done for `all'.

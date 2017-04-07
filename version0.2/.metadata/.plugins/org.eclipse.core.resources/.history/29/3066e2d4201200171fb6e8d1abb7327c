@@ -1,0 +1,18 @@
+/*
+ * movesort.cpp
+ *
+ *  Created on: 2017年3月25日
+ *      Author: peteryuanpan
+ */
+
+#include "base.h"
+
+void MoveSortStruct::InitEnd ( void ) {
+	nMoveIndex = 0;
+	nMoveNum = 0;
+
+	nMoveNum += search.pos.GenCapMove ( move + nMoveNum ); // 生成吃子着法
+	nMoveNum += search.pos.GenNonCapMove ( move + nMoveNum ); // 生成非吃子着法
+
+	for ()
+}

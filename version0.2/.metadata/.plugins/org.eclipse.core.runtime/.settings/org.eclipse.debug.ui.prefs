@@ -1,4 +1,7 @@
 eclipse.preferences.version=1
 org.eclipse.debug.ui.PREF_LAUNCH_PERSPECTIVES=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<launchPerspectives/>\n
+<<<<<<< HEAD
 org.eclipse.debug.ui.save_dirty_editors_before_launch=always
+=======
+>>>>>>> a0b421694024b2ef4a276effd1b09e1a16a60408
 preferredTargets=org.eclipse.cdt.debug.ui.toggleCBreakpointTarget,org.eclipse.cdt.debug.ui.toggleCDynamicPrintfTarget\:org.eclipse.cdt.debug.ui.toggleCBreakpointTarget|

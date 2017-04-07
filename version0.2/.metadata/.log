@@ -333,6 +333,7 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.
 
 !ENTRY org.eclipse.launchbar.core 2 0 2017-04-04 09:26:12.083
 !MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.arduino.core.descriptorType
+<<<<<<< HEAD
 !SESSION 2017-04-06 16:16:29.977 -----------------------------------------------
 eclipse.buildId=4.6.2.M20161124-1400
 java.version=1.8.0_05
@@ -585,3 +586,5 @@ org.eclipse.core.internal.resources.ResourceException: The project description f
 
 !ENTRY org.eclipse.core.resources 2 10035 2017-04-07 10:57:23.719
 !MESSAGE The workspace will exit with unsaved changes in this session.
+=======
+>>>>>>> a0b421694024b2ef4a276effd1b09e1a16a60408
