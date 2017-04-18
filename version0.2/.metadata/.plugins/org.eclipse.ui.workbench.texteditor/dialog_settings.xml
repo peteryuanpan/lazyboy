@@ -2,22 +2,28 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="thisTime" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="ThisTime"/>
+			<item value="TheTime"/>
+			<item value="time."/>
+			<item value="&amp;time"/>
+			<item value=" time"/>
+			<item value="WIN_32"/>
+			<item value="MATE"/>
 			<item value="26215"/>
-			<item value="2621"/>
-			<item value="33587"/>
-			<item value="17974"/>
-			<item value="21812"/>
-			<item value="13894"/>
-			<item value="29781"/>
-			<item value="13622"/>
 		</list>
 		<list key="replacehistory">
+			<item value="thisTime"/>
+			<item value="ThisTime"/>
+			<item value="TheTime."/>
+			<item value="&amp;TheTime"/>
+			<item value="TheTime"/>
+			<item value="_WIN32"/>
 			<item value="TYPE"/>
 		</list>
 	</section>

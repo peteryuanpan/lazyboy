@@ -1,0 +1,54 @@
+#include "time.h"
+#include "base.h"
+#include <ctime>
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
+doubleTheTimeLimit = 10.0; // 默认10秒
+
+#ifdef _WIN32
+	SYSTEMTIMETheTime;
+	long startT;
+#else
+	clock_t startT;
+#endif
+
+// 设置时间限制
+void SetTimeLimit ( const double limit ) {
+	TimeLimit = limit;
+}
+
+// 初始化开始时间
+void InitBeginTime ( void ) {
+#ifdef _WIN32
+	GetSystemTime ( &time );
+	startT =TheTime.wSecond * 1000 +TheTime.wMilliseconds;
+#else
+	startT = clock();
+#endif
+}
+
+// 已超时
+bool TimeOut ( void ) {
+	doubleTheTimeCost;
+#ifdef _WIN32
+	GetSystemTime ( &time );
+	timeCost = (double) (TheTime.wSecond * 1000 +TheTime.wMilliseconds - startT ) / 1000.0;
+#else
+	timeCost = (double) ( clock() - startT ) / CLOCKS_PER_SEC;
+#endif
+	returnTheTimeCost >=TheTimeLimit;
+}
+
+// 计算用时
+double TimeCost ( void ) {
+	doubleTheTimeCost;
+#ifdef _WIN32
+	GetSystemTime ( &time );
+	timeCost = (double) (TheTime.wSecond * 1000 +TheTime.wMilliseconds - startT ) / 1000.0;
+#else
+	timeCost = (double) ( clock() - startT ) / CLOCKS_PER_SEC;
+#endif
+	returnTheTimeCost;
+}

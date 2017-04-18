@@ -1,0 +1,138 @@
+#include "search.h"
+#include "base.h"
+#include "hash.h"
+#include "position.h"
+#include "rollback.h"
+#include "movesort.h"
+#include "evaluate.h"
+#include "debug.h"
+
+PositionStruct pos; // 当前搜索局面
+RollBackListStruct roll; // 回滚着法表
+
+// 无害裁剪
+int HarmlessPruning ( void ) {
+	// 1. 和局局面
+	if ( pos.IsDraw() ) {
+		return 0; // eleeye上表示，为了安全起见，不用pos.DrawValue()
+	}
+
+	// 2. 路径重复
+	int vRep = roll.RepStatus ();
+	if ( vRep != REP_NONE ) {
+		return roll.RepValue ( vRep );
+	}
+
+	return -MATE_VALUE;
+}
+
+// 主要遍历搜索
+int SearchPV ( int depth, int alpha, int beta ) {
+	int val;
+	int bestval = - MATE_VALUE;
+	int bestmv = 0;
+	MoveSortStruct mvsort;
+
+	// 1. 打分
+	if ( depth <= 0 ) {
+		return pos.Evaluate ();
+	}
+
+	// 2. 无害裁剪
+	val = HarmlessPruning ();
+	if ( val > - MATE_VALUE ) {
+		return val;
+	}
+
+	// 3. 置换裁剪
+	val = QueryValueInHashTable ( depth );
+	if ( val != - MATE_VALUE ) {
+		return val;
+	}
+
+	// 4. 生成着法
+	mvsort.InitPV ();
+
+	// 5. 递归搜索
+	int mv;
+	while ( (mv = mvsort.NextPV()) != 0 ) {
+		pos.MakeMove ( mv ); // 走一步
+		int val = -SearchPV ( depth - 1, -beta, -alpha ); // 搜下一层
+		pos.UndoMakeMove (); // 回一步
+		if ( val > bestval ) {
+			bestval = val;
+			bestmv = mv;
+			if ( bestval >= beta ) {
+				InsertHashTable ( depth, bestval, bestmv );
+				return bestval;
+			}
+			if ( bestval > alpha ) {
+				alpha = bestval;
+			}
+		}
+	}
+	InsertHashTable ( depth, bestval, bestmv );
+	return bestval;
+}
+
+// 主搜索函数
+void MainSearch ( void ) {
+	// 1. 清空置换表
+	ClearHashTable ();
+
+	// 2. 迭代加深搜索，并计算时间
+	int bestmove[100];
+	int nb = 0;
+	double timeCost;
+#ifdef WIN_32
+	SYSTEMTIME time;
+	GetSystemTime ( &time );
+	long starT = time.wSecond * 1000 + time.wMilliseconds;
+#else
+	clock_t startT = clock();
+#endif
+	for ( int depth = 1; depth <= 32; depth ++ ) {
+		int value = SearchPV ( depth, - MATE_VALUE, MATE_VALUE );
+		bestmove[nb] = QueryMoveInHashTable ();
+#ifdef WIN_32
+		GetSystemTime ( &time );
+	time.wSecond * 1000 + time.wMilliseconds - startT;
+#else
+		timeCost = (double)(clock() - startT) / CLOCKS_PER_SEC;
+#endif
+		printf("depth: %2d, time = %.2f, value: %5d, bestmove = %s\n", depth, timeCost, value, MoveIntToStr(bestmove[nb]).c_str());
+		nb ++;
+
+		// 找到解
+		if ( value >= MATE_VALUE ) {
+			break;
+		}
+	}
+	printf("TotalTime = %.2fs\n", timeCost);
+
+	// 3. 输出最优着法
+	// 先在所有着法中找到频率最高的
+	int bestmv = 0;
+	int maxn = 0;
+	for ( int i = 0; i < nb; i ++ ) {
+		int n = 0;
+		for ( int j = 0; j < nb; j ++ ) {
+			if ( bestmove[i] == bestmove[j] ) {
+				n ++;
+			}
+		}
+		if ( n > maxn ) {
+			maxn = n;
+			bestmv = bestmove[i];
+		}
+	}
+	// 再输出
+	if ( bestmv == 0 ) {
+		printf("nobestmv\n");
+		fflush(stdout);
+	}
+	else {
+		printf("bestmove %s\n", MoveIntToStr(bestmv).c_str());
+		fflush(stdout);
+	}
+}

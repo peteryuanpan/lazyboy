@@ -1,0 +1,53 @@
+ucci
+
+// 4 弈亦大哉
+setoption newgame
+position fen 9/4P4/2NakaR2/3P1P3/2pP1cb2/3r1c3/1rPNppCn1/3K1A3/2p3n2/9 w - - 0 1
+go ponder
+
+// 23 迎头痛击
+setoption newgame
+position fen 2ca1k3/4P1r1R/4ba3/7Cp/8r/7C1/7n1/9/3p1pp2/3nK4 w - - 0 1
+go ponder
+
+// 61 炮借马威
+setoption newgame
+position fen 4ka3/c1r3n2/6N2/9/2r2N2R/9/9/1p7/1p1KC2n1/2p1cC3 w - - 0 1
+go ponder
+
+// 80 亦步亦趋
+setoption newgame
+position fen 1P7/4c4/5k3/6P2/3P5/1N7/6n2/4C4/2p1p4/3K5 w - - 0 1
+go ponder
+
+// 144 以身殉国
+setoption newgame
+position fen r8/3ka2R1/3a3C1/1n2pN3/9/R2N1n2c/5c3/2r2A3/3p1p1p1/4K1C2 w - - 0 1
+go ponder
+
+// 151 走马看花
+setoption newgame
+position fen n1ck1P3/4P2P1/4baP1b/5cP2/N8/3C1C3/5n3/5p3/R1r1p3r/3R1K3 w - - 0 1
+go ponder
+
+// 165 安步当车
+setoption newgame
+position fen 3c1a3/8r/1NP1k4/5P3/5n3/9/R8/R4p3/C2Np1p2/1c3K3 w - - 0 1
+go ponder
+
+// 169 绍君出塞
+setoption newgame
+position fen 4ka3/4a4/4b1r2/2N6/C5pC1/3R5/3R5/4B2n1/1n2p1p2/cr1N1K2c w - - 0 1
+go ponder
+
+// 192 暗度陈仓
+setoption newgame
+position fen 5an2/4a4/3k5/2P1P3R/c3p4/7nR/9/3N2rC1/6pr1/3p1KcC1 w - - 0 1
+go ponder
+
+// 202 塞翁失马
+setoption newgame
+position fen 4k2Pn/3Par3/2c1r3N/2p2n3/6N2/2c5C/1C7/R8/4pp3/3K5 w - - 0 1
+go ponder
+
+quit

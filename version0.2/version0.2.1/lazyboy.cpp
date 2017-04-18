@@ -4,6 +4,7 @@
 #include "move.h"
 #include "search.h"
 #include "ucci.h"
+#include "time.h"
 
 void PreparePrint ();
 
@@ -13,7 +14,7 @@ inline void print( const std::string s ) {
 }
 
 int main() {
-	//freopen ("/Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/Test/long_data.txt", "r", stdin);
+	freopen ("/Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/趣味象棋/long_data.txt", "r", stdin);
 
 	CommEnum Order;
 
@@ -35,6 +36,7 @@ int main() {
 					roll.Init ();
 					InitZobrist ();
 					InitMove ();
+					SetTimeLimit (10.0); // 10s
 				}
 			}
 			else if ( Order == e_CommPosition ) { // position [ startpos | fen ] moves ...

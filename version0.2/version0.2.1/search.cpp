@@ -6,6 +6,7 @@
 #include "movesort.h"
 #include "evaluate.h"
 #include "debug.h"
+#include "time.h"
 
 PositionStruct pos; // 当前搜索局面
 RollBackListStruct roll; // 回滚着法表
@@ -33,6 +34,10 @@ int SearchPV ( int depth, int alpha, int beta ) {
 	int bestmv = 0;
 	MoveSortStruct mvsort;
 
+	if ( TimeOut() ) { // 超时
+		return bestval;
+	}
+
 	// 1. 打分
 	if ( depth <= 0 ) {
 		return pos.Evaluate ();
@@ -59,7 +64,12 @@ int SearchPV ( int depth, int alpha, int beta ) {
 		pos.MakeMove ( mv ); // 走一步
 		int val = -SearchPV ( depth - 1, -beta, -alpha ); // 搜下一层
 		pos.UndoMakeMove (); // 回一步
-		if ( val > bestval ) {
+
+		if ( TimeOut() ) { // 超时
+			return bestval;
+		}
+
+		if ( val > bestval ) { // 更新
 			bestval = val;
 			bestmv = mv;
 			if ( bestval >= beta ) {
@@ -77,29 +87,61 @@ int SearchPV ( int depth, int alpha, int beta ) {
 
 // 主搜索函数
 void MainSearch ( void ) {
-	// 1. 清空置换表
+	// 1. 初始化时间器
+	InitBeginTime ();
+
+	// 2. 清空置换表
 	ClearHashTable ();
 
-	// 2. 迭代加深搜索
-	int value, bestmv;
-	double timeCost;
-	clock_t startT = clock();
-	for ( int depth = 1; depth <= 30; depth ++ ) {
-		value = SearchPV ( depth, - MATE_VALUE, MATE_VALUE );
-		bestmv = QueryMoveInHashTable ();
-		timeCost = (double)(clock() - startT) / CLOCKS_PER_SEC;
-		printf("depth: %2d, time = %.2f, value: %5d, bestmove = %s\n", depth, timeCost, value, MoveIntToStr(bestmv).c_str());
+	// 3. 迭代加深搜索，并计算时间
+	int bestmove[100];
+	int nb = 0;
+	for ( int depth = 1; depth <= 32; depth ++ ) {
+		// 搜索
+		int value = SearchPV ( depth, - MATE_VALUE, MATE_VALUE );
+		if ( TimeOut() ) { // 超时
+			break;
+		}
 
-		// 找到解
-		if ( value >= MATE_VALUE ) {
+		// 记录着法，输出重要信息
+		bestmove[++nb] = QueryMoveInHashTable ();
+		printf("depth: %2d, time = %.2f, value: %5d, bestmove = %s\n", depth, TimeCost(), value, MoveIntToStr(bestmove[nb]).c_str());
+
+		// 搜到杀棋 或 无解
+		if ( value >= MATE_VALUE || value <= - MATE_VALUE) {
 			break;
 		}
 	}
-	printf("TotalTime = %.2fs\n", timeCost);
+	printf("TotalTime = %.2fs\n", TimeCost());
 
-	// 3. 输出最优着法
+	// 4. 输出最优着法
+	// 分情况确定最优着法
+	int bestmv = 0;
+	if ( QueryValueInHashTable (0) == MATE_VALUE ) {
+		bestmv = QueryMoveInHashTable ();
+	}
+	else if ( QueryValueInHashTable (0) == - MATE_VALUE ) {
+		bestmv = 0;
+	}
+	else {
+		// 在所有着法中找出权值最高的 ( 这个方法有待研究改进 )
+		int maxval = 0;
+		for ( int i = 1; i <= nb; i ++ ) {
+			int val = 0;
+			for ( int j = 1; j <= nb; j ++ ) {
+				if ( bestmove[i] == bestmove[j] ) {
+					val += j / 10 + 1;
+				}
+			}
+			if ( val > maxval ) {
+				maxval = val;
+				bestmv = bestmove[i];
+			}
+		}
+	}
+	// 输出
 	if ( bestmv == 0 ) {
-		printf("nobestmv\n");
+		printf("nobestmove\n");
 		fflush(stdout);
 	}
 	else {

@@ -1,0 +1,23 @@
+#include "time.h"
+#include "base.h"
+#include <ctime>
+#ifdef WIN_32
+#include <windows.h>
+#endif
+
+double TimeLimit = 10.0; // 默认10秒
+
+// 设置时间限制
+void SetTimeLimit ( const double limit ) {
+
+}
+
+// 初始化开始时间
+void InitBeginTime ( void ) {
+
+}
+
+// 已超时
+bool TimeOut ( void ) {
+
+}
