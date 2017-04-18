@@ -1,0 +1,19 @@
+#ifndef HASHTABLE_H_
+#define HASHTABLE_H_
+
+struct HashTableStruct {
+	int depth;
+	int zorb1;
+	int zorb2;
+	int val;
+};
+
+extern HashTableStruct *HashTable;
+
+void InitHashTable ( void );
+void ClearHashTable ( void );
+void DelHashTable ( void );
+void InsertHashTable ( void );
+int QueryHashTable ( void );
+
+#endif /* HASHTABLE_H_ */

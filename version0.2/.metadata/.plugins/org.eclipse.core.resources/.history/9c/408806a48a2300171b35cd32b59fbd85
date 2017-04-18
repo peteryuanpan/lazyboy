@@ -1,0 +1,7 @@
+#include "evaluate.h"
+#include "search.h"
+
+// 给局面打分
+int Evaluate ( void ) {
+
+}

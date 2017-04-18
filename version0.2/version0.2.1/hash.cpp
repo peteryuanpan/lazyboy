@@ -1,5 +1,7 @@
+#include "base.h"
 #include "hash.h"
 #include "move.h"
+#include <ctime>
 
 bool HASH_INIT_FLAG = false;
 
@@ -85,5 +87,47 @@ void PositionStruct::ModifyZobrist ( const int mv, const int sqSrc, const int sq
 	zobrist.second ^= ZobristPlayer_2;
 }
 
+#include "hash.h"
+#include "base.h"
+#include "search.h"
+#include "evaluate.h"
 
+HashTableStruct HashTable[ HashTableNum + 100 ];
 
+void ClearHashTable ( void ) {
+	for ( int i = 0; i < HashTableNum; i ++ ) {
+		HashTable[i].depth = 0;
+		HashTable[i].zorb1 = 0;
+		HashTable[i].zorb2 = 0;
+		HashTable[i].value = 0;
+	}
+}
+
+void InsertHashTable ( const int depth, const int val, const int mv ) {
+	if ( val > - BAN_VALUE && mv != 0 ) { // !!
+		const int t = pos.zobrist.first & ( HashTableNum - 1 );
+		HashTable[t].depth = depth;
+		HashTable[t].zorb1 = pos.zobrist.first;
+		HashTable[t].zorb2 = pos.zobrist.second;
+		HashTable[t].value = val;
+		HashTable[t].move = mv;
+	}
+}
+
+int QueryValueInHashTable ( const int depth ) {
+	const int t = pos.zobrist.first & ( HashTableNum - 1 );
+	if ( HashTable[t].zorb1 == pos.zobrist.first && HashTable[t].zorb2 == pos.zobrist.second ) {
+		if ( HashTable[t].depth >= depth ) {
+			return HashTable[t].value;
+		}
+	}
+	return - MATE_VALUE;
+}
+
+int QueryMoveInHashTable ( void ) {
+	const int t = pos.zobrist.first & ( HashTableNum - 1 );
+	if ( HashTable[t].zorb1 == pos.zobrist.first && HashTable[t].zorb2 == pos.zobrist.second ) {
+		return HashTable[t].move;
+	}
+	return 0;
+}

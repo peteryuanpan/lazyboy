@@ -1,0 +1,37 @@
+#include "evaluate.h"
+#include "search.h"
+
+// 中局/残局状态分值
+int PositionStruct::MidGameValue ( void ) {
+	return 0;
+}
+
+// 中局/残局状态分值
+int PositionStruct::AttackValue ( void ) {
+	return 0;
+}
+
+// 被进攻/未被进攻状态分值
+int PositionStruct::AttackedValue ( void ) {
+	return 0;
+}
+
+// 打分，子力平衡
+int PositionStruct::Material ( void ) {
+	return 0;
+}
+
+// 打分，车的灵活性
+int PositionStruct::RookMobility ( void ) {
+	return 0;
+}
+
+// 打分，马的阻碍
+int PositionStruct::KnightTrap ( void ) {
+	return 0;
+}
+
+// 给局面打分
+int PositionStruct::Evaluate ( void ) {
+	return 0;
+}

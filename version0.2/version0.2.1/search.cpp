@@ -7,110 +7,103 @@
 #include "evaluate.h"
 #include "debug.h"
 
-SearchStruct Search;
-
-// 打分
-int Evaluate ( void ) {
-	return Search.pos.player == 0 ? -MATE_VALUE : MATE_VALUE;
-}
+PositionStruct pos; // 当前搜索局面
+RollBackListStruct roll; // 回滚着法表
 
 // 无害裁剪
 int HarmlessPruning ( void ) {
-	int vRep;
-
 	// 1. 和局局面
-	if ( Search.pos.IsDraw() ) {
+	if ( pos.IsDraw() ) {
 		return 0; // eleeye上表示，为了安全起见，不用pos.DrawValue()
 	}
 
 	// 2. 路径重复
-	vRep = Search.roll.RepStatus ();
+	int vRep = roll.RepStatus ();
 	if ( vRep != REP_NONE ) {
-		return Search.roll.RepValue ( vRep );
+		return roll.RepValue ( vRep );
 	}
 
 	return -MATE_VALUE;
 }
 
-void InsertMap ( const int bestmv, const int bestv ) {
-	if ( bestmv != 0 && bestv > - BAN_VALUE ) {
-		if ( Search.pos.player == 0 ) {
-			Search.bestmove [ Search.pos.zobrist ] = bestmv;
-		}
-	}
-}
-
 // 主要遍历搜索
 int SearchPV ( int depth, int alpha, int beta ) {
-	int mv, v;
+	int val;
+	int bestval = - MATE_VALUE;
 	int bestmv = 0;
-	int bestv = -MATE_VALUE;
 	MoveSortStruct mvsort;
 
+	// 1. 打分
 	if ( depth <= 0 ) {
-		return Evaluate ();
+		return pos.Evaluate ();
 	}
 
-	v = HarmlessPruning ();
-	if ( v > -MATE_VALUE ) {
-		return v;
+	// 2. 无害裁剪
+	val = HarmlessPruning ();
+	if ( val > - MATE_VALUE ) {
+		return val;
 	}
 
-	if ( Search.pos.nDistance == LIMIT_DEPTH ) {
-		return Evaluate ();
+	// 3. 置换裁剪
+	val = QueryValueInHashTable ( depth );
+	if ( val != - MATE_VALUE ) {
+		return val;
 	}
 
+	// 4. 生成着法
 	mvsort.InitPV ();
 
+	// 5. 递归搜索
+	int mv;
 	while ( (mv = mvsort.NextPV()) != 0 ) {
-		Search.pos.MakeMove ( mv ); // 走一步
-		int v = -SearchPV ( depth - 1, -beta, -alpha ); // 搜下一层
-		Search.pos.UndoMakeMove (); // 回一步
-		if ( v > bestv ) {
-			bestv = v;
+		pos.MakeMove ( mv ); // 走一步
+		int val = -SearchPV ( depth - 1, -beta, -alpha ); // 搜下一层
+		pos.UndoMakeMove (); // 回一步
+		if ( val > bestval ) {
+			bestval = val;
 			bestmv = mv;
-			if ( v >= beta ) {
-				InsertMap ( bestmv, bestv );
-				return v;
+			if ( bestval >= beta ) {
+				InsertHashTable ( depth, bestval, bestmv );
+				return bestval;
 			}
-			if ( v > alpha ) {
-				alpha = v;
+			if ( bestval > alpha ) {
+				alpha = bestval;
 			}
 		}
 	}
-
-	InsertMap ( bestmv, bestv );
-
-	return bestv;
+	InsertHashTable ( depth, bestval, bestmv );
+	return bestval;
 }
 
-// 迭代加深搜索
+// 主搜索函数
 void MainSearch ( void ) {
-	double TotalTime = 0;
-	for ( int depth = 1; depth <= 30 ; depth ++ ) {
-		// 1. 清空最佳着法表
-		Search.bestmove.clear ();
+	// 1. 清空置换表
+	ClearHashTable ();
 
-		// 2. 搜索，算时间
-		clock_t start = clock();
-		int val = SearchPV ( depth, -MATE_VALUE, MATE_VALUE );
-		double TimeCost = (double) ( clock() - start ) / CLOCKS_PER_SEC;
-		printf("Search done, Depth: %d, Val: %d, Time taken: %.2fs\n", depth, val, TimeCost);
-		TotalTime += TimeCost;
+	// 2. 迭代加深搜索
+	int value, bestmv;
+	double timeCost;
+	clock_t startT = clock();
+	for ( int depth = 1; depth <= 30; depth ++ ) {
+		value = SearchPV ( depth, - MATE_VALUE, MATE_VALUE );
+		bestmv = QueryMoveInHashTable ();
+		timeCost = (double)(clock() - startT) / CLOCKS_PER_SEC;
+		printf("depth: %2d, time = %.2f, value: %5d, bestmove = %s\n", depth, timeCost, value, MoveIntToStr(bestmv).c_str());
 
-		if ( val > - BAN_VALUE ) {
+		// 找到解
+		if ( value >= MATE_VALUE ) {
 			break;
 		}
 	}
-	printf("TotalTime = %.2fs\n", TotalTime);
-}
+	printf("TotalTime = %.2fs\n", timeCost);
 
-// 在着法表中找最优着法
-std::string BestMove ( void ) {
-	if ( Search.bestmove.find(Search.pos.zobrist) == Search.bestmove.end() ) {
-		return "nobestmove";
+	// 3. 输出最优着法
+	if ( bestmv == 0 ) {
+		printf("nobestmv\n");
+		fflush(stdout);
 	}
 	else {
-		return "bestmove " + MoveIntToStr( Search.bestmove[Search.pos.zobrist] );
+		printf("bestmove %s\n", MoveIntToStr(bestmv).c_str());
+		fflush(stdout);
 	}
 }

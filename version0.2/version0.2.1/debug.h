@@ -6,15 +6,15 @@
 #include "search.h"
 
 inline void PrintChessBoard ( void ) {
-	printf ( "%s\n", Search.pos.player == 0 ? "Turn Red" : "Turn Black" );
-	printf ( "nDistance = %d\n", Search.pos.nDistance);
-	printf ( "check = %d\n", Search.pos.check );
-	printf ( "checked = %d\n", Search.pos.checked );
-	//printf ( "Zobrist = (%lld, %lld)\n", Search.pos.zobrist.first, Search.pos.zobrist.second );
-	printf ( "LastMove = %d\n", Search.roll.LastMove() );
+	printf ( "%s\n", pos.player == 0 ? "Turn Red" : "Turn Black" );
+	printf ( "nDistance = %d\n", pos.nDistance);
+	//printf ( "check = %d\n", pos.check );
+	//printf ( "checked = %d\n", pos.checked );
+	//printf ( "Zobrist = (%lld, %lld)\n", pos.zobrist.first, pos.zobrist.second );
+	printf ( "LastMove = %d\n", roll.LastMove() );
 	for ( int i = 51; i < 204 ; i += 16 ) {
 		for ( int j = i; j < i + 9; j ++ ) {
-			printf ("%3d  ", Search.pos.square[j]);
+			printf ("%3d  ", pos.square[j]);
 		}
 		printf("\n");
 	}

@@ -1,14 +1,15 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=a0b421694024b2ef4a276effd1b09e1a16a60408
 LaunchTargetManager/configs/lazyboy=org.eclipse.launchbar.core.launchTargetType.local\:Local
 LaunchTargetManager/configs/temp=org.eclipse.launchbar.core.launchTargetType.local\:Local
+LaunchTargetManager/configs/version0.2.1=org.eclipse.launchbar.core.launchTargetType.local\:Local
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=macosx
 activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
-<<<<<<< HEAD
-configDescList=org.eclipse.launchbar.core.descriptorType.default\:temp,org.eclipse.launchbar.core.descriptorType.default\:lazyboy,org.eclipse.launchbar.core.descriptorType.default\:version0.2.1
-=======
-configDescList=org.eclipse.launchbar.core.descriptorType.default\:temp,org.eclipse.launchbar.core.descriptorType.default\:lazyboy
->>>>>>> a0b421694024b2ef4a276effd1b09e1a16a60408
+configDescList=org.eclipse.launchbar.core.descriptorType.default\:temp,org.eclipse.launchbar.core.descriptorType.default\:version0.2.1
 eclipse.preferences.version=1
 org.eclipse.launchbar.core.descriptorType.default\:lazyboy/activeLaunchMode=run
 org.eclipse.launchbar.core.descriptorType.default\:lazyboy/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
 org.eclipse.launchbar.core.descriptorType.default\:temp/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:temp/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local

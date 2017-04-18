@@ -133,8 +133,10 @@ void PositionStruct::Init ( const char *FenStr, const char *MoveStr, const int M
 	memset ( bitCol, 0, sizeof bitCol );
     p = STA_POS;
     while ( p != 0 ) {
-    	bitRow[ ROW(p) ] |= 1<<COL(p);
-    	bitCol[ COL(p) ] |= 1<<ROW(p);
+    	if ( square[p] != 0 ) {
+        	bitRow[ ROW(p) ] |= (1<<COL(p));
+        	bitCol[ COL(p) ] |= (1<<ROW(p));
+    	}
     	p = NEXTSQ (p);
     }
 
@@ -159,13 +161,13 @@ void PositionStruct::MakeMove ( const int mv ) {
 	const int sqDst = square[ dst ];
 
 	// 1. 记录于回滚着法表
-	int & nRollNum = Search.roll.nRollNum;
-	Search.roll.player[ nRollNum ] = player;
-	Search.roll.move[ nRollNum ] = mv;
-	Search.roll.dstPiece [ nRollNum ] = square[ DST(mv) ];
-	Search.roll.check[ nRollNum ] = check;
-	Search.roll.checked[ nRollNum ] = checked;
-	Search.roll.zobrist[ nRollNum ] = zobrist;
+	int & nRollNum = roll.nRollNum;
+	roll.player[ nRollNum ] = player;
+	roll.move[ nRollNum ] = mv;
+	roll.dstPiece [ nRollNum ] = square[ DST(mv) ];
+	roll.check[ nRollNum ] = check;
+	roll.checked[ nRollNum ] = checked;
+	roll.zobrist[ nRollNum ] = zobrist;
 	nRollNum ++;
 
 	// 2. 修改走子方
@@ -183,11 +185,11 @@ void PositionStruct::MakeMove ( const int mv ) {
 
 	// 5. 修改位行、位列
 	if ( sqDst == 0 ) {
-		bitRow[ ROW(dst) ] |= 1<<COL(dst);
-		bitCol[ COL(dst) ] |= 1<<ROW(dst);
+		bitRow[ ROW(dst) ] |= (1<<COL(dst));
+		bitCol[ COL(dst) ] |= (1<<ROW(dst));
 	}
-	bitRow[ ROW(src) ] -= 1<<COL(src);
-	bitCol[ COL(src) ] -= 1<<ROW(src);
+	bitRow[ ROW(src) ] -= (1<<COL(src));
+	bitCol[ COL(src) ] -= (1<<ROW(src));
 
 	// 6. 修改zobrist值
 	ModifyZobrist ( mv, sqSrc, sqDst );
@@ -202,46 +204,51 @@ void PositionStruct::MakeMove ( const int mv ) {
 
 // 撤回走法
 void PositionStruct::UndoMakeMove ( void ) {
-	const int src = SRC ( Search.roll.LastMove() );
-	const int dst = DST ( Search.roll.LastMove() );
+	const int src = SRC ( roll.LastMove() );
+	const int dst = DST ( roll.LastMove() );
 	const int sqDst = square[ dst ];
 
 	// 1. 修改走子方
-	player = Search.roll.LastPlayer ();
+	player = roll.LastPlayer ();
 
 	// 2. 修改square数组
 	square[ src ] = square[ dst ];
-	square[ dst ] = Search.roll.LastDstPiece ();
+	square[ dst ] = roll.LastDstPiece ();
 
 	// 3. 修改piece数组
 	piece[ sqDst ] = src;
-	if ( Search.roll.LastDstPiece() != 0 ) {
-		piece[ Search.roll.LastDstPiece() ] = dst;
+	if ( roll.LastDstPiece() != 0 ) {
+		piece[ roll.LastDstPiece() ] = dst;
 	}
 
 	// 4. 修改位行、位列
-	bitRow[ ROW(src) ] |= 1<<COL(src);
-	bitCol[ COL(src) ] |= 1<<ROW(src);
-	if ( Search.roll.LastDstPiece() == 0 ) {
-		bitRow[ ROW(dst) ] -= 1<<COL(dst);
-		bitCol[ COL(dst) ] -= 1<<ROW(dst);
+	bitRow[ ROW(src) ] |= (1<<COL(src));
+	bitCol[ COL(src) ] |= (1<<ROW(src));
+	if ( roll.LastDstPiece() == 0 ) {
+		bitRow[ ROW(dst) ] -= (1<<COL(dst));
+		bitCol[ COL(dst) ] -= (1<<ROW(dst));
 	}
 
 	// 5. 修改zobrist值
-	zobrist = Search.roll.LastZobrist ();
+	zobrist = roll.LastZobrist ();
 
 	// 6. 修改搜索深度
 	nDistance --;
 
 	// 7. 修改check与checked
-	check = Search.roll.LastCheck ();
-	checked = Search.roll.LastChecked ();
+	check = roll.LastCheck ();
+	checked = roll.LastChecked ();
 
 	// 8. 修改回滚着法表
-	Search.roll.nRollNum --;
+	roll.nRollNum --;
 }
 
 // 判断和局
 bool PositionStruct::IsDraw ( void ) const {
-	return false;
+	for ( int i = KNIGHT_FROM; i <= PAWN_TO; i ++ ) {
+		if ( piece[i+RED_TYPE] || piece[i+BLACK_TYPE] ) {
+			return false;
+		}
+	}
+	return true;
 }

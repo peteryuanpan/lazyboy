@@ -1,0 +1,25 @@
+#ifndef DEBUG_H_
+#define DEBUG_H_
+
+#include "base.h"
+#include "position.h"
+#include "search.h"
+
+inline void PrintChessBoard ( void ) {
+	printf ( "%s\n", Search.pos.player == 0 ? "Turn Red" : "Turn Black" );
+	printf ( "nDistance = %d\n", Search.pos.nDistance);
+	//printf ( "check = %d\n", Search.pos.check );
+	//printf ( "checked = %d\n", Search.pos.checked );
+	//printf ( "Zobrist = (%lld, %lld)\n", Search.pos.zobrist.first, Search.pos.zobrist.second );
+	printf ( "LastMove = %d\n", Search.roll.LastMove() );
+	for ( int i = 51; i < 204 ; i += 16 ) {
+		for ( int j = i; j < i + 9; j ++ ) {
+			printf ("%3d  ", Search.pos.square[j]);
+		}
+		printf("\n");
+	}
+}
+
+
+
+#endif /* DEBUG_H_ */

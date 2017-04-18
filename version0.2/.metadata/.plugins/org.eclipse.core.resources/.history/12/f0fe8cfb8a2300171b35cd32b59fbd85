@@ -1,0 +1,19 @@
+#include "evaluate.h"
+#include "search.h"
+
+int PositionStruct::MidGameValue ( void ) {
+
+}
+
+int PositionStruct::AttackValue ( void ) {
+
+}
+
+int PositionStruct::AttackedValue ( void ) {
+
+}
+
+// 给局面打分
+int Evaluate ( void ) {
+
+}

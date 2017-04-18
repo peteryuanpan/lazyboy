@@ -1,20 +1,25 @@
 #include "move.h"
 #include "position.h"
 #include "search.h"
+#include "debug.h"
 
-int KING_HIT [256][10];
+int KING_HIT [256][10];	// 将在每个位置的 可达位置，遇0终止
 int ADVISOR_HIT [256][10];
 int BISHOP_HIT [256][10];
-int BISHOP_PIN [256][10];
+int BISHOP_PIN [256][10]; // 马在每个位置的 马脚，遇0终止
 int KNIGHT_HIT [256][10];
 int KNIGHT_PIN [256][10];
 int PAWN_HIT [256][2][10];
+
+int LOWER_P [1<<16][16][2]; 	// 2进制数 第i个1 低位方向的 第j+1个1 所在的相对位置
+int HIGHER_P [1<<16][16][2]; 	// 2进制数 第i个1 高位方向的 第j+1个1 所在的相对位置
 
 void InitMove ( void ) {
 	int p = STA_POS;
 	int t;
 
-	// 1. 初始化
+	// 1. HIT & PIN
+	// 1.1 初始化
 	for ( int i = 0; i < 256; i ++ ) {
 		for ( int j = 0; j < 10; j ++ ) {
 			 KING_HIT [i][j] = 0;
@@ -27,66 +32,65 @@ void InitMove ( void ) {
 			 PAWN_HIT [i][1][j] = 0;
 		}
 	}
-
-	// 2. 求结果
+	// 1.2 求结果
 	while ( p != 0 ) {
-		// 1. 生成将的HIT
+		// 生成将的HIT
 		t = 0;
 		for ( int i = 0; i < 4 ; i ++ ) {
 			int x = p + KING_DIR[i];
-			if ( LegalPosition[x] & PositionMask[ KING_TYPE ] ) {
+			if ( LEGAL_POSITION[x] & POSITION_MASK[ KING_TYPE ] ) {
 				KING_HIT[p][t] = x;
 				t ++;
 			}
 		}
 
-		// 2. 生成士的HIT
+		// 生成士的HIT
 		t = 0;
 		for ( int i = 0; i < 4 ; i ++ ) {
 			int x = p + ADVISOR_DIR[i];
-			if ( LegalPosition[x] & PositionMask[ ADVISOR_TYPE ] ) {
+			if ( LEGAL_POSITION[x] & POSITION_MASK[ ADVISOR_TYPE ] ) {
 				ADVISOR_HIT[p][t] = x;
 				t ++;
 			}
 		}
 
-		// 3. 生成象的HIT及PIN
+		// 生成象的HIT及PIN
 		t = 0;
 		for ( int i = 0; i < 4 ; i ++ ) {
 			int x = p + BISHOP_DIR[i];
-			if ( LegalPosition[x] & PositionMask[ BISHOP_TYPE ] ) {
+			if ( LEGAL_POSITION[x] & POSITION_MASK[ BISHOP_TYPE ] ) {
 				BISHOP_HIT[p][t] = x;
 				BISHOP_PIN[p][t] = p + BISHOP_PIN_DIR[i];
 				t ++;
 			}
 		}
 
-		// 4. 生成马的HIT及PIN
+		// 生成马的HIT及PIN
 		t = 0;
 		for ( int i = 0; i < 8 ; i ++ ) {
 			int x = p + KNIGHT_DIR[i];
-			if ( LegalPosition[x] & PositionMask[ KNIGHT_TYPE ] ) {
+			if ( LEGAL_POSITION[x] & POSITION_MASK[ KNIGHT_TYPE ] ) {
 				KNIGHT_HIT[p][t] = x;
 				KNIGHT_PIN[p][t] = p + KNIGHT_PIN_DIR[i];
 				t ++;
 			}
 		}
 
-		// 5. 生成红兵的HIT
+		// 生成红兵的HIT
 		t = 0;
 		for ( int i = 0; i < 3; i ++ ) {
 			int x = p + RED_PAWN_DIR[i];
-			if ( LegalPosition[x] & PositionMask[ RED_PAWN_TYPE ] ) {
+			if ( LEGAL_POSITION[x] & POSITION_MASK[ RED_PAWN_TYPE ] ) {
 				PAWN_HIT[p][0][t] = x;
 				t ++;
 			}
 		}
 
-		// 6. 生成黑兵的HIT
+		// 生成黑兵的HIT
 		t = 0;
 		for ( int i = 0; i < 3; i ++ ) {
 			int x = p + BLACK_PAWN_DIR[i];
-			if ( LegalPosition[x] & PositionMask[ BLACK_PAWN_TYPE ] ) {
+			if ( LEGAL_POSITION[x] & POSITION_MASK[ BLACK_PAWN_TYPE ] ) {
 				PAWN_HIT[p][1][t] = x;
 				t ++;
 			}
@@ -94,13 +98,53 @@ void InitMove ( void ) {
 
 		p = NEXTSQ (p);
 	}
+
+	// 2. LOWER_P & HIGHER_P
+	// 2.1 初始化
+	for ( int i = 0; i < (1<<16); i ++ ) {
+		for ( int j = 0; j < 16; j ++ ) {
+			for ( int k = 0; k < 2; k ++ ) {
+				LOWER_P [i][j][k] = 0;
+				HIGHER_P [i][j][k] = 0;
+			}
+		}
+	}
+	// 2.2 求结果
+	for ( int i = 0; i < (1<<16); i ++ ) {
+		for ( int j = 0; j < 16; j ++ ) {
+			if ( i & (1<<j) ) {
+				int t = 0;
+				for ( int k = j - 1; k >= 0; k -- ) {
+					if ( i & (1<<k) ) {
+						LOWER_P [i][j][t] = j - k;
+						t ++;
+					}
+					if ( t > 1 ) {
+						break;
+					}
+				}
+
+				t = 0;
+				for ( int k = j + 1; k < 16; k ++ ) {
+					if ( i & (1<<k) ) {
+						HIGHER_P [i][j][t] = k - j;
+						t ++;
+					}
+					if ( t > 1 ) {
+						break;
+					}
+				}
+			}
+		}
+	}
+
 }
 
 // 执棋方将军
-bool PositionStruct::Check ( void ) const { // 可用行列位压数组优化
-	int ST = SIDE_TYPE (player);
-	int OppSideKingPos = piece [ KING_FROM + OPP_SIDE_TYPE(player) ];
-	int k;
+bool PositionStruct::Check ( void ) const {
+	const int ST = SIDE_TYPE (player);
+	const int OppSideKingPos = piece [ KING_FROM + OPP_SIDE_TYPE(player) ];
+	int k, r, c, p;
 
 	// 1. 判断马将军
 	for ( int i = KNIGHT_FROM; i <= KNIGHT_TO; i ++ ) {
@@ -121,24 +165,31 @@ bool PositionStruct::Check ( void ) const { // 可用行列位压数组优化
 	// 2. 判断车将军
 	for ( int i = ROOK_FROM; i <= ROOK_TO; i ++ ) {
 		if ( piece[i+ST] ) {
-			for ( int j = 0; j < 4; j ++ ) {
-				int p = piece[i+ST];
-				int meetTime = 0;
-				while ( true ) {
-					p = p + DIR[j];
-					if ( ! IN_BOARD(p) ) {
-						break;
-					}
-					if ( square[p] != 0 ) {
-						meetTime ++;
-					}
-					if ( meetTime == 1 ) {
-						if ( p == OppSideKingPos ) {
-							return true;
-						}
-						break;
-					}
-				}
+			r = ROW ( piece[i+ST] );
+			c = COL ( piece[i+ST] );
+
+			p = LOWER_P[ bitCol[c] ][r][0];
+			p = piece[i+ST] - ( p << 4 );
+			if ( p == OppSideKingPos ) {
+				return true;
+			}
+
+			p = HIGHER_P[ bitCol[c] ][r][0];
+			p = piece[i+ST] + ( p << 4 );
+			if ( p == OppSideKingPos ) {
+				return true;
+			}
+
+			p = LOWER_P [ bitRow[r] ][c][0];
+			p = piece[i+ST] - p;
+			if ( p == OppSideKingPos ) {
+				return true;
+			}
+
+			p = HIGHER_P [ bitRow[r] ][c][0];
+			p = piece[i+ST] + p;
+			if ( p == OppSideKingPos ) {
+				return true;
 			}
 		}
 	}
@@ -146,24 +197,31 @@ bool PositionStruct::Check ( void ) const { // 可用行列位压数组优化
 	// 3. 判断炮将军
 	for ( int i = CANNON_FROM; i <= CANNON_TO; i ++ ) {
 		if ( piece[i+ST] ) {
-			for ( int j = 0; j < 4; j ++ ) {
-				int p = piece[i+ST];
-				int meetTime = 0;
-				while ( true ) {
-					p = p + DIR[j];
-					if ( ! IN_BOARD(p) ) {
-						break;
-					}
-					if ( square[p] != 0 ) {
-						meetTime ++;
-					}
-					if ( meetTime == 2 ) {
-						if ( p == OppSideKingPos ) {
-							return true;
-						}
-						break;
-					}
-				}
+			r = ROW ( piece[i+ST] );
+			c = COL ( piece[i+ST] );
+
+			p = LOWER_P[ bitCol[c] ][r][1];
+			p = piece[i+ST] - ( p << 4 );
+			if ( p == OppSideKingPos ) {
+				return true;
+			}
+
+			p = HIGHER_P[ bitCol[c] ][r][1];
+			p = piece[i+ST] + ( p << 4 );
+			if ( p == OppSideKingPos ) {
+				return true;
+			}
+
+			p = LOWER_P [ bitRow[r] ][c][1];
+			p = piece[i+ST] - p;
+			if ( p == OppSideKingPos ) {
+				return true;
+			}
+
+			p = HIGHER_P [ bitRow[r] ][c][1];
+			p = piece[i+ST] + p;
+			if ( p == OppSideKingPos ) {
+				return true;
 			}
 		}
 	}
@@ -185,10 +243,10 @@ bool PositionStruct::Check ( void ) const { // 可用行列位压数组优化
 }
 
 // 执棋方被将军
-bool PositionStruct::Checked ( void ) const { // 可用行列位压数组优化
-	int ST = OPP_SIDE_TYPE ( player );
-	int ThisSideKingPos = piece [ KING_FROM + SIDE_TYPE(player) ];
-	int k;
+bool PositionStruct::Checked ( void ) const {
+	const int ST = OPP_SIDE_TYPE ( player );
+	const int ThisSideKingPos = piece [ KING_FROM + SIDE_TYPE(player) ];
+	int k, r, c, p;
 
 	// 1. 判断被马将军
 	for ( int i = KNIGHT_FROM; i <= KNIGHT_TO; i ++ ) {
@@ -209,24 +267,31 @@ bool PositionStruct::Checked ( void ) const { // 可用行列位压数组优化
 	// 2. 判断被车将军
 	for ( int i = ROOK_FROM; i <= ROOK_TO; i ++ ) {
 		if ( piece[i+ST] ) {
-			for ( int j = 0; j < 4; j ++ ) {
-				int p = piece[i+ST];
-				int meetTime = 0;
-				while ( true ) {
-					p = p + DIR[j];
-					if ( ! IN_BOARD(p) ) {
-						break;
-					}
-					if ( square[p] != 0 ) {
-						meetTime ++;
-					}
-					if ( meetTime == 1 ) {
-						if ( p == ThisSideKingPos ) {
-							return true;
-						}
-						break;
-					}
-				}
+			r = ROW ( piece[i+ST] );
+			c = COL ( piece[i+ST] );
+
+			p = LOWER_P[ bitCol[c] ][r][0];
+			p = piece[i+ST] - ( p << 4 );
+			if ( p == ThisSideKingPos ) {
+				return true;
+			}
+
+			p = HIGHER_P[ bitCol[c] ][r][0];
+			p = piece[i+ST] + ( p << 4 );
+			if ( p == ThisSideKingPos ) {
+				return true;
+			}
+
+			p = LOWER_P [ bitRow[r] ][c][0];
+			p = piece[i+ST] - p;
+			if ( p == ThisSideKingPos ) {
+				return true;
+			}
+
+			p = HIGHER_P [ bitRow[r] ][c][0];
+			p = piece[i+ST] + p;
+			if ( p == ThisSideKingPos ) {
+				return true;
 			}
 		}
 	}
@@ -234,24 +299,31 @@ bool PositionStruct::Checked ( void ) const { // 可用行列位压数组优化
 	// 3. 判断被炮将军
 	for ( int i = CANNON_FROM; i <= CANNON_TO; i ++ ) {
 		if ( piece[i+ST] ) {
-			for ( int j = 0; j < 4; j ++ ) {
-				int p = piece[i+ST];
-				int meetTime = 0;
-				while ( true ) {
-					p = p + DIR[j];
-					if ( ! IN_BOARD(p) ) {
-						break;
-					}
-					if ( square[p] != 0 ) {
-						meetTime ++;
-					}
-					if ( meetTime == 2 ) {
-						if ( p == ThisSideKingPos ) {
-							return true;
-						}
-						break;
-					}
-				}
+			r = ROW ( piece[i+ST] );
+			c = COL ( piece[i+ST] );
+
+			p = LOWER_P[ bitCol[c] ][r][1];
+			p = piece[i+ST] - ( p << 4 );
+			if ( p == ThisSideKingPos ) {
+				return true;
+			}
+
+			p = HIGHER_P[ bitCol[c] ][r][1];
+			p = piece[i+ST] + ( p << 4 );
+			if ( p == ThisSideKingPos ) {
+				return true;
+			}
+
+			p = LOWER_P [ bitRow[r] ][c][1];
+			p = piece[i+ST] - p;
+			if ( p == ThisSideKingPos ) {
+				return true;
+			}
+
+			p = HIGHER_P [ bitRow[r] ][c][1];
+			p = piece[i+ST] + p;
+			if ( p == ThisSideKingPos ) {
+				return true;
 			}
 		}
 	}
@@ -273,7 +345,7 @@ bool PositionStruct::Checked ( void ) const { // 可用行列位压数组优化
 }
 
 // 将对将局面
-bool PositionStruct::KingFaceKing ( void ) const { // 可用行列位压数组优化
+bool PositionStruct::KingFaceKing ( void ) const {
 	int RED_KING_POS = piece [ RED_TYPE + KING_FROM ];
 	int BLACK_KING_POS = piece [ BLACK_TYPE + KING_FROM ];
 
@@ -285,26 +357,20 @@ bool PositionStruct::KingFaceKing ( void ) const { // 可用行列位压数组�
 	}
 
 	// 判断两将之间是否有棋子挡住
-	const int dir[] = {+16, -16};
+	int c = COL ( RED_KING_POS );
+	int r = ROW ( RED_KING_POS );
 	int p;
-	for ( int i = 0; i < 2 ; i ++ ) {
-		p = RED_KING_POS;
-		int meetTime = 0;
-		while ( true ) {
-			p = p + dir[i];
-			if ( ! IN_BOARD(p) ) {
-				break;
-			}
-			if ( square[p] != 0 ) {
-				meetTime ++;
-			}
-			if ( meetTime == 1 ) {
-				if ( p == BLACK_KING_POS ) {
-					return true;
-				}
-				break;
-			}
-		}
+
+	p = LOWER_P[ bitCol[c] ][r][0];
+	p = RED_KING_POS - ( p << 4 );
+	if ( p == BLACK_KING_POS ) {
+		return true;
+	}
+
+	p = HIGHER_P[ bitCol[c] ][r][0];
+	p = RED_KING_POS + ( p << 4 );
+	if ( p == BLACK_KING_POS ) {
+		return true;
 	}
 
 	return false;
@@ -313,7 +379,7 @@ bool PositionStruct::KingFaceKing ( void ) const { // 可用行列位压数组�
 // 生成吃子着法
 void PositionStruct::GenCapMove ( int *move, int &nMoveNum ) const {
 	int ST = SIDE_TYPE ( player );
-	int k;
+	int k, r, c, p;
 
 	// 1. 生成将的吃子着法
 	for ( int i = KING_FROM; i <= KING_TO; i ++ ) {
@@ -378,51 +444,65 @@ void PositionStruct::GenCapMove ( int *move, int &nMoveNum ) const {
 	}
 
 	// 5. 生成车的吃子着法
-	for ( int i = ROOK_FROM; i <= ROOK_TO; i ++ ) { // 可用行列位压数组优化
+	for ( int i = ROOK_FROM; i <= ROOK_TO; i ++ ) {
 		if ( piece[i+ST] ) {
-			for ( int j = 0; j < 4; j ++ ) {
-				int hit = piece[i+ST];
-				int meetTime = 0;
-				while ( true ) {
-					hit = hit + DIR[j];
-					if ( ! IN_BOARD(hit) ) {
-						break;
-					}
-					if ( square[hit] != 0 ) {
-						meetTime ++;
-					}
-					if ( meetTime == 1 ) {
-						if ( COLOR_TYPE(i+ST) != COLOR_TYPE(square[hit]) ) {
-							move[nMoveNum++] = MOVE ( piece[i+ST], hit );
-						}
-						break;
-					}
-				}
+			r = ROW ( piece[i+ST] );
+			c = COL ( piece[i+ST] );
+
+			p = LOWER_P[ bitCol[c] ][r][0];
+			p = piece[i+ST] - ( p << 4 );
+			if ( COLOR_TYPE(i+ST) != COLOR_TYPE(square[p]) ) {
+				move[nMoveNum++] = MOVE ( piece[i+ST], p );
+			}
+
+			p = HIGHER_P[ bitCol[c] ][r][0];
+			p = piece[i+ST] + ( p << 4 );
+			if ( COLOR_TYPE(i+ST) != COLOR_TYPE(square[p]) ) {
+				move[nMoveNum++] = MOVE ( piece[i+ST], p );
+			}
+
+			p = LOWER_P [ bitRow[r] ][c][0];
+			p = piece[i+ST] - p;
+			if ( COLOR_TYPE(i+ST) != COLOR_TYPE(square[p]) ) {
+				move[nMoveNum++] = MOVE ( piece[i+ST], p );
+			}
+
+			p = HIGHER_P [ bitRow[r] ][c][0];
+			p = piece[i+ST] + p;
+			if ( COLOR_TYPE(i+ST) != COLOR_TYPE(square[p]) ) {
+				move[nMoveNum++] = MOVE ( piece[i+ST], p );
 			}
 		}
 	}
 
 	// 6. 生成炮的吃子着法
-	for ( int i = CANNON_FROM; i <= CANNON_TO; i ++ ) { // 可用行列位压数组优化
+	for ( int i = CANNON_FROM; i <= CANNON_TO; i ++ ) {
 		if ( piece[i+ST] ) {
-			for ( int j = 0; j < 4; j ++ ) {
-				int hit = piece[i+ST];
-				int meetTime = 0;
-				while ( true ) {
-					hit = hit + DIR[j];
-					if ( ! IN_BOARD(hit) ) {
-						break;
-					}
-					if ( square[hit] != 0 ) {
-						meetTime ++;
-					}
-					if ( meetTime == 2 ) {
-						if ( COLOR_TYPE(i+ST) != COLOR_TYPE(square[hit]) ) {
-							move[nMoveNum++] = MOVE ( piece[i+ST], hit );
-						}
-						break;
-					}
-				}
+			r = ROW ( piece[i+ST] );
+			c = COL ( piece[i+ST] );
+
+			p = LOWER_P[ bitCol[c] ][r][1];
+			p = piece[i+ST] - ( p << 4 );
+			if ( COLOR_TYPE(i+ST) != COLOR_TYPE(square[p]) ) {
+				move[nMoveNum++] = MOVE ( piece[i+ST], p );
+			}
+
+			p = HIGHER_P[ bitCol[c] ][r][1];
+			p = piece[i+ST] + ( p << 4 );
+			if ( COLOR_TYPE(i+ST) != COLOR_TYPE(square[p]) ) {
+				move[nMoveNum++] = MOVE ( piece[i+ST], p );
+			}
+
+			p = LOWER_P [ bitRow[r] ][c][1];
+			p = piece[i+ST] - p;
+			if ( COLOR_TYPE(i+ST) != COLOR_TYPE(square[p]) ) {
+				move[nMoveNum++] = MOVE ( piece[i+ST], p );
+			}
+
+			p = HIGHER_P [ bitRow[r] ][c][1];
+			p = piece[i+ST] + p;
+			if ( COLOR_TYPE(i+ST) != COLOR_TYPE(square[p]) ) {
+				move[nMoveNum++] = MOVE ( piece[i+ST], p );
 			}
 		}
 	}

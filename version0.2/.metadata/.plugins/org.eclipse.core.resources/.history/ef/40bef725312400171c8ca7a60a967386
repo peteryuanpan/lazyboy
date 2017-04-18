@@ -1,0 +1,114 @@
+#include "search.h"
+#include "base.h"
+#include "hash.h"
+#include "position.h"
+#include "rollback.h"
+#include "movesort.h"
+#include "evaluate.h"
+#include "hashtable.h"
+#include "debug.h"
+
+PositionStruct pos; // 当前搜索局面
+RollBackListStruct roll; // 回滚着法表
+int bestmv; // 最佳着法
+
+// 无害裁剪
+int HarmlessPruning ( void ) {
+	// 1. 和局局面
+	if ( pos.IsDraw() ) {
+		return 0; // eleeye上表示，为了安全起见，不用pos.DrawValue()
+	}
+
+	// 2. 路径重复
+	int vRep = roll.RepStatus ();
+	if ( vRep != REP_NONE ) {
+		return roll.RepValue ( vRep );
+	}
+
+	return -MATE_VALUE;
+}
+
+// 主要遍历搜索
+int SearchPV ( int depth, int alpha, int beta ) {
+	int v;
+	int bestv = -MATE_VALUE;
+	MoveSortStruct mvsort;
+
+	// 1. 打分
+	if ( depth <= 0 ) {
+		return pos.Evaluate ();
+	}
+
+	// 2. 无害裁剪
+	v = HarmlessPruning ();
+	if ( v > -MATE_VALUE ) {
+		return v;
+	}
+
+	// 3. 置换裁剪
+	v = QueryValueInHashTable ( depth );
+	if ( v > bestv ) {
+		bestv = v;
+		if ( v >= beta ) {
+			return bestv;
+		}
+		if ( bestv > alpha ) {
+			alpha = bestv;
+		}
+	}
+
+	// 4. 生成着法
+	mvsort.InitPV ();
+
+	// 5. 递归搜索
+	int mv;
+	while ( (mv = mvsort.NextPV()) != 0 ) {
+		pos.MakeMove ( mv ); // 走一步
+		int v = -SearchPV ( depth - 1, -beta, -alpha ); // 搜下一层
+		pos.UndoMakeMove (); // 回一步
+		if ( v > bestv ) {
+			bestv = v;
+			if ( pos.nDistance == 0 ) {
+				bestmv = mv;
+			}
+			if ( bestv >= beta ) {
+				InsertHashTable ( depth, bestv, bestmv );
+				return v;
+			}
+			if ( bestv > alpha ) {
+				alpha = bestv;
+			}
+		}
+	}
+	InsertHashTable ( depth, bestv, bestmv );
+	return bestv;
+}
+
+// 主搜索函数
+void MainSearch ( void ) {
+	// 1. 迭代加深搜索
+	ClearHashTable ();
+
+	clock_t startT = clock();
+	for ( int depth = 0; depth <= 0; depth ++ ) {
+		bestmv = 0;
+		int val = SearchPV ( depth, -MATE_VALUE, MATE_VALUE );
+		printf("Search done, depth: %2d, value: %5d, bestmove = %s\n", depth, val, MoveIntToStr(bestmv).c_str());
+
+		// 找到解
+		if ( val == MATE_VALUE ) {
+			break;
+		}
+	}
+	printf("TotalTime = %.2fs\n", (double) ( clock() - startT ) / CLOCKS_PER_SEC);
+
+	// 2. 输出结果
+	if ( bestmv == 0 ) {
+		printf("nobestmv\n");
+		fflush(stdout);
+	}
+	else {
+		printf("bestmove %s\n", MoveIntToStr(bestmv).c_str());
+		fflush(stdout);
+	}
+}

@@ -1,0 +1,15 @@
+#ifndef SEARCH_H_
+#define SEARCH_H_
+
+#include "base.h"
+#include "position.h"
+#include "rollback.h"
+
+const int MAX_DEPTH = 60;
+
+extern PositionStruct pos; // 当前搜索局面
+extern RollBackListStruct roll; // 回滚着法表
+
+void MainSearch ( void );
+
+#endif /* SEARCH_H_ */

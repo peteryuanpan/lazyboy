@@ -1,0 +1,15 @@
+#ifndef HASHTABLE_H_
+#define HASHTABLE_H_
+
+struct HashTableStruct {
+
+};
+
+extern HashTableStruct *HashTable;
+
+void InitHashTable ( void );
+void DelHashTable ( void );
+void InsertHashTable ( void );
+int QueryHashTable ( void );
+
+#endif /* HASHTABLE_H_ */

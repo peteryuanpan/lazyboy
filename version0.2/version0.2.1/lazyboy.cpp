@@ -13,10 +13,9 @@ inline void print( const std::string s ) {
 }
 
 int main() {
-	//freopen ("/Users/peteryuanpan/Desktop/data.txt", "r", stdin);
+	//freopen ("/Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/Test/long_data.txt", "r", stdin);
 
 	CommEnum Order;
-	bool First = true;
 
 	printf("Type 'ucci' to begin.\n");
 
@@ -28,26 +27,22 @@ int main() {
 			if ( Order == e_CommQuit ) { // quit
 				break;
 			}
-			if( Order == e_CommIsReady ) { // 
+			if( Order == e_CommIsReady ) { // isready
 				print("readyok");
 			}
 			else if ( Order == e_CommSetOption ) {
 				if( Command.Option.Type == e_NewGame ) { // setoption newgame
-					First = true;
-					Search.roll.Init ();
+					roll.Init ();
 					InitZobrist ();
 					InitMove ();
 				}
 			}
 			else if ( Order == e_CommPosition ) { // position [ startpos | fen ] moves ...
-				Search.pos.Init ( Command.Position.FenStr, Command.Position.MoveStr, Command.Position.MoveNum );
+				pos.Init ( Command.Position.FenStr, Command.Position.MoveStr, Command.Position.MoveNum );
+				printf("position fen %s\n", Command.Position.FenStr);
 			}
 			else if( Order == e_CommGo || Order == e_CommGoPonder ) { // go nodes 10077696
-				if ( First ) { // 若是第一次，则进行一次完全搜索，将结果存入结果表中
-					First = false;
-					MainSearch ();
-				}
-				print( BestMove() );
+				MainSearch ();
 			}
 		}
 
@@ -59,7 +54,7 @@ int main() {
 void PreparePrint () {
 	// 显示引擎的名称、版本、作者和使用者
 	print("id name lazyboy");
-    print("id version 0.2");
+    print("id version 0.2.1");
 	print("id author peterpan");
     
 	//设置参数

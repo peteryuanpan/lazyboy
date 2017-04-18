@@ -1,5 +1,6 @@
 #include "movesort.h"
 #include "debug.h"
+#include "search.h"
 
 void MoveSortStruct::InitPV ( void ) { // 为SearchPV生成着法
 	// 1. 初始化
@@ -8,61 +9,35 @@ void MoveSortStruct::InitPV ( void ) { // 为SearchPV生成着法
 	nMoveNum = 0;
 
 	// 2.生成所有着法
-	Search.pos.GenAllMove ( move, nMoveNum );
-	Search.pos.DelMeaningLessMove ( move, nMoveNum );
+	pos.GenAllMove ( move, nMoveNum );
+	pos.DelMeaningLessMove ( move, nMoveNum );
 
-	// 3.给每个局面赋值上排序关键字
-	int sortKey[128];
-	for ( int i = 0; i < nMoveNum; i ++ ) {
-		sortKey[i] = 0;
-	}
-	for ( int i = 0; i < nMoveNum; i ++ ) {
-		Search.pos.MakeMove ( move[i] );
-		if ( Search.pos.checked ) { // 将军着法
-			sortKey[i] = 3;
-		}
-		Search.pos.UndoMakeMove ();
-		if ( sortKey[i] != 3 ) {
-			if ( Search.pos.square[DST(move[i])] != 0 ) { // 吃子着法
-				sortKey[i] = 2;
-			}
-			else { // 非吃子着法
-				sortKey[i] = 1;
-			}
-		}
-	}
-
-	// 4.按 将军着法、吃子着法、非吃子着法 这样的排序关键字排序
-	int t = 0;
-	for ( int sortkey = 3; sortkey >= 1; sortkey -- ) {
-		for ( int i = t; i < nMoveNum; i ++ ) {
-			if ( sortKey[i] == sortkey ) {
-				SWAP ( move[i], move[t] );
-				SWAP ( sortKey[i], sortKey[t] );
-				t ++;
-			}
-		}
-	}
-
-	// 5. 如果是红色，只生成将军着法
-	if ( Search.pos.player == 0 ) {
-		int n = 0;
+	// 3. 如果是红色，将军着法放最前
+	if ( pos.player == 0 ) {
+		int nCheck = 0;
 		for ( int i = 0; i < nMoveNum; i ++ ) {
-			if ( sortKey[i] == 3 ) {
-				n ++;
+			pos.MakeMove ( move[i] );
+			if ( pos.checked ) {
+				SWAP (move[i], move[nCheck]);
+				nCheck ++;
 			}
+			pos.UndoMakeMove ();
 		}
-		nMoveNum = n;
+
+		// 3.1 有待改进：在深度大于d下只生成将军着法，d有待研究
+		if ( pos.nDistance > -1 ) {
+			nMoveNum = nCheck;
+		}
 	}
 
-	// 6. Debug
+	// 4. Debug
 	if ( false ) {
 		PrintChessBoard ();
 		printf("nMoveNum = %d\n", nMoveNum);
 		for ( int i = 0; i < nMoveNum; i ++ ) {
-			Search.pos.MakeMove ( move[i] );
+			pos.MakeMove ( move[i] );
 			PrintChessBoard ();
-			Search.pos.UndoMakeMove ();
+			pos.UndoMakeMove ();
 		}
 		printf("\n");
 	}

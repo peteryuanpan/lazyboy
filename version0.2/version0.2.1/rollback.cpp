@@ -18,7 +18,7 @@ void RollBackListStruct::Init ( void ) {
 // 判断重复类型
 int RollBackListStruct::RepStatus ( void ) const {
 	int ThisSideConCheck = ( nRollNum == 0 ) ? 0 : checked[ nRollNum - 1 ];
-	int OppSideConCheck = Search.pos.checked;
+	int OppSideConCheck = pos.checked;
 	int TurnThisSide = 1;
 
 	for ( int i = nRollNum - 1; i >= 0; i -- ) {
@@ -30,7 +30,7 @@ int RollBackListStruct::RepStatus ( void ) const {
 			TurnThisSide = 1;
 			OppSideConCheck &= checked[i];
 		}
-		if ( zobrist[i] == Search.pos.zobrist ) {
+		if ( zobrist[i] == pos.zobrist ) {
 			return ThisSideConCheck == OppSideConCheck ? REP_DRAW :
 					( ThisSideConCheck > OppSideConCheck ? REP_LOSE : REP_WIN );
 		}

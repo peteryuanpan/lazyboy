@@ -1,0 +1,41 @@
+#include "hashtable.h"
+#include "base.h"
+#include "search.h"
+#include "evaluate.h"
+
+HashTableStruct *HashTable;
+int HashTableNum;
+
+void InitHashTable ( const int num ) {
+	HashTableNum = num;
+	HashTable = ( HashTableStruct * ) malloc ( HashTableNum * sizeof(HashTable) );
+}
+
+void ClearHashTable ( void ) {
+	memset ( HashTable, 0, sizeof HashTable );
+}
+
+void DelHashTable ( void ) {
+	if ( HashTable ) {
+		delete [] HashTable;
+	}
+}
+
+void InsertHashTable ( const int depth, const int val ) {
+	const int t = Search.pos.zobrist.first & (HashTableNum - 1);
+	HashTable[t].depth = depth;
+	HashTable[t].zorb1 = Search.pos.zobrist.first;
+	HashTable[t].zorb2 = Search.pos.zobrist.second;
+	HashTable[t].val = val;
+}
+
+int QueryHashTable ( const int depth ) {
+	const int t = Search.pos.zobrist.first & (HashTableNum - 1);
+	if ( HashTable[t].zorb1 == Search.pos.zobrist.first && HashTable[t].zorb2 == Search.pos.zobrist.second ) {
+		if ( depth >= HashTable[t].depth ) {
+			return HashTable[t].val;
+		}
+	}
+	return - MATE_VALUE;
+}
+

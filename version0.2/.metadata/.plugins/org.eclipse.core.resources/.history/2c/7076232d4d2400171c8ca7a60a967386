@@ -1,0 +1,55 @@
+#include "hashtable.h"
+#include "base.h"
+#include "search.h"
+#include "evaluate.h"
+
+struct HashTableStruct {
+	int depth; // 深度
+	ULL zorb1; // zobrist值1
+	ULL zorb2; // zobrist值2
+	int value;   // 分值
+	int move; // 着法
+};
+
+const int HashTableNum = 1 << 20;
+HashTableStruct HashTable[ HashTableNum + 100 ];
+
+void ClearHashTable ( void ) {
+	for ( int i = 0; i < HashTableNum; i ++ ) {
+		HashTable[i].depth = 0;
+		HashTable[i].zorb1 = 0;
+		HashTable[i].zorb2 = 0;
+		HashTable[i].value = 0;
+	}
+}
+
+void InsertHashTable ( const int depth, const int val, const int mv ) {
+	if ( val > - BAN_VALUE && mv != 0 ) { // !!
+		const int t = pos.zobrist.first & ( HashTableNum - 1 );
+		HashTable[t].depth = depth;
+		HashTable[t].zorb1 = pos.zobrist.first;
+		HashTable[t].zorb2 = pos.zobrist.second;
+		HashTable[t].value = val;
+		HashTable[t].move = mv;
+	}
+}
+
+int QueryValueInHashTable ( const int depth ) {
+	const int t = pos.zobrist.first & ( HashTableNum - 1 );
+	if ( HashTable[t].zorb1 == pos.zobrist.first && HashTable[t].zorb2 == pos.zobrist.second ) {
+		if ( HashTable[t].depth >= depth ) {
+			return HashTable[t].value;
+		}
+	}
+	return - MATE_VALUE;
+}
+
+int QueryMoveInHashTable ( const int depth ) {
+	const int t = pos.zobrist.first & ( HashTableNum - 1 );
+	if ( HashTable[t].zorb1 == pos.zobrist.first && HashTable[t].zorb2 == pos.zobrist.second ) {
+		if ( HashTable[t].depth >= depth ) {
+			return HashTable[t].move;
+		}
+	}
+	return 0;
+}

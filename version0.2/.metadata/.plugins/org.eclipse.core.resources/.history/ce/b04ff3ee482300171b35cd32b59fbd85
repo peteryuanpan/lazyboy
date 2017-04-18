@@ -1,0 +1,6 @@
+#include "evaluate.h"
+
+// 打分
+int Evaluate ( void ) {
+	return Search.pos.player == 0 ? -MATE_VALUE : MATE_VALUE;
+}

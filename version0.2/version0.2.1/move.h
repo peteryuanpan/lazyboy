@@ -20,24 +20,6 @@
  							// C3  C4  C5  C6  C7  C8  C9  C10 C11
  */
 
-inline int SIDE_TYPE ( const int player ) {
-	return 16 + ( player << 4 );
-}
-
-inline int OPP_SIDE_TYPE ( const int player ) {
-	return 32 - ( player << 4 );
-}
-
-inline int COLOR_TYPE ( const int piece ) {
-	return piece == 0 ? 0 : ( (piece&RED_TYPE) ? RED_TYPE : BLACK_TYPE ) ;
-}
-
-inline bool IN_BOARD ( const int pos ) {
-	int r = ROW ( pos );
-	int c = COL ( pos );
-	return r >= 3 && r <= 12 && c >= 3 && c <= 11;
-}
-
 // 合法数组数据结构的原理
 /*
  先用二进制数字表示不同棋子
@@ -63,7 +45,7 @@ inline bool IN_BOARD ( const int pos ) {
  车马炮红兵黑兵	00110001 49
  */
 
-const int LegalPosition[256] = {
+const int LEGAL_POSITION[256] = {
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -83,7 +65,7 @@ const int LegalPosition[256] = {
 };
 const int RED_PAWN_TYPE = 7;
 const int BLACK_PAWN_TYPE = 8;
-const int PositionMask[] = {2, 4, 8, 1, 1, 1, 0, 16, 32};
+const int POSITION_MASK[] = {2, 4, 8, 1, 1, 1, 0, 16, 32};
 
 const int DIR[] = {-16, +1, +16, -1};
 const int KING_DIR[] = {-16, +1, +16, -1};
@@ -94,6 +76,37 @@ const int KNIGHT_DIR[] = {-33, -31, -14, +18, +33, +31, +14, -18};
 const int KNIGHT_PIN_DIR[] = {-16, -16, +1, +1, +16, +16, -1, -1};
 const int RED_PAWN_DIR[] = {-16, +1, -1};
 const int BLACK_PAWN_DIR[] = {+16, +1, -1};
+
+
+extern int KING_HIT [256][10];
+extern int ADVISOR_HIT [256][10];
+extern int BISHOP_HIT [256][10];
+extern int BISHOP_PIN [256][10];
+extern int KNIGHT_HIT [256][10];
+extern int KNIGHT_PIN [256][10];
+extern int PAWN_HIT [256][2][10];
+
+extern int LOWER_P [1<<16][16][2];
+extern int HIGHER_P [1<<16][16][2];
+
+
+inline int SIDE_TYPE ( const int player ) {
+	return 16 + ( player << 4 );
+}
+
+inline int OPP_SIDE_TYPE ( const int player ) {
+	return 32 - ( player << 4 );
+}
+
+inline int COLOR_TYPE ( const int piece ) {
+	return piece == 0 ? 0 : ( (piece&RED_TYPE) ? RED_TYPE : BLACK_TYPE ) ;
+}
+
+inline bool IN_BOARD ( const int pos ) {
+	int r = ROW ( pos );
+	int c = COL ( pos );
+	return r >= 3 && r <= 12 && c >= 3 && c <= 11;
+}
 
 void InitMove ( void );
 

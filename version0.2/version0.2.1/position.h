@@ -19,6 +19,32 @@
  							// C3  C4  C5  C6  C7  C8  C9  C10 C11
  */
 
+const int RED_TYPE = 16;
+const int BLACK_TYPE = 32;
+
+const int KING_TYPE = 0;
+const int ADVISOR_TYPE = 1;
+const int BISHOP_TYPE = 2;
+const int KNIGHT_TYPE = 3;
+const int ROOK_TYPE = 4;
+const int CANNON_TYPE = 5;
+const int PAWN_TYPE = 6;
+
+const int KING_FROM = 0;
+const int KING_TO = 0;
+const int ADVISOR_FROM = 1;
+const int ADVISOR_TO = 2;
+const int BISHOP_FROM = 3;
+const int BISHOP_TO = 4;
+const int KNIGHT_FROM = 5;
+const int KNIGHT_TO = 6;
+const int ROOK_FROM = 7;
+const int ROOK_TO = 8;
+const int CANNON_FROM = 9;
+const int CANNON_TO = 10;
+const int PAWN_FROM = 11;
+const int PAWN_TO = 15;
+
 const int STA_POS = 51;
 
 inline int ROW ( const int sq ) {
@@ -51,38 +77,13 @@ inline int MOVE ( const int src, const int dst ) {
 
 std::string MoveIntToStr ( const int mv );
 
-// position fen rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1 moves b2e2 h9g7
+inline bool IN_OPP_SIDE_BOARD ( const int x, const int p ) {
+	return ((x&RED_TYPE) && ROW(p) <= 7) || ((x&BLACK_TYPE) && ROW(p) > 7);
+}
 
-// 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
-//                                                  K  A  A  B  B  N  N  R  R  C  C  P  P  P  P  P  
-//                                                 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
-//                                                  K  A  A  B  B  N  N  R  R  C  C  P  P  P  P  P
-
-const int RED_TYPE = 16;
-const int BLACK_TYPE = 32;
-
-const int KING_TYPE = 0;
-const int ADVISOR_TYPE = 1;
-const int BISHOP_TYPE = 2;
-const int KNIGHT_TYPE = 3;
-const int ROOK_TYPE = 4;
-const int CANNON_TYPE = 5;
-const int PAWN_TYPE = 6;
-
-const int KING_FROM = 0;
-const int KING_TO = 0;
-const int ADVISOR_FROM = 1;
-const int ADVISOR_TO = 2;
-const int BISHOP_FROM = 3;
-const int BISHOP_TO = 4;
-const int KNIGHT_FROM = 5;
-const int KNIGHT_TO = 6;
-const int ROOK_FROM = 7;
-const int ROOK_TO = 8;
-const int CANNON_FROM = 9;
-const int CANNON_TO = 10;
-const int PAWN_FROM = 11;
-const int PAWN_TO = 15;
+inline int REVERSE_POS ( const int p ) {
+	return SQ ( 15 - ROW(p), 14 - COL(p) );
+}
 
 struct PositionStruct {
 	// 基本成员
@@ -115,6 +116,13 @@ struct PositionStruct {
 	void GenNonCapMove ( int *move, int &nMoveNum ) const; // 生成非吃子着法
 	void GenAllMove ( int *move, int &nMoveNum ) const; // 生成所有着法
 	void DelMeaningLessMove ( int *move, int &nMoveNum ); // 去除无意义着法
+
+	// 以下函数见evaluate.cpp
+	int MidGameValue ( void ); // 中局/残局状态分值
+	int Material ( void ); // 打分，子力平衡
+	int RookMobility ( void ); // 打分，车的灵活性
+	int KnightTrap ( void ); // 打分，马的阻碍
+	int Evaluate ( void ); // 给局面打分
 };
 
 #endif /* POSITION_H_ */

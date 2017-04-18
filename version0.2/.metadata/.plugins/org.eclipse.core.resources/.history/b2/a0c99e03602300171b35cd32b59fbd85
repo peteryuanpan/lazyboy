@@ -1,0 +1,24 @@
+#include "hashtable.h"
+#include "base.h"
+
+HashTableStruct *HashTable;
+int HashTableNum;
+
+void InitHashTable ( int Num ) {
+	HashTable = ( HashTableStruct * ) malloc ( HashTableNum * sizeof(HashTableStruct) );
+}
+
+void DelHashTable ( void ) {
+	if ( HashTable ) {
+		delete [] HashTable;
+	}
+}
+
+void InsertHashTable ( void ) {
+
+}
+
+int QueryHashTable ( void ) {
+	return 0;
+}
+

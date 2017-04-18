@@ -1,0 +1,15 @@
+
+struct HashTableStruct {
+
+};
+
+HashTableStruct *HashTable;
+
+void InsertHashTable ( void ) {
+
+}
+
+int QueryHashTable ( void ) {
+
+}
+
