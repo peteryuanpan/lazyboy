@@ -1,46 +1,55 @@
-05:44:51 **** Incremental Build of configuration Debug for project version0.2.1 ****
+09:51:50 **** Incremental Build of configuration Debug for project version0.2.1 ****
 make all 
-Building file: ../lazyboy.cpp
+Building file: ../rollback.cpp
 Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
-Finished building: ../lazyboy.cpp
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
  
-Building file: ../movesort.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
-Finished building: ../movesort.cpp
+Building target: version0.2.1
+Invoking: MacOS X C++ Linker
+g++  -o "version0.2.1"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: version0.2.1
  
+09:51:57 **** Incremental Build of configuration Debug for project version0.2.1 ****
+make all 
+make: Nothing to be done for `all'.
+09:56:27 **** Incremental Build of configuration Debug for project version0.2.1 ****
+make all 
 Building file: ../search.cpp
 Invoking: GCC C++ Compiler
 g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
 Finished building: ../search.cpp
  
-Building file: ../time.cpp
+Building target: version0.2.1
+Invoking: MacOS X C++ Linker
+g++  -o "version0.2.1"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: version0.2.1
+ 
+10:00:38 **** Incremental Build of configuration Debug for project version0.2.1 ****
+make all 
+Building file: ../search.cpp
 Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"time.d" -MT"time.o" -o "time.o" "../time.cpp"
-Finished building: ../time.cpp
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
  
 Building target: version0.2.1
 Invoking: MacOS X C++ Linker
 g++  -o "version0.2.1"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: version0.2.1
  
-05:45:03 **** Incremental Build of configuration Debug for project version0.2.1 ****
+10:08:47 **** Incremental Build of configuration Debug for project version0.2.1 ****
 make all 
-Building file: ../lazyboy.cpp
+Building file: ../search.cpp
 Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
-Finished building: ../lazyboy.cpp
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
  
 Building target: version0.2.1
 Invoking: MacOS X C++ Linker
 g++  -o "version0.2.1"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: version0.2.1
  
-05:45:08 **** Incremental Build of configuration Debug for project version0.2.1 ****
-make all 
-make: Nothing to be done for `all'.
-05:45:21 **** Incremental Build of configuration Debug for project version0.2.1 ****
+12:03:00 **** Incremental Build of configuration Debug for project version0.2.1 ****
 make all 
 Building file: ../lazyboy.cpp
 Invoking: GCC C++ Compiler

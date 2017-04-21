@@ -1,0 +1,134 @@
+#include "search.h"
+#include "base.h"
+#include "hash.h"
+#include "position.h"
+#include "rollback.h"
+#include "movesort.h"
+#include "evaluate.h"
+#include "debug.h"
+#include "time.h"
+
+PositionStruct pos; // 当前搜索局面
+RollBackListStruct roll; // 回滚着法表
+SearchStruct Search; // 搜索结构体
+
+// 无害裁剪
+int HarmlessPruning ( void ) {
+	// 1. 和局局面
+	if ( pos.IsDraw() ) {
+		return 0; // eleeye上表示，为了安全起见，不用pos.DrawValue()
+	}
+
+	// 2. 路径重复
+	int vRep = roll.RepStatus ();
+	if ( vRep != REP_NONE ) {
+		return roll.RepValue ( vRep );
+	}
+
+	return -MATE_VALUE;
+}
+
+// 主要遍历搜索
+int SearchPV ( int depth, int alpha, int beta ) {
+	int val;
+	int bestval = - MATE_VALUE;
+	int bestmv = 0;
+	MoveSortStruct mvsort;
+
+	if ( TimeOut(SEARCH_TOTAL_TIME) ) { // 超时
+		return bestval;
+	}
+
+	// 1. 无害裁剪
+	val = HarmlessPruning ();
+	if ( val > - MATE_VALUE ) {
+		return val;
+	}
+
+	Search.nNode ++;
+
+	// 2. 打分
+	if ( depth <= 0 ) {
+		return pos.Evaluate ();
+	}
+
+	// 3. 置换裁剪
+	val = QueryValueInHashTable ( depth );
+	if ( val != - MATE_VALUE ) {
+		return val;
+	}
+
+	// 4. 生成着法
+	mvsort.InitPV ();
+
+	// 5. 递归搜索
+	int mv;
+	while ( (mv = mvsort.NextPV()) != 0 ) {
+		pos.MakeMove ( mv ); // 走一步
+		int val = -SearchPV ( depth - 1, -beta, -alpha ); // 搜下一层
+		pos.UndoMakeMove (); // 回一步
+
+		if ( TimeOut(SEARCH_TOTAL_TIME) ) { // 超时
+			return bestval;
+		}
+
+		if ( val > bestval ) { // better
+			bestval = val;
+			bestmv = mv;
+
+			if ( pos.nDistance == 0 ) { // 记录着法
+				Search.bmv = mv;
+			}
+
+			if ( bestval >= beta ) { // beta
+				InsertHashTable ( depth, bestval, bestmv );
+				Search.nBeta ++;
+				return bestval;
+			}
+
+			if ( bestval > alpha ) { // alpha
+				alpha = bestval;
+			}
+		}
+	}
+	InsertHashTable ( depth, bestval, bestmv );
+	return bestval;
+}
+
+// 主搜索函数
+void MainSearch ( void ) {
+	// 1. 初始化时间器
+	InitBeginTime ( SEARCH_TOTAL_TIME );
+
+	// 2. 清空置换表
+	ClearHashTable ();
+
+	// 3. 迭代加深搜索，并计算时间
+	int vl, depth;
+	for ( depth = 1; /*depth <= ?*/; depth ++ ) {
+		// 搜索，获取 bestmv 及 bestval
+		InitBeginTime ( THIS_SEARCH_TIME );
+		Search.bmv = 0;
+		Search.nNode = Search.nBeta = 0;
+		vl = SearchPV ( depth, - MATE_VALUE, MATE_VALUE );
+
+		if ( TimeOut(SEARCH_TOTAL_TIME) ) { // 超时
+			break;
+		}
+
+		if ( Search.info_out ) {
+			printf( "d: %2d, t: %.2fs, nN: %6d, nb.rate: %2.0f%%, vl: %5d, bmv = %s\n",
+							depth, TimeCost(THIS_SEARCH_TIME), Search.nNode, 100.0*Search.nBeta/Search.nNode,
+							vl, MoveIntToStr(Search.bmv).c_str() );
+		}
+
+		// 搜到杀棋或无解
+		if ( vl >= MATE_VALUE || vl <= - MATE_VALUE) {
+			break;
+		}
+	}
+	printf( "totaltime: %.2fs\n", TimeCost( SEARCH_TOTAL_TIME ));
+
+	// 4. 输出最优着法
+	// .....
+}

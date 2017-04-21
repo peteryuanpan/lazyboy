@@ -1,0 +1,88 @@
+#include "movesort.h"
+#include "debug.h"
+#include "search.h"
+#include "hash.h"
+
+void MoveSortStruct::InitAlphaBeta ( void ) { // 为SearchPV生成着法
+	// 1. 初始化
+	memset ( move, 0, sizeof move );
+	nMoveIndex = 0;
+	nMoveNum = 0;
+
+	// 2. 生成所有着法
+	pos.GenAllMove ( move, nMoveNum );
+	pos.DelMeaningLessMove ( move, nMoveNum );
+
+	// 3. 给着法分类赋值
+	int type[128];
+	int hashmv = QueryMoveInHashTable ();
+	for ( int i = 0; i < nMoveNum; i ++ ) {
+		type[i] = SORT_TYPE_OTHER; // 0
+		if ( hashmv == move[i] ) { // 4
+			type[i] = SORT_TYPE_HASHTABLE;
+		}
+		if ( Search.onlyCheck && !pos.checked ) { // 3
+			pos.MakeMove ( move[i] );
+			if ( pos.checked ) {
+				type[i] = SORT_TYPE_CHECK;
+			}
+			pos.UndoMakeMove ();
+		}
+		if ( pos.square[DST(move[i])] != 0 ) { // 2，待改进
+
+		}
+	}
+
+	// 4. 按赋值降序排序
+	int t = 0;
+	for ( int k = MAX_SORT_TYPE; k >= 0; k -- ) {
+		for ( int i = t; i < nMoveNum; i ++ ) {
+			if ( type[i] == k ) {
+				SWAP ( move[i], move[t] );
+				SWAP ( type[i], type[t] );
+				t ++;
+			}
+		}
+	}
+
+	// 5. 对每类按历史表排序
+	for ( int k = MAX_SORT_TYPE ; k >= 0; k -- ) {
+		int s;
+		for ( s = 0; s < nMoveNum; s ++ ) { // 找到第一个k
+			if ( type[s] == k ) {
+				break;
+			}
+		}
+		if ( s >= nMoveNum ) { // 未找到
+			continue;
+		}
+		int t = s;
+		for (; t < nMoveNum; t ++ ) { // 找到最后一个k
+			if ( type[t] != k ) {
+				break;
+			}
+		}
+		t --;
+
+		for ( int i = s; i <= t; i ++ ) {
+			for ( int j = i + 1; j <= t; j ++ ) {
+				if ( HistoryTable[j] > HistoryTable[i] ) { // 按历史表排序
+					SWAP ( move[i], move[j] );
+				}
+			}
+		}
+	}
+
+	// 6. Debug
+	if ( false ) {
+		PrintChessBoard ();
+		printf("nMoveNum = %d\n", nMoveNum);
+		for ( int i = 0; i < nMoveNum; i ++ ) {
+			pos.MakeMove ( move[i] );
+			PrintChessBoard ();
+			pos.UndoMakeMove ();
+		}
+		printf("\n");
+	}
+}
+

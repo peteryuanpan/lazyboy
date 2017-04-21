@@ -1,0 +1,105 @@
+#include "movesort.h"
+#include "debug.h"
+#include "search.h"
+#include "hash.h"
+
+// 历史表、杀手表
+int HistoryTable [ 256 * 256 ];
+const int MAX_DEPTH_KILLER = 30;
+int KillerTable [ 256 * 256 ][MAX_DEPTH_KILLER];
+
+// 初始化
+void InitMoveSort ( void ) {
+	memset ( HistoryTable, 0, sizeof HistoryTable );
+}
+
+// 更新历史表
+void InsertHistoryTable ( const int mv, const int depth ) {
+	HistoryTable[mv] += depth * depth; // 考虑下别的函数？
+}
+
+// 生成着法
+void MoveSortStruct::InitAlphaBetaMove ( void ) {
+	// 1. 初始化
+	memset ( move, 0, sizeof move );
+	nMoveIndex = 0;
+	nMoveNum = 0;
+
+	// 2. 生成所有着法
+	pos.GenAllMove ( move, nMoveNum );
+	pos.DelMeaningLessMove ( move, nMoveNum );
+
+	// 3. 给着法分类赋值
+	int type[128];
+	int hashmv = QueryMoveInHashTable ();
+	for ( int i = 0; i < nMoveNum; i ++ ) {
+		type[i] = SORT_TYPE_OTHER; // 0
+		if ( hashmv == move[i] ) { // 4
+			type[i] = SORT_TYPE_HASHTABLE;
+		}
+		else if ( Search.onlyCheck ) { // 3
+			pos.MakeMove ( move[i] );
+			if ( pos.checked ) {
+				type[i] = SORT_TYPE_CHECK;
+			}
+			pos.UndoMakeMove ();
+		}
+		else if ( pos.square[DST(move[i])] != 0 ) { // 2，有待改进
+			type[i] = SORT_TYPE_NICE_CAP;
+		}
+
+	}
+
+	// 4. 按赋值降序排序
+	int t = 0;
+	for ( int k = MAX_SORT_TYPE; k >= 0; k -- ) {
+		for ( int i = t; i < nMoveNum; i ++ ) {
+			if ( type[i] == k ) {
+				SWAP ( move[i], move[t] );
+				SWAP ( type[i], type[t] );
+				t ++;
+			}
+		}
+	}
+
+	// 5. 对每类按历史表排序
+	for ( int k = MAX_SORT_TYPE ; k >= 0; k -- ) {
+		int s;
+		for ( s = 0; s < nMoveNum; s ++ ) { // 找到第一个k
+			if ( type[s] == k ) {
+				break;
+			}
+		}
+		if ( s >= nMoveNum ) { // 未找到
+			continue;
+		}
+		int t = s;
+		for (; t < nMoveNum; t ++ ) { // 找到最后一个k
+			if ( type[t] != k ) {
+				break;
+			}
+		}
+		t --;
+
+		for ( int i = s; i <= t; i ++ ) {
+			for ( int j = i + 1; j <= t; j ++ ) {
+				if ( HistoryTable[move[j]] > HistoryTable[move[i]] ) { // 按历史表排序
+					SWAP ( move[i], move[j] );
+				}
+			}
+		}
+	}
+
+	// 6. Debug
+	if ( false ) {
+		PrintChessBoard ();
+		printf("nMoveNum = %d\n", nMoveNum);
+		for ( int i = 0; i < nMoveNum; i ++ ) {
+			pos.MakeMove ( move[i] );
+			PrintChessBoard ();
+			pos.UndoMakeMove ();
+		}
+		printf("\n");
+	}
+}
+

@@ -47,20 +47,20 @@ const int PAWN_TO = 15;
 
 const int STA_POS = 51;
 
-inline int ROW ( const int sq ) {
-	return sq >> 4;
+inline int ROW ( const int p ) {
+	return p >> 4;
 }
 
-inline int COL ( const int sq ) {
-	return sq & 15;
+inline int COL ( const int p ) {
+	return p & 15;
 }
 
 inline int SQ ( const int row, const int col ) {
 	return (row << 4) | col;
 }
 
-inline int NEXTSQ ( const int sq ) {
-	return COL( sq ) == 11 ? ( sq == 203 ? 0 : sq + 8 ) : sq + 1;
+inline int NEXTSQ ( const int x ) {
+	return COL( x ) == 11 ? ( x == 203 ? 0 : x + 8 ) : x + 1;
 }
 
 inline int SRC ( const int mv ) {

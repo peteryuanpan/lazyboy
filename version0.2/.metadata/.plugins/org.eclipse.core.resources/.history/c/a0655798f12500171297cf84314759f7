@@ -1,0 +1,64 @@
+#include "movesort.h"
+#include "debug.h"
+#include "search.h"
+#include "hash.h"
+
+void MoveSortStruct::InitPV ( void ) { // 为SearchPV生成着法
+	// 1. 初始化
+	memset ( move, 0, sizeof move );
+	nMoveIndex = 0;
+	nMoveNum = 0;
+
+	// 2. 生成所有着法
+	pos.GenAllMove ( move, nMoveNum );
+	pos.DelMeaningLessMove ( move, nMoveNum );
+
+	// 3. 如果是红色，将军着法放最前
+	int type[128];
+	int hashmv = QueryMoveInHashTable ();
+	for ( int i = 0; i < nMoveNum; i ++ ) {
+		type[i] = 0;
+		pos.MakeMove ( move[i] );
+		if ( hashmv == move[i] ) {
+			type[i] = 2;
+		}
+		else if ( pos.checked ) {
+			type[i] = 1;
+		}
+		pos.UndoMakeMove ();
+	}
+	for ( int k = 2; k >= 0; k -- ) {
+		int t = 0;
+		for ( int i = 0; i < nMoveNum; i ++ ) {
+			if ( type[i] == k ) {
+				SWAP ( move[i], move[t] );
+				SWAP ( type[i], type[t] );
+				t ++;
+			}
+		}
+	}
+
+	// 有待改进：在深度大于d下只生成将军着法，d有待研究
+	if ( pos.nDistance > -1 ) {
+		int n = 0;
+		for ( int i = 0; i < nMoveNum; i ++ ) {
+			if ( type[i] != 0 ) {
+				n ++;
+			}
+		}
+		nMoveNum = n;
+	}
+
+	// 4. Debug
+	if ( false ) {
+		PrintChessBoard ();
+		printf("nMoveNum = %d\n", nMoveNum);
+		for ( int i = 0; i < nMoveNum; i ++ ) {
+			pos.MakeMove ( move[i] );
+			PrintChessBoard ();
+			pos.UndoMakeMove ();
+		}
+		printf("\n");
+	}
+}
+

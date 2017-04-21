@@ -1,4 +1,4 @@
-05:45:21 **** Incremental Build of configuration Debug for project version0.2.1 ****
+12:03:00 **** Incremental Build of configuration Debug for project version0.2.1 ****
 make all 
 Building file: ../lazyboy.cpp
 Invoking: GCC C++ Compiler
@@ -11,5 +11,5 @@ g++  -o "version0.2.1"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o 
 Finished building target: version0.2.1
  
 
-05:45:22 Build Finished (took 963ms)
+12:03:01 Build Finished (took 794ms)
 

@@ -168,6 +168,8 @@ void PositionStruct::MakeMove ( const int mv ) {
 	roll.check[ nRollNum ] = check;
 	roll.checked[ nRollNum ] = checked;
 	roll.zobrist[ nRollNum ] = zobrist;
+	const int t = zobrist.first & rbHashMask;
+	RollBackHash[t] = 1;
 	nRollNum ++;
 
 	// 2. 修改走子方
@@ -241,6 +243,8 @@ void PositionStruct::UndoMakeMove ( void ) {
 
 	// 8. 修改回滚着法表
 	roll.nRollNum --;
+	const int t = zobrist.first & rbHashMask;
+	RollBackHash[t] = 0;
 }
 
 // 判断和局

@@ -13,7 +13,8 @@ struct HashTableStruct {
 	int move; // 着法
 };
 
-const int HashTableNum = 1 << 20;
+const int HashTableNum = 1 << 23;
+const int HashTableMask = HashTableNum - 1;
 extern HashTableStruct HashTable[ HashTableNum + 100 ];
 
 void ClearHashTable ( void );

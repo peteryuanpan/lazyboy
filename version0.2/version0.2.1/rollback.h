@@ -8,8 +8,12 @@ const int REP_WIN = 1;
 const int REP_LOSE = -1;
 const int REP_DRAW = 0;
 const int REP_NONE = -99;
-
 const int RBL_MAXN = 128;
+
+// 回滚哈希
+const int rbHashNum = 1<<17;
+const int rbHashMask = rbHashNum - 1;
+extern bool RollBackHash [ rbHashNum + 100 ];
 
 // 回滚结构体
 struct RollBackListStruct {

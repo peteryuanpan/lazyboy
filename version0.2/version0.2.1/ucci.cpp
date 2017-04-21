@@ -13,8 +13,7 @@
  * 这个函数基本上拷贝了Crafty的源程序，其实大多数国际象棋的WinBoard引擎和UCI引擎都是这么做的，这里就不详细说明了
  */
 
-#include <stdio.h>
-#include <string.h>
+#include "base.h"
 #include "ucci.h"
  CommDetail Command;
 
@@ -415,7 +414,12 @@ CommEnum IdleLine(CommDetail &Command, int /* bool */ Debug) {
     } else if (strcmp(LineStr, "quit") == 0) {
         return e_CommQuit;
 
-        // 7. 无法识别的指令
+        // 7. 重要信息
+    } else if (strncmp(LineStr, "//", 2) == 0 ) {
+    	Command.Annotation.String = LineStr;
+    	return e_CommAnnotation;
+
+    	// 8. 无法识别的指令
     } else {
         return e_CommNone;
     }
