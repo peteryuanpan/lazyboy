@@ -42,7 +42,7 @@ void InitZobrist_sub ( ULL ZobristSP [][48], ULL &ZobristPlayer ) {
 	ZobristPlayer = rand64 ();
 }
 
-void InitZobrist () {
+void InitZobrist ( void ) {
 	if ( HASH_INIT_FLAG ) {
 		return;
 	}
@@ -92,7 +92,29 @@ void PositionStruct::ModifyZobrist ( const int mv, const int sqSrc, const int sq
 #include "search.h"
 #include "evaluate.h"
 
-HashTableStruct HashTable[ HashTableNum + 100 ];
+struct HashTableStruct {
+	int depth; // 深度
+	ULL zorb1; // zobrist值1
+	ULL zorb2; // zobrist值2
+	int value;   // 分值
+	int move; // 着法
+};
+
+HashTableStruct *HashTable;
+int HashTableNum;
+int HashTableMask;
+
+void InitHashTable ( const int x ) {
+	HashTableNum = ( 1<<x ) / sizeof ( HashTableStruct );
+	HashTableMask = HashTableNum - 1;
+	HashTable = new HashTableStruct[ HashTableNum ];
+}
+
+void DelHashTable ( void ) {
+	if ( HashTable ) {
+		delete HashTable;
+	}
+}
 
 void ClearHashTable ( void ) {
 	for ( int i = 0; i < HashTableNum; i ++ ) {

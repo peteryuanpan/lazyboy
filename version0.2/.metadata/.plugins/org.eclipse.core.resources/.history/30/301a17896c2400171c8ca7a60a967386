@@ -1,8 +1,0 @@
-#ifndef TIME_H_
-#define TIME_H_
-
-void SetTimeLimit ( const double limit );
-
-
-
-#endif /* TIME_H_ */

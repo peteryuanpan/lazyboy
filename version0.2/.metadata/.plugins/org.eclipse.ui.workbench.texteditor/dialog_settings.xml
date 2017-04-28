@@ -2,30 +2,30 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="SORT_TYPE" key="selection"/>
+		<item value="blkAttack" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="SORT"/>
-			<item value="HashTableNum - 1"/>
-			<item value="SearchPV"/>
-			<item value="vl"/>
-			<item value="beas"/>
-			<item value="info_out"/>
-			<item value="ThisTime"/>
-			<item value="TheTime"/>
+			<item value="blackAttack"/>
+			<item value="blackA"/>
+			<item value="Attack"/>
+			<item value="redAttack"/>
+			<item value="attacked"/>
+			<item value="i"/>
+			<item value="2"/>
+			<item value="256"/>
 		</list>
 		<list key="replacehistory">
+			<item value="blkAttack"/>
+			<item value="blackAttack"/>
+			<item value="redAttack"/>
+			<item value="blackA"/>
+			<item value="j"/>
+			<item value="i"/>
+			<item value=""/>
 			<item value="SORT_TYPE"/>
-			<item value="HashTableMask"/>
-			<item value="AlphaBetaSearch"/>
-			<item value="bvl"/>
-			<item value="bestval"/>
-			<item value="debug"/>
-			<item value="thisTime"/>
-			<item value="ThisTime"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

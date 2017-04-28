@@ -99,13 +99,13 @@ char *ReadInput(void){
     static char s_LineStr[c_MaxInputBuff];
     static int s_BytesLeft = 0;
     char *RetVal;
-    if (CheckInput(s_BytesLeft)) {
-        RetVal = fgets(s_LineStr, c_MaxInputBuff, stdin);
-        if (RetVal != NULL) {
-            if (s_BytesLeft > 0) {
-                s_BytesLeft -= (int)strlen(RetVal);
+    if ( CheckInput(s_BytesLeft) ) {
+        RetVal = fgets ( s_LineStr, c_MaxInputBuff, stdin );
+        if ( RetVal != NULL ) {
+            if  (s_BytesLeft > 0 ) {
+                s_BytesLeft -= (int) strlen ( RetVal );
             }
-            RetVal = strchr(s_LineStr, '\n');
+            RetVal = strchr ( s_LineStr, '\n' );
             *RetVal = '\0';
             RetVal = s_LineStr;
         }
@@ -415,7 +415,7 @@ CommEnum IdleLine(CommDetail &Command, int /* bool */ Debug) {
         return e_CommQuit;
 
         // 7. 重要信息
-    } else if (strncmp(LineStr, "//", 2) == 0 ) {
+    } else if (strncmp(LineStr, "//", 2) == 0) {
     	Command.Annotation.String = LineStr;
     	return e_CommAnnotation;
 

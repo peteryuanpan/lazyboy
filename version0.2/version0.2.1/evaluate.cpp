@@ -3,8 +3,10 @@
 #include "position.h"
 #include "move.h"
 
-// 打分，子力平衡
-int PositionStruct::Material ( void ) {
+int vlPiece[2][7][256];
+
+// 预评估，给 vlRed 及 vlBlk 赋值
+void PositionStruct::PreEvaluate ( void ) {
 	// 1. 计算局面阶段分值
 	int val = 0;
 	for ( int sd = 0; sd < 2; sd ++ ) {
@@ -39,117 +41,94 @@ int PositionStruct::Material ( void ) {
 			}
 		}
 	}
-	const int MIDGAME_VALUE = (2 * TOTAL_GAME_VALUE - val) * val / TOTAL_GAME_VALUE; // 使用二次函数，子力很少时才认为接近残局
+	const int MIDGAME_VALUE = ( 2 * TOTAL_GAME_VALUE - val ) * val / TOTAL_GAME_VALUE; // 使用二次函数，子力很少时才认为接近残局
 	const int ENDGAME_VALUE = TOTAL_GAME_VALUE - MIDGAME_VALUE;
 
 	// 2. 计算攻击/被攻击状态分值
-	int Attack = 0;
-	int Attacked = 0;
+	int redAttack = 0;
+	int blkAttack = 0;
 	// 计算马和车的过河分值
 	for ( int i = KNIGHT_FROM; i <= ROOK_TO; i ++ ) {
 		if ( piece[i+RED_TYPE] && IN_OPP_SIDE_BOARD(i+RED_TYPE, piece[i+RED_TYPE]) ) {
-			Attack += 2;
+			redAttack += 2;
 		}
 		if ( piece[i+BLACK_TYPE] && IN_OPP_SIDE_BOARD(i+BLACK_TYPE, piece[i+BLACK_TYPE]) ) {
-			Attacked += 2;
+			blkAttack += 2;
 		}
 	}
 	// 计算炮和兵的过河分值
 	for ( int i = CANNON_FROM; i <= PAWN_TO; i ++ ) {
 		if ( piece[i+RED_TYPE] && IN_OPP_SIDE_BOARD(i+RED_TYPE, piece[i+RED_TYPE]) ) {
-			Attack += 1;
+			redAttack += 1;
 		}
 		if ( piece[i+BLACK_TYPE] && IN_OPP_SIDE_BOARD(i+BLACK_TYPE, piece[i+BLACK_TYPE]) ) {
-			Attacked += 1;
+			blkAttack += 1;
 		}
 	}
 	// 计算轻子数差
 	int d = 0;
 	for ( int i = KNIGHT_FROM; i <= KNIGHT_TO; i ++ ) {
-		d += ((piece[i+RED_TYPE] > 0) - (piece[i+BLACK_TYPE] > 0)) * 2;
+		d += (piece[i+RED_TYPE] > 0) - (piece[i+BLACK_TYPE] > 0);
 	}
 	for ( int i = ROOK_FROM; i <= ROOK_TO; i ++ ) {
-		d += ((piece[i+RED_TYPE] > 0) - (piece[i+BLACK_TYPE] > 0)) * 4;
+		d += (piece[i+RED_TYPE] > 0) - (piece[i+BLACK_TYPE] > 0);
+		d += (piece[i+RED_TYPE] > 0) - (piece[i+BLACK_TYPE] > 0);
 	}
 	for ( int i = CANNON_FROM; i <= CANNON_TO; i ++ ) {
-		d += ((piece[i+RED_TYPE] > 0) - (piece[i+BLACK_TYPE] > 0)) * 2;
+		d += (piece[i+RED_TYPE] > 0) - (piece[i+BLACK_TYPE] > 0);
 	}
 	// 再更新攻击状态分值
 	if ( d > 0 ) {
-		Attack += d;
+		redAttack += abs(d) * 2;
 	}
 	if ( d < 0 ) {
-		Attacked += d;
+		blkAttack += abs(d) * 2;
 	}
-	Attack = MIN ( Attack, TOTAL_ATTACK_VALUE ); // 最多不超过8
-	Attacked = MIN ( Attacked, TOTAL_ATTACK_VALUE );
-	if ( this->player == 1 ) { // !
-		SWAP ( Attack, Attacked );
-	}
+	redAttack = MIN ( redAttack, TOTAL_ATTACK_VALUE ); // 最多不超过8
+	blkAttack = MIN ( blkAttack, TOTAL_ATTACK_VALUE );
 
 	// 3. 计算子力平衡分值
-	int value[2];
 	for ( int sd = 0; sd < 2; sd ++ ) {
-		const int ATTACKING_VALUE = (sd == this->player) ? Attack : Attacked; // 本方进攻值
+		const int ATTACKING_VALUE = (sd == 0) ? redAttack : blkAttack; // 本方进攻值
 		const int ATTACKLESS_VALUE = TOTAL_ATTACK_VALUE - ATTACKING_VALUE; // 本方非进攻值
-		const int THREATENED_VALUE = (sd == this->player) ? Attacked : Attack; // 本方被进攻值
+		const int THREATENED_VALUE = (sd == 0) ? blkAttack : redAttack; // 本方被进攻值
 		const int THREATLESS_VALUE = TOTAL_ATTACK_VALUE - THREATENED_VALUE; // 本方非被进攻值
-		const int ST = (sd == 0) ? RED_TYPE : BLACK_TYPE;
 
-		value[sd] = 0;
-		// 将
-		for ( int i = KING_FROM; i <= KING_TO; i ++ ) {
-			if ( piece[i+ST] ) {
-				const int p = (sd == 0) ? piece[i+ST] : REVERSE_POS(piece[i+ST]);
-				value[sd] += ( MIDGAME_VALUE * ATTACKING_VALUE * MIDGAME_ATTACKING_KING_PAWN[p] +
-						ENDGAME_VALUE * ATTACKING_VALUE * ENDGAME_ATTACKING_KING_PAWN[p] +
-						MIDGAME_VALUE * ATTACKLESS_VALUE * MIDGAME_ATTACKLESS_KING_PAWN[p] +
-						ENDGAME_VALUE * ATTACKLESS_VALUE * ENDGAME_ATTACKLESS_KING_PAWN[p] )
-								/ ( TOTAL_GAME_VALUE * TOTAL_ATTACK_VALUE );
-			}
-		}
-		// 士、象
-		for ( int i = ADVISOR_FROM; i <= BISHOP_TO; i ++ ) {
-			if ( piece[i+ST] ) {
-				const int p = (sd == 0) ? piece[i+ST] : REVERSE_POS(piece[i+ST]);
-				value[sd] += ( THREATENED_VALUE * THREATENED_ADVISOR_BISHOP[p] + THREATLESS_VALUE * THREATLESS_ADVISOR_BISHOP[p])
-								/ TOTAL_ATTACK_VALUE;
-			}
-		}
-		// 马
-		for ( int i = KNIGHT_FROM; i <= KNIGHT_TO; i ++ ) {
-			if ( piece[i+ST] ) {
-				const int p = (sd == 0) ? piece[i+ST] : REVERSE_POS(piece[i+ST]);
-				value[sd] += ( MIDGAME_VALUE * MIDGAME_KNIGHT[p] + ENDGAME_VALUE * ENDGAME_KNIGHT[p]) / TOTAL_ATTACK_VALUE;
-			}
-		}
-		// 车
-		for ( int i = ROOK_FROM; i <= ROOK_TO; i ++ ) {
-			if ( piece[i+ST] ) {
-				const int p = (sd == 0) ? piece[i+ST] : REVERSE_POS(piece[i+ST]);
-				value[sd] += ( MIDGAME_VALUE * MIDGAME_ROOK[p] + ENDGAME_VALUE * ENDGAME_ROOK[p]) / TOTAL_ATTACK_VALUE;
-			}
-		}
-		// 炮
-		for ( int i = CANNON_FROM; i <= CANNON_TO; i ++ ) {
-			if ( piece[i+ST] ) {
-				const int p = (sd == 0) ? piece[i+ST] : REVERSE_POS(piece[i+ST]);
-				value[sd] += ( MIDGAME_VALUE * MIDGAME_CANNON[p] + ENDGAME_VALUE * ENDGAME_CANNON[p]) / TOTAL_ATTACK_VALUE;
-			}
-		}
-		// 兵
-		for ( int i = PAWN_FROM; i <= PAWN_TO; i ++ ) {
-			if ( piece[i+ST] ) {
-				const int p = (sd == 0) ? piece[i+ST] : REVERSE_POS(piece[i+ST]);
-				value[sd] += ( MIDGAME_VALUE * ATTACKING_VALUE * MIDGAME_ATTACKING_KING_PAWN[p] +
-						ENDGAME_VALUE * ATTACKING_VALUE * ENDGAME_ATTACKING_KING_PAWN[p] +
-						MIDGAME_VALUE * ATTACKLESS_VALUE * MIDGAME_ATTACKLESS_KING_PAWN[p] +
-						ENDGAME_VALUE * ATTACKLESS_VALUE * ENDGAME_ATTACKLESS_KING_PAWN[p] )
-								/ ( TOTAL_GAME_VALUE * TOTAL_ATTACK_VALUE );
+		for ( int p = 0; p < 256; p ++ ) {
+			if ( IN_BOARD(p) ) {
+				// 将、兵
+				const int t1 = ( MIDGAME_VALUE * MIDGAME_ATTACKING_KING_PAWN[p] + ENDGAME_VALUE * ENDGAME_ATTACKING_KING_PAWN[p] ) / TOTAL_GAME_VALUE;
+				const int t2 = ( MIDGAME_VALUE * MIDGAME_ATTACKLESS_KING_PAWN[p] + ENDGAME_VALUE * ENDGAME_ATTACKLESS_KING_PAWN[p] ) / TOTAL_GAME_VALUE;
+				vlPiece[sd][KING_TYPE][p] = ( t1 * ATTACKING_VALUE + t2 * ATTACKLESS_VALUE ) / TOTAL_ATTACK_VALUE;
+				vlPiece[sd][PAWN_TYPE][p] = vlPiece[sd][KING_TYPE][p];
+				// 士、象
+				vlPiece[sd][ADVISOR_TYPE][p] = ( THREATENED_VALUE * THREATENED_ADVISOR_BISHOP[p] + THREATLESS_VALUE * THREATLESS_ADVISOR_BISHOP[p]) / TOTAL_ATTACK_VALUE;
+				vlPiece[sd][BISHOP_TYPE][p] = vlPiece[sd][ADVISOR_TYPE][p];
+				// 马
+				vlPiece[sd][KNIGHT_TYPE][p] = ( MIDGAME_VALUE * MIDGAME_KNIGHT[p] + ENDGAME_VALUE * ENDGAME_KNIGHT[p]) / TOTAL_GAME_VALUE;
+				// 车
+				vlPiece[sd][ROOK_TYPE][p] = ( MIDGAME_VALUE * MIDGAME_ROOK[p] + ENDGAME_VALUE * ENDGAME_ROOK[p]) / TOTAL_GAME_VALUE;
+				// 炮
+				vlPiece[sd][CANNON_TYPE][p] = ( MIDGAME_VALUE * MIDGAME_CANNON[p] + ENDGAME_VALUE * ENDGAME_CANNON[p]) / TOTAL_GAME_VALUE;
 			}
 		}
 	}
-	return SIDE_VALUE ( this->player, value[0] - value[1] );
+
+	// 4. 计算红黑的子力值
+	// 调整不受威胁方少掉的士、象分值
+	this->vlRed = ADVISOR_BISHOP_ATTACKLESS_VALUE * ( TOTAL_ATTACK_VALUE - blkAttack ) / TOTAL_ATTACK_VALUE;
+	this->vlBlk = ADVISOR_BISHOP_ATTACKLESS_VALUE * ( TOTAL_ATTACK_VALUE - redAttack ) / TOTAL_ATTACK_VALUE;
+	// 再计算
+	for ( int i = 16; i < 32; i ++ ) {
+		if ( piece[i] ) {
+			this->vlRed += vlPiece[0][PIECE_TYPE(i)][piece[i]];
+		}
+	}
+	for ( int i = 32; i < 48; i ++ ) {
+		if ( piece[i] ) {
+			this->vlBlk += vlPiece[1][PIECE_TYPE(i)][piece[i]];
+		}
+	}
 }
 
 // 打分，车的灵活性
@@ -162,14 +141,15 @@ int PositionStruct::RookMobility ( void ) {
 			if ( piece[i+ST] ) {
 				int r = ROW (piece[i+ST]);
 				int c = COL (piece[i+ST]);
-				value[sd] += MAX ( 0, LOWER_P[ bitCol[c] ][r][0] - 1 );
-				value[sd] += MAX ( 0, HIGHER_P[ bitCol[c] ][r][0] - 1 );
-				value[sd] += MAX ( 0, LOWER_P[ bitRow[r] ][c][0] - 1 );
-				value[sd] += MAX ( 0, HIGHER_P[ bitRow[r] ][c][0] - 1 );
+				int p;
+				p = LOWER_P[ bitCol[c] ][r][0];  value[sd] += ( p == 0 ) ? r - 3 : p - 1;
+				p = HIGHER_P[ bitCol[c] ][r][0]; value[sd] += ( p == 0 ) ? 12 - r : p - 1;
+				p = LOWER_P[ bitRow[r] ][c][0];  value[sd] += ( p == 0 ) ? c - 3 : p - 1;
+				p = HIGHER_P[ bitRow[r] ][c][0]; value[sd] += ( p == 0 ) ? 11 - c : p - 1;
 			}
 		}
 	}
-	return SIDE_VALUE ( this->player, value[0] - value[1] );
+	return SIDE_VALUE ( this->player, value[0] - value[1] ) >> 1; // 取一半
 }
 
 // 打分，马的阻碍
@@ -187,7 +167,7 @@ int PositionStruct::KnightTrap ( void ) {
 					int pin = KNIGHT_PIN[ piece[i+ST] ][k];
 					if ( square[hit] == 0 && square[pin] == 0 ) {
 						if ( KNIGHT_TRAP[hit] == 0 ) {
-							nMovable ++;
+							nMovable ++; // 待改进：落子点还不能被对方吃掉
 							if ( nMovable > 1 ) {
 								break;
 							}
@@ -208,13 +188,29 @@ int PositionStruct::KnightTrap ( void ) {
 }
 
 // 给局面打分
-int PositionStruct::Evaluate ( void ) {
+int PositionStruct::Evaluate ( const int alpha, const int beta ) {
 	int value = 0;
 	// 1. 子力平衡评估
 	value += Material ();
-	// 2. 车的灵活性评估
+	if ( value + LAZY_VALUE[1] <= alpha ) {
+		return value + LAZY_VALUE[1];
+	}
+	else if ( value - LAZY_VALUE[1] >= beta ) {
+		return value - LAZY_VALUE[1];
+	}
+	// 2. 特殊棋型评估
+
+	// 3. 牵制评估
+
+	// 4. 车的灵活性评估
 	value += RookMobility ();
-	// 3. 马的阻碍评估
-	value += KnightTrap ();
+	if ( value + LAZY_VALUE[4] <= alpha ) {
+		return value + LAZY_VALUE[4];
+	}
+	else if ( value - LAZY_VALUE[4] >= beta ) {
+		return value - LAZY_VALUE[4];
+	}
+	// 5. 马的阻碍评估
+	//value += KnightTrap ();
 	return value;
 }

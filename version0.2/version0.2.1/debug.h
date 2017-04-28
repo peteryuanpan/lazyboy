@@ -8,9 +8,6 @@
 inline void PrintChessBoard ( void ) {
 	printf ( "%s\n", pos.player == 0 ? "Turn Red" : "Turn Black" );
 	printf ( "nDistance = %d\n", pos.nDistance);
-	//printf ( "check = %d\n", pos.check );
-	//printf ( "checked = %d\n", pos.checked );
-	//printf ( "Zobrist = (%lld, %lld)\n", pos.zobrist.first, pos.zobrist.second );
 	printf ( "LastMove = %d\n", roll.LastMove() );
 	for ( int i = 51; i < 204 ; i += 16 ) {
 		for ( int j = i; j < i + 9; j ++ ) {
@@ -19,7 +16,5 @@ inline void PrintChessBoard ( void ) {
 		printf("\n");
 	}
 }
-
-
 
 #endif /* DEBUG_H_ */

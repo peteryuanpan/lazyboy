@@ -55,7 +55,7 @@ inline int COL ( const int p ) {
 	return p & 15;
 }
 
-inline int SQ ( const int row, const int col ) {
+inline int POS ( const int row, const int col ) {
 	return (row << 4) | col;
 }
 
@@ -77,12 +77,28 @@ inline int MOVE ( const int src, const int dst ) {
 
 std::string MoveIntToStr ( const int mv );
 
+inline bool IN_BOARD ( const int p ) {
+	return ROW(p) >= 3 && ROW(p) <= 12 && COL(p) >= 3 && COL(p) <= 11;
+}
+
 inline bool IN_OPP_SIDE_BOARD ( const int x, const int p ) {
 	return ((x&RED_TYPE) && ROW(p) <= 7) || ((x&BLACK_TYPE) && ROW(p) > 7);
 }
 
 inline int REVERSE_POS ( const int p ) {
-	return SQ ( 15 - ROW(p), 14 - COL(p) );
+	return POS ( 15 - ROW(p), 14 - COL(p) );
+}
+
+inline int PIECE_TYPE ( const int x ) {
+	return x & 15;
+}
+
+inline int COLOR_TYPE ( const int piece ) {
+	return piece == 0 ? 0 : ( (piece&RED_TYPE) ? RED_TYPE : BLACK_TYPE ) ;
+}
+
+inline int SIDE_VALUE ( const int sd, const int val ) {
+	return sd == 0 ? val : - val;
 }
 
 struct PositionStruct {
@@ -96,6 +112,8 @@ struct PositionStruct {
 	int nDistance; // 搜索深度，初始值为0
 	bool check; // 将军态
 	bool checked; // 被将军态
+	int vlRed; // 红方子力值
+	int vlBlk; // 黑方子力值
 
 	void Init ( const char *FenStr, const char *MoveStr, const int MoveNum ); // 初始化棋盘
 
@@ -118,11 +136,13 @@ struct PositionStruct {
 	void DelMeaningLessMove ( int *move, int &nMoveNum ); // 去除无意义着法
 
 	// 以下函数见evaluate.cpp
-	int MidGameValue ( void ); // 中局/残局状态分值
-	int Material ( void ); // 打分，子力平衡
+	void PreEvaluate ( void ); // 预评估，给 vlRed 及 vlBlk 赋值
+	int Material ( void ) { // 打分，子力平衡
+		return SIDE_VALUE ( player, vlRed - vlBlk );
+	}
 	int RookMobility ( void ); // 打分，车的灵活性
 	int KnightTrap ( void ); // 打分，马的阻碍
-	int Evaluate ( void ); // 给局面打分
+	int Evaluate ( const int alpha, const int beta ); // 给局面打分
 };
 
 #endif /* POSITION_H_ */

@@ -1,9 +1,7 @@
 ucci
 
-// 202 塞翁失马
 setoption newgame
-position fen 4k2Pn/3Par3/2c1r3N/2p2n3/6N2/2c5C/1C7/R8/4pp3/3K5 w - - 0 1
+position fen 3c1a3/8r/1NP2k3/9/9/9/4n4/R4p3/C2Np1p2/1c3K3 w - - 0 1
 go ponder
 
 quit
-

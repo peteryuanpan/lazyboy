@@ -99,14 +99,14 @@ union CommDetail {
 extern CommDetail Command;
 
 // 下面两个函数可被UCCI指令解释器和浅红象棋协议解释器调用
-char *ReadInput(void);                             // 读取一行
-int ReadDigit(const char *&LineStr, int MaxValue); // 读取某串字符中的数字
+char *ReadInput ( void );                             // 读取一行
+int ReadDigit ( const char *&LineStr, int MaxValue ); // 读取某串字符中的数字
 
 // 下面三个函数用来解释UCCI指令，但适用于不同场合
-CommEnum BootLine(void);                                      // UCCI引擎启动的第一条指令，只接收"ucci"
-CommEnum IdleLine(CommDetail &Command, int /* bool */ Debug); // 引擎空闲时接收指令
-CommEnum BusyLine(int /* bool */ Debug);                      // 引擎思考时接收指令，只允许接收"stop"和"ponderhit"
+CommEnum BootLine ( void );                                      // UCCI引擎启动的第一条指令，只接收"ucci"
+CommEnum IdleLine ( CommDetail &Command, int /* bool */ Debug ); // 引擎空闲时接收指令
+CommEnum BusyLine (int /* bool */ Debug );                      // 引擎思考时接收指令，只允许接收"stop"和"ponderhit"
 
-int /* bool */ QhInputLine(int /* bool */ Busy); // 浅红象棋协议的接收过程
+int /* bool */ QhInputLine ( int /* bool */ Busy ); // 浅红象棋协议的接收过程
 
 #endif

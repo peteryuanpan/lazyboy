@@ -1,6 +1,7 @@
 #include "position.h"
 #include "search.h"
 #include "rollback.h"
+#include "evaluate.h"
 
 /* 以下是初始化棋盘部分 */
 const int DDSQ1 [] = { 0, 0, 0, +6, +4, +2, 0, -2, -4, -6, -8, -10, -12 };
@@ -18,7 +19,7 @@ int SQStrToInt ( const std::string sq ) {
 	int c = (int) (sq[0] - 'a' + 3);
 	int t = (int) (sq[1] - '0');
 	int r = t + DDSQ2[t];
-	return SQ ( r, c );
+	return POS ( r, c );
 }
 
 std::string MoveIntToStr ( const int mv ) {
@@ -149,6 +150,9 @@ void PositionStruct::Init ( const char *FenStr, const char *MoveStr, const int M
    	// 7. 初始化check及checked
     check = Check ();
     checked = Checked ();
+
+    // 8. 初始化vlRed及vlBlk
+    PreEvaluate ();
 }
 /* 以上是初始化棋盘部分 */
 
@@ -159,6 +163,8 @@ void PositionStruct::MakeMove ( const int mv ) {
 	const int dst = DST ( mv );
 	const int sqSrc = square[ src ];
 	const int sqDst = square[ dst ];
+	const int thisSide = player;
+	const int OppSide = 1 - thisSide;
 
 	// 1. 记录于回滚着法表
 	int & nRollNum = roll.nRollNum;
@@ -202,6 +208,22 @@ void PositionStruct::MakeMove ( const int mv ) {
 	// 8. 修改check与checked
 	check = Check ();
 	checked = Checked ();
+
+	// 9. 修改vlRed及vlBlk
+	if ( sqDst != 0 ) {
+		if ( thisSide == 0 ) {
+			vlBlk -= vlPiece[OppSide][PIECE_TYPE(sqDst)][dst];
+		}
+		else {
+			vlRed -= vlPiece[OppSide][PIECE_TYPE(sqDst)][dst];
+		}
+	}
+	if ( thisSide == 0 ) {
+		vlRed += vlPiece[thisSide][PIECE_TYPE(sqSrc)][dst] - vlPiece[thisSide][PIECE_TYPE(sqSrc)][src];;
+	}
+	else {
+		vlBlk += vlPiece[thisSide][PIECE_TYPE(sqSrc)][dst] - vlPiece[thisSide][PIECE_TYPE(sqSrc)][src];;
+	}
 }
 
 // 撤回走法
@@ -209,6 +231,9 @@ void PositionStruct::UndoMakeMove ( void ) {
 	const int src = SRC ( roll.LastMove() );
 	const int dst = DST ( roll.LastMove() );
 	const int sqDst = square[ dst ];
+	const int lastDstPiece = roll.LastDstPiece ();
+	const int thisSide = roll.LastPlayer ();
+	const int OppSide = 1 - thisSide;
 
 	// 1. 修改走子方
 	player = roll.LastPlayer ();
@@ -219,14 +244,14 @@ void PositionStruct::UndoMakeMove ( void ) {
 
 	// 3. 修改piece数组
 	piece[ sqDst ] = src;
-	if ( roll.LastDstPiece() != 0 ) {
-		piece[ roll.LastDstPiece() ] = dst;
+	if ( lastDstPiece != 0 ) {
+		piece[ lastDstPiece ] = dst;
 	}
 
 	// 4. 修改位行、位列
 	bitRow[ ROW(src) ] |= (1<<COL(src));
 	bitCol[ COL(src) ] |= (1<<ROW(src));
-	if ( roll.LastDstPiece() == 0 ) {
+	if ( lastDstPiece == 0 ) {
 		bitRow[ ROW(dst) ] -= (1<<COL(dst));
 		bitCol[ COL(dst) ] -= (1<<ROW(dst));
 	}
@@ -245,6 +270,22 @@ void PositionStruct::UndoMakeMove ( void ) {
 	roll.nRollNum --;
 	const int t = zobrist.first & rbHashMask;
 	RollBackHash[t] = 0;
+
+	// 9. 修改vlRed及vlBlk
+	if ( lastDstPiece != 0 ) {
+		if ( thisSide == 0 ) {
+			vlBlk += vlPiece[OppSide][PIECE_TYPE(lastDstPiece)][dst];
+		}
+		else {
+			vlRed += vlPiece[OppSide][PIECE_TYPE(lastDstPiece)][dst];
+		}
+	}
+	if ( thisSide == 0 ) {
+		vlRed += vlPiece[thisSide][PIECE_TYPE(sqDst)][src] - vlPiece[thisSide][PIECE_TYPE(sqDst)][dst];
+	}
+	else {
+		vlBlk += vlPiece[thisSide][PIECE_TYPE(sqDst)][src] - vlPiece[thisSide][PIECE_TYPE(sqDst)][dst];
+	}
 }
 
 // 判断和局

@@ -1,9 +1,0 @@
-#include "time.h"
-#include "base.h"
-#include <ctime>
-#ifdef WIN_32
-#include <windows.h>
-#endif
-
-double TimeLimit = 10.0; // 默认10秒
-

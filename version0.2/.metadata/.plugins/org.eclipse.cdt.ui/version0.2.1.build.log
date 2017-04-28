@@ -1,9 +1,44 @@
-12:03:00 **** Incremental Build of configuration Debug for project version0.2.1 ****
+23:10:05 **** Incremental Build of configuration Debug for project version0.2.1 ****
 make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+Finished building: ../evaluate.cpp
+ 
+Building file: ../hash.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
+Finished building: ../hash.cpp
+ 
 Building file: ../lazyboy.cpp
 Invoking: GCC C++ Compiler
 g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
 Finished building: ../lazyboy.cpp
+ 
+Building file: ../move.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
+Finished building: ../move.cpp
+ 
+Building file: ../movesort.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
+Finished building: ../movesort.cpp
+ 
+Building file: ../position.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
+Finished building: ../position.cpp
+ 
+Building file: ../rollback.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
+ 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
  
 Building target: version0.2.1
 Invoking: MacOS X C++ Linker
@@ -11,5 +46,5 @@ g++  -o "version0.2.1"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o 
 Finished building target: version0.2.1
  
 
-12:03:01 Build Finished (took 794ms)
+23:10:19 Build Finished (took 14s.2ms)
 

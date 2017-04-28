@@ -12,10 +12,12 @@ const int KNIGHT_CANNON_GAME_VALUE = 3;
 const int OTHER_GAME_VALUE = 1;
 const int TOTAL_GAME_VALUE = ROOK_GAME_VALUE * 4 + KNIGHT_CANNON_GAME_VALUE * 8 + OTHER_GAME_VALUE * 18;
 const int TOTAL_ATTACK_VALUE = 8;
+const int ADVISOR_BISHOP_ATTACKLESS_VALUE = 80;
 
-inline int SIDE_VALUE ( const int sd, const int val ) {
-	return sd == 0 ? val : - val;
-}
+const int LAZY_VALUE[5] = {0, 160, 80, 40, 20};
+
+// 不同棋子在不同位置的价值
+extern int vlPiece[2][7][256];
 
 // 1. 开中局，有进攻机会的将、兵
 const int MIDGAME_ATTACKING_KING_PAWN[256] = {

@@ -1,9 +1,0 @@
-#ifndef HASHTABLE_H_
-#define HASHTABLE_H_
-
-void ClearHashTable ( void );
-void InsertHashTable ( const int depth, const int val, const int mv );
-int QueryValueInHashTable ( const int depth );
-int QueryBestMoveInHashTable ( const int depth );
-
-#endif /* HASHTABLE_H_ */

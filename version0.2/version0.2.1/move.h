@@ -98,16 +98,6 @@ inline int OPP_SIDE_TYPE ( const int player ) {
 	return 32 - ( player << 4 );
 }
 
-inline int COLOR_TYPE ( const int piece ) {
-	return piece == 0 ? 0 : ( (piece&RED_TYPE) ? RED_TYPE : BLACK_TYPE ) ;
-}
-
-inline bool IN_BOARD ( const int pos ) {
-	int r = ROW ( pos );
-	int c = COL ( pos );
-	return r >= 3 && r <= 12 && c >= 3 && c <= 11;
-}
-
 void InitMove ( void );
 
 #endif /* MOVE_H_ */
