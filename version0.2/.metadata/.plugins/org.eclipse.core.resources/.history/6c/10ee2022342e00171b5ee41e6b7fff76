@@ -1,0 +1,32 @@
+#ifndef MOVE_H_
+#define MOVE_H_
+
+#include "base.h"
+#include "position.h"
+
+const int DIR[] = {-16, +1, +16, -1};
+const int KING_DIR[] = {-16, +1, +16, -1};
+const int ADVISOR_DIR[] = {-17, -15, +17, +15};
+const int BISHOP_DIR[] = {-34, -30, +34, +30};
+const int BISHOP_PIN_DIR[] = {-17, -15, +17, +15};
+const int KNIGHT_DIR[] = {-33, -31, -14, +18, +33, +31, +14, -18};
+const int KNIGHT_PIN_DIR[] = {-16, -16, +1, +1, +16, +16, -1, -1};
+const int RED_PAWN_DIR[] = {-16, +1, -1};
+const int BLACK_PAWN_DIR[] = {+16, +1, -1};
+
+extern int KING_HIT [256][10];
+extern int ADVISOR_HIT [256][10];
+extern int BISHOP_HIT [256][10];
+extern int BISHOP_PIN [256][10];
+extern int KNIGHT_HIT [256][10];
+extern int KNIGHT_PIN [256][10];
+extern int PAWN_HIT [256][2][10];
+
+extern int LOWER_P [1<<16][16][2];
+extern int HIGHER_P [1<<16][16][2];
+
+int can_hit ( const int color, const int type, const int pfrom, const int pto );
+
+void InitMove ( void );
+
+#endif /* MOVE_H_ */

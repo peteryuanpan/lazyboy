@@ -2136,3 +2136,237 @@ org.xml.sax.SAXParseException; lineNumber: 13; columnNumber: 2; 元素内容必�
 	at org.eclipse.launchbar.core.internal.LaunchBarManager.init(LaunchBarManager.java:129)
 	at org.eclipse.launchbar.core.internal.LaunchBarManager$1.run(LaunchBarManager.java:95)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SESSION 2017-04-29 13:55:27.771 -----------------------------------------------
+eclipse.buildId=4.6.2.M20161124-1400
+java.version=1.8.0_05
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=zh_CN
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -keyring /Users/peteryuanpan/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.cpp.product -keyring /Users/peteryuanpan/.eclipse_keyring
+
+!ENTRY org.eclipse.launchbar.core 2 0 2017-04-29 13:55:53.481
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2017-04-29 13:55:53.575
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2017-04-29 13:55:53.634
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.arduino.core.descriptorType
+
+!ENTRY org.eclipse.debug.core 4 125 2017-04-29 13:55:57.770
+!MESSAGE Error logged from Debug Core: 
+!STACK 1
+org.eclipse.debug.core.DebugException: org.xml.sax.SAXParseException; lineNumber: 13; columnNumber: 2; 元素内容必须由格式正确的字符数据或标记组成。 occurred while reading launch configuration file: /Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/.metadata/.plugins/org.eclipse.debug.core/.launches/lazyboy.launch.
+	at org.eclipse.debug.internal.core.LaunchManager.createDebugException(LaunchManager.java:925)
+	at org.eclipse.debug.internal.core.LaunchManager.throwException(LaunchManager.java:2474)
+	at org.eclipse.debug.internal.core.LaunchManager.getInfo(LaunchManager.java:1378)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.getInfo(LaunchConfiguration.java:470)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.getType(LaunchConfiguration.java:640)
+	at org.eclipse.debug.internal.core.LaunchManager.isValid(LaunchManager.java:2101)
+	at org.eclipse.debug.internal.core.LaunchManager.verifyConfigurations(LaunchManager.java:2488)
+	at org.eclipse.debug.internal.core.LaunchManager.getAllLaunchConfigurations(LaunchManager.java:1145)
+	at org.eclipse.debug.internal.core.LaunchManager.getLaunchConfigurations(LaunchManager.java:1428)
+	at org.eclipse.launchbar.core.internal.LaunchBarManager.init(LaunchBarManager.java:129)
+	at org.eclipse.launchbar.core.internal.LaunchBarManager$1.run(LaunchBarManager.java:95)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+Caused by: org.xml.sax.SAXParseException; lineNumber: 13; columnNumber: 2; 元素内容必须由格式正确的字符数据或标记组成。
+	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:203)
+	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.fatalError(ErrorHandlerWrapper.java:177)
+	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:441)
+	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:368)
+	at com.sun.org.apache.xerces.internal.impl.XMLScanner.reportFatalError(XMLScanner.java:1436)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.startOfMarkup(XMLDocumentFragmentScannerImpl.java:2620)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2718)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:606)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:510)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:848)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:777)
+	at com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:243)
+	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:348)
+	at org.eclipse.debug.internal.core.LaunchManager.createInfoFromXML(LaunchManager.java:953)
+	at org.eclipse.debug.internal.core.LaunchManager.getInfo(LaunchManager.java:1371)
+	... 9 more
+!SUBENTRY 1 org.eclipse.debug.core 4 5012 2017-04-29 13:55:58.003
+!MESSAGE org.xml.sax.SAXParseException; lineNumber: 13; columnNumber: 2; 元素内容必须由格式正确的字符数据或标记组成。 occurred while reading launch configuration file: /Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/.metadata/.plugins/org.eclipse.debug.core/.launches/lazyboy.launch.
+!STACK 0
+org.xml.sax.SAXParseException; lineNumber: 13; columnNumber: 2; 元素内容必须由格式正确的字符数据或标记组成。
+	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:203)
+	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.fatalError(ErrorHandlerWrapper.java:177)
+	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:441)
+	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:368)
+	at com.sun.org.apache.xerces.internal.impl.XMLScanner.reportFatalError(XMLScanner.java:1436)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.startOfMarkup(XMLDocumentFragmentScannerImpl.java:2620)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2718)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:606)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:510)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:848)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:777)
+	at com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:243)
+	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:348)
+	at org.eclipse.debug.internal.core.LaunchManager.createInfoFromXML(LaunchManager.java:953)
+	at org.eclipse.debug.internal.core.LaunchManager.getInfo(LaunchManager.java:1371)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.getInfo(LaunchConfiguration.java:470)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.getType(LaunchConfiguration.java:640)
+	at org.eclipse.debug.internal.core.LaunchManager.isValid(LaunchManager.java:2101)
+	at org.eclipse.debug.internal.core.LaunchManager.verifyConfigurations(LaunchManager.java:2488)
+	at org.eclipse.debug.internal.core.LaunchManager.getAllLaunchConfigurations(LaunchManager.java:1145)
+	at org.eclipse.debug.internal.core.LaunchManager.getLaunchConfigurations(LaunchManager.java:1428)
+	at org.eclipse.launchbar.core.internal.LaunchBarManager.init(LaunchBarManager.java:129)
+	at org.eclipse.launchbar.core.internal.LaunchBarManager$1.run(LaunchBarManager.java:95)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SESSION 2017-05-08 23:49:07.332 -----------------------------------------------
+eclipse.buildId=4.6.2.M20161124-1400
+java.version=1.8.0_05
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=zh_CN
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -keyring /Users/peteryuanpan/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.cpp.product -keyring /Users/peteryuanpan/.eclipse_keyring
+
+!ENTRY org.eclipse.launchbar.core 2 0 2017-05-08 23:49:34.781
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2017-05-08 23:49:34.870
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2017-05-08 23:49:34.929
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.arduino.core.descriptorType
+
+!ENTRY org.eclipse.debug.core 4 125 2017-05-08 23:49:39.245
+!MESSAGE Error logged from Debug Core: 
+!STACK 1
+org.eclipse.debug.core.DebugException: org.xml.sax.SAXParseException; lineNumber: 13; columnNumber: 2; 元素内容必须由格式正确的字符数据或标记组成。 occurred while reading launch configuration file: /Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/.metadata/.plugins/org.eclipse.debug.core/.launches/lazyboy.launch.
+	at org.eclipse.debug.internal.core.LaunchManager.createDebugException(LaunchManager.java:925)
+	at org.eclipse.debug.internal.core.LaunchManager.throwException(LaunchManager.java:2474)
+	at org.eclipse.debug.internal.core.LaunchManager.getInfo(LaunchManager.java:1378)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.getInfo(LaunchConfiguration.java:470)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.getType(LaunchConfiguration.java:640)
+	at org.eclipse.debug.internal.core.LaunchManager.isValid(LaunchManager.java:2101)
+	at org.eclipse.debug.internal.core.LaunchManager.verifyConfigurations(LaunchManager.java:2488)
+	at org.eclipse.debug.internal.core.LaunchManager.getAllLaunchConfigurations(LaunchManager.java:1145)
+	at org.eclipse.debug.internal.core.LaunchManager.getLaunchConfigurations(LaunchManager.java:1428)
+	at org.eclipse.launchbar.core.internal.LaunchBarManager.init(LaunchBarManager.java:129)
+	at org.eclipse.launchbar.core.internal.LaunchBarManager$1.run(LaunchBarManager.java:95)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+Caused by: org.xml.sax.SAXParseException; lineNumber: 13; columnNumber: 2; 元素内容必须由格式正确的字符数据或标记组成。
+	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:203)
+	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.fatalError(ErrorHandlerWrapper.java:177)
+	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:441)
+	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:368)
+	at com.sun.org.apache.xerces.internal.impl.XMLScanner.reportFatalError(XMLScanner.java:1436)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.startOfMarkup(XMLDocumentFragmentScannerImpl.java:2620)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2718)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:606)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:510)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:848)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:777)
+	at com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:243)
+	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:348)
+	at org.eclipse.debug.internal.core.LaunchManager.createInfoFromXML(LaunchManager.java:953)
+	at org.eclipse.debug.internal.core.LaunchManager.getInfo(LaunchManager.java:1371)
+	... 9 more
+!SUBENTRY 1 org.eclipse.debug.core 4 5012 2017-05-08 23:49:39.330
+!MESSAGE org.xml.sax.SAXParseException; lineNumber: 13; columnNumber: 2; 元素内容必须由格式正确的字符数据或标记组成。 occurred while reading launch configuration file: /Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/.metadata/.plugins/org.eclipse.debug.core/.launches/lazyboy.launch.
+!STACK 0
+org.xml.sax.SAXParseException; lineNumber: 13; columnNumber: 2; 元素内容必须由格式正确的字符数据或标记组成。
+	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:203)
+	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.fatalError(ErrorHandlerWrapper.java:177)
+	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:441)
+	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:368)
+	at com.sun.org.apache.xerces.internal.impl.XMLScanner.reportFatalError(XMLScanner.java:1436)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.startOfMarkup(XMLDocumentFragmentScannerImpl.java:2620)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2718)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:606)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:510)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:848)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:777)
+	at com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:243)
+	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:348)
+	at org.eclipse.debug.internal.core.LaunchManager.createInfoFromXML(LaunchManager.java:953)
+	at org.eclipse.debug.internal.core.LaunchManager.getInfo(LaunchManager.java:1371)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.getInfo(LaunchConfiguration.java:470)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.getType(LaunchConfiguration.java:640)
+	at org.eclipse.debug.internal.core.LaunchManager.isValid(LaunchManager.java:2101)
+	at org.eclipse.debug.internal.core.LaunchManager.verifyConfigurations(LaunchManager.java:2488)
+	at org.eclipse.debug.internal.core.LaunchManager.getAllLaunchConfigurations(LaunchManager.java:1145)
+	at org.eclipse.debug.internal.core.LaunchManager.getLaunchConfigurations(LaunchManager.java:1428)
+	at org.eclipse.launchbar.core.internal.LaunchBarManager.init(LaunchBarManager.java:129)
+	at org.eclipse.launchbar.core.internal.LaunchBarManager$1.run(LaunchBarManager.java:95)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 17 2017-05-08 23:50:12.388
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: Connect to dev.eclipse.org:443 [dev.eclipse.org/198.41.30.200] failed: Read timed out. ; version: 2.0.3.v20161205-0933
+!STACK 0
+org.apache.http.conn.ConnectTimeoutException: Connect to dev.eclipse.org:443 [dev.eclipse.org/198.41.30.200] failed: Read timed out
+	at org.apache.http.impl.conn.HttpClientConnectionOperator.connect(HttpClientConnectionOperator.java:134)
+	at org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:319)
+	at org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:363)
+	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:219)
+	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:86)
+	at org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:108)
+	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:184)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:82)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:57)
+	at org.apache.http.client.fluent.Executor.execute(Executor.java:206)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.request(IO.java:206)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.refreshConfiguration(IO.java:68)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:124)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.read(SocketInputStream.java:150)
+	at java.net.SocketInputStream.read(SocketInputStream.java:121)
+	at sun.security.ssl.InputRecord.readFully(InputRecord.java:465)
+	at sun.security.ssl.InputRecord.read(InputRecord.java:503)
+	at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:954)
+	at sun.security.ssl.SSLSocketImpl.performInitialHandshake(SSLSocketImpl.java:1343)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:1371)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:1355)
+	at org.apache.http.conn.ssl.SSLConnectionSocketFactory.createLayeredSocket(SSLConnectionSocketFactory.java:290)
+	at org.apache.http.conn.ssl.SSLConnectionSocketFactory.connectSocket(SSLConnectionSocketFactory.java:259)
+	at org.apache.http.impl.conn.HttpClientConnectionOperator.connect(HttpClientConnectionOperator.java:125)
+	... 16 more
+
+!ENTRY org.eclipse.cdt.launch 4 104 2017-05-10 23:58:08.148
+!MESSAGE Program file does not exist
+!STACK 0
+java.io.FileNotFoundException: /Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/version0.2.1/Debug/version0.2.1 not found
+	at org.eclipse.cdt.launch.AbstractCLaunchDelegate2.verifyProgramPath(AbstractCLaunchDelegate2.java:684)
+	at org.eclipse.cdt.launch.internal.LocalRunLaunchDelegate.checkBinaryDetails(LocalRunLaunchDelegate.java:266)
+	at org.eclipse.cdt.launch.internal.LocalRunLaunchDelegate.runLocalApplication(LocalRunLaunchDelegate.java:88)
+	at org.eclipse.cdt.launch.internal.LocalRunLaunchDelegate.launch(LocalRunLaunchDelegate.java:76)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:885)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:739)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1039)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$8.run(DebugUIPlugin.java:1256)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.launch 4 104 2017-05-10 23:58:08.149
+!MESSAGE /Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/version0.2.1/Debug/version0.2.1 not found
+!STACK 0
+java.io.FileNotFoundException: /Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/version0.2.1/Debug/version0.2.1 not found
+	at org.eclipse.cdt.launch.AbstractCLaunchDelegate2.verifyProgramPath(AbstractCLaunchDelegate2.java:684)
+	at org.eclipse.cdt.launch.internal.LocalRunLaunchDelegate.checkBinaryDetails(LocalRunLaunchDelegate.java:266)
+	at org.eclipse.cdt.launch.internal.LocalRunLaunchDelegate.runLocalApplication(LocalRunLaunchDelegate.java:88)
+	at org.eclipse.cdt.launch.internal.LocalRunLaunchDelegate.launch(LocalRunLaunchDelegate.java:76)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:885)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:739)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1039)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$8.run(DebugUIPlugin.java:1256)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.core.resources 4 372 2017-05-11 01:28:48.715
+!MESSAGE Resource '/lazyboy' is not open.
+
+!ENTRY org.eclipse.core.resources 2 2 2017-05-11 01:28:48.849
+!MESSAGE Save operation warnings.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2017-05-11 01:28:48.849
+!MESSAGE The project description file (.project) for 'RemoteSystemsTempFiles' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
+
+!ENTRY org.eclipse.cdt.core 1 0 2017-05-11 01:28:58.493
+!MESSAGE Indexed 'lazyboy' (10 sources, 59 headers) in 1.37 sec: 1,533 declarations; 4,426 references; 9 unresolved inclusions; 0 syntax errors; 191 unresolved names (3.1%)

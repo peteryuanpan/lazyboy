@@ -1,0 +1,10 @@
+#ifndef DEBUG_H_
+#define DEBUG_H_
+
+#include "base.h"
+#include "position.h"
+#include "search.h"
+
+
+
+#endif /* DEBUG_H_ */

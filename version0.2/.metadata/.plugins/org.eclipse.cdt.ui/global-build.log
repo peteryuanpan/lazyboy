@@ -1,4 +1,4 @@
-23:10:05 **** Incremental Build of configuration Debug for project version0.2.1 ****
+01:29:07 **** Build of configuration Debug for project lazyboy ****
 make all 
 Building file: ../evaluate.cpp
 Invoking: GCC C++ Compiler
@@ -40,8 +40,21 @@ Invoking: GCC C++ Compiler
 g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
 Finished building: ../search.cpp
  
-Building target: version0.2.1
-Invoking: MacOS X C++ Linker
-g++  -o "version0.2.1"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: version0.2.1
+Building file: ../time.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"time.d" -MT"time.o" -o "time.o" "../time.cpp"
+Finished building: ../time.cpp
  
+Building file: ../ucci.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"ucci.d" -MT"ucci.o" -o "ucci.o" "../ucci.cpp"
+Finished building: ../ucci.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+01:29:45 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+make: Nothing to be done for `all'.

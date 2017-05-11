@@ -1,0 +1,10 @@
+#ifndef DEBUG_H_
+#define DEBUG_H_
+
+void MainDebug ( void );
+
+void PrintChessboard ( void ) {
+
+}
+
+#endif /* DEBUG_H_ */

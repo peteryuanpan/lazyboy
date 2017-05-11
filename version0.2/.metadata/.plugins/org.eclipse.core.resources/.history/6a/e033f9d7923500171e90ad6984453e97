@@ -1,0 +1,42 @@
+#include "debug.h"
+
+const int DEBUG_ACCEPTED = 0;
+const int DEBUG_TIME_NODE = 1;
+const int DEBUG_MOVESORT_EVALUATE = 2;
+
+void ReadData ( void ) {
+
+}
+
+void DebugAccepted ( void ) {
+
+}
+
+void DebugTimeNode ( void ) {
+
+}
+
+void DebugMovesortEvaluate ( void ) {
+
+}
+
+void MainDebug ( void ) {
+	int DEBUG_TYPE = 1;
+
+	switch ( DEBUG_TYPE ) {
+		case DEBUG_ACCEPTED:
+			DebugAccepted ();
+			break;
+
+		case DEBUG_TIME_NODE:
+			DebugTimeNode ();
+			break;
+
+		case DEBUG_MOVESORT_EVALUATE:
+			DebugMovesortEvaluate ();
+			break;
+
+		default:
+			break;
+	}
+}

@@ -1,0 +1,6 @@
+#ifndef DEBUG_H_
+#define DEBUG_H_
+
+void MainDebug ( void );
+
+#endif /* DEBUG_H_ */

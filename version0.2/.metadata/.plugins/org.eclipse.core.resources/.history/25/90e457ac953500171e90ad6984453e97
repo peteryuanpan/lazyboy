@@ -1,0 +1,75 @@
+#include "debug.h"
+#include "base.h"
+#include "position.h"
+#include "hash.h"
+#include "move.h"
+#include "movesort.h"
+#include "search.h"
+#include "ucci.h"
+#include "time.h"
+#include <string>
+#include <cstdio>
+
+const int DEBUG_ACCEPTED = 0;
+const int DEBUG_TIME_NODE = 1;
+const int DEBUG_MOVESORT_EVALUATE = 2;
+
+struct DataStruct {
+	std::string FenStr;
+	std::string MoveStr;
+	int MoveNum;
+	int id;
+	std::string name;
+};
+
+DataStruct Data[250];
+int nData;
+
+void ReadData ( void ) {
+	freopen ("/Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/data/data.txt", "r", stdin);
+	while ( true ) {
+		CommEnum Order = IdleLine ( Command, 0 );
+		if ( Order == e_CommQuit ) {
+			break;
+		}
+		else if ( Order == e_CommAnnotation ) {
+			printf ( "%s\n", Command.Annotation.String );
+		}
+		else if ( Order == e_CommPosition ) {
+
+		}
+	}
+}
+
+void DebugAccepted ( void ) {
+
+}
+
+void DebugTimeNode ( void ) {
+	ReadData ();
+
+}
+
+void DebugMovesortEvaluate ( void ) {
+
+}
+
+void MainDebug ( void ) {
+	int DEBUG_TYPE = 1; //
+	switch ( DEBUG_TYPE ) {
+		case DEBUG_ACCEPTED:
+			DebugAccepted ();
+			break;
+
+		case DEBUG_TIME_NODE:
+			DebugTimeNode ();
+			break;
+
+		case DEBUG_MOVESORT_EVALUATE:
+			DebugMovesortEvaluate ();
+			break;
+
+		default:
+			break;
+	}
+}

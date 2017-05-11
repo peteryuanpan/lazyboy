@@ -14,6 +14,14 @@
 		<item value="false" key="testFileSelected"/>
 		<item value="true" key="stubSelected0"/>
 	</section>
+	<section name="CRenameRefactoringInputPage">
+		<item value="2" key="scope"/>
+		<item value="" key="workingset"/>
+		<item value="false" key="references_inv"/>
+		<item value="false" key="comment"/>
+		<item value="true" key="exhausiveFileSearch"/>
+		<item value="false" key="macroDefinition"/>
+	</section>
 	<section name="completion_proposal_size">
 	</section>
 </section>

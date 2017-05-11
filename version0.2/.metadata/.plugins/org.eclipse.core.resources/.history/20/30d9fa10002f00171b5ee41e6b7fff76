@@ -1,0 +1,9 @@
+#include "debug.h"
+
+const int DEBUG_ACCEPTED = 0;
+const int DEBUG_MOVESORT_EVALUATE = 1;
+const int DEBUG_TIME_NODE = 2;
+
+void MainDebug ( void ) {
+	const int debugType = 1;
+}
