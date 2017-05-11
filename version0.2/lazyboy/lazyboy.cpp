@@ -41,9 +41,9 @@ int main ( int argc, char *argv[] ) {
 					roll.Init ();
 					InitZobrist ();
 					InitMove ();
-					InitHashTable ( 26 ); // 24 = 16MB, 25 = 32MB, 26 = 64MB, 27 = 128MB, ...
+					InitHashTable ( 27 ); // 27 = 128MB
 					ClearHashTable ();
-					ClearHistoryKillerTable ();
+					SetTimeLimit (10); // may changed
 				}
 			}
 			else if ( Order == e_CommPosition ) { // position [ startpos | fen ] moves ...

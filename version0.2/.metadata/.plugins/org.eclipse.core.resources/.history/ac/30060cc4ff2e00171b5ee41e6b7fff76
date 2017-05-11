@@ -1,9 +1,0 @@
-#include "debug.h"
-
-void DealDebugType ( void ) {
-
-}
-
-void MainDebug ( void ) {
-
-}

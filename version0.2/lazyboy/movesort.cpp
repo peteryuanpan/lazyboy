@@ -3,28 +3,18 @@
 #include "search.h"
 #include "hash.h"
 
-// 历史表、杀手表
-int HistoryTable [ 256 * 256 ];
-const int MAX_DEPTH_KILLER = 30;
-int KillerTable [ 256 * 256 ][ MAX_DEPTH_KILLER ];
+// 历史表
+LL HistoryTable [ 256 * 256 ];
 
-// 清空两个表
-void ClearHistoryKillerTable ( void ) {
+// 清空历史表
+void ClearHistoryTable ( void ) {
 	memset ( HistoryTable, 0, sizeof HistoryTable );
-	memset ( KillerTable, 0, sizeof KillerTable );
 }
 
 // 更新历史表
-void InsertHistoryTable ( const int mv, const int depth ) {
-	if ( mv != 0 ) {
-		HistoryTable[mv] += depth * depth; // 考虑下别的函数？
-	}
-}
-
-// 更新杀手表
-void InsertKillerTable ( const int mv ) {
-	if ( pos.nDistance < MAX_DEPTH_KILLER && mv != 0 ) {
-		KillerTable[mv][pos.nDistance] += 1;
+void InsertHistoryTable ( const int mv, const LL score ) {
+	if ( mv != 0 && !pos.GoodCapMove(mv) ) { // !
+		HistoryTable[mv] += score;
 	}
 }
 
@@ -39,37 +29,31 @@ int MoveSortStruct::InitAlphaBetaMove ( void ) {
 	pos.GenAllMove ( move, nMoveNum );
 	pos.DelMeaningLessMove ( move, nMoveNum );
 
-	// 3. 获得置换表、杀手表的着法
-	int hashmv = QueryMoveInHashTable ();
-	int killmv1 = 0, killmv2 = 0;
-	int MAX1 = 0, MAX2 = 0;
-	if ( pos.nDistance < MAX_DEPTH_KILLER ) { // !
-		for ( int i = 0; i < nMoveNum; i ++ ) {
-			if ( KillerTable[move[i]][pos.nDistance] > MAX1 ) {
-				killmv2 = killmv1;
-				MAX2 = MAX1;
-				killmv1 = move[i];
-				MAX1 = KillerTable[move[i]][pos.nDistance];
-			}
-			else if ( KillerTable[move[i]][pos.nDistance] > MAX2 ) {
-				killmv2 = move[i];
-				MAX2 = KillerTable[move[i]][pos.nDistance];
-			}
-		}
-	}
+	// 3. 获得置换表着法
+	int bstmv = QueryBestMoveInHashTable ();
+	int scdmv = QuerySecondMoveInHashTable ();
 
 	// 4. 给着法分类赋值
 	int type[128];
 	for ( int i = 0; i < nMoveNum; i ++ ) {
-		type[i] = SORT_TYPE_OTHER; // 0
-		if ( hashmv == move[i] ) { // 4
-			type[i] = SORT_TYPE_HASHTABLE;
+		type[i] = SORT_TYPE_OTHER;
+		if ( bstmv == move[i] ) {
+			type[i] = SORT_TYPE_BEST_MOVE;
 		}
-		else if ( move[i] == killmv1 ) { // 2
-			type[i] = SORT_TYPE_KILLER_1;
+		else if ( scdmv == move[i] ) {
+			type[i] = SORT_TYPE_SECOND_MOVE;
 		}
-		else if ( move[i] == killmv2 ) { // 1
-			type[i] = SORT_TYPE_KILLER_2;
+		else if ( pos.square[DST(move[i])] != 0 ) {
+			const int v = pos.MvvLva ( SRC(move[i]), DST(move[i]) );
+			if ( v > 0 ) {
+				type[i] = SORT_TYPE_GOOD_CAP;
+			}
+			else {
+				type[i] = SORT_TYPE_OTHER;
+			}
+		}
+		else {
+			type[i] = SORT_TYPE_OTHER;
 		}
 	}
 
@@ -85,12 +69,14 @@ int MoveSortStruct::InitAlphaBetaMove ( void ) {
 		}
 	}
 
-	// 6. 对其他类按历史表排序
+	// 6. 对GoodCap类按照得分降序排序
 	for ( int i = 0; i < nMoveNum; i ++ ) {
-		if ( type[i] == SORT_TYPE_OTHER ) {
+		if ( type[i] == SORT_TYPE_GOOD_CAP ) {
 			for ( int j = i + 1; j < nMoveNum; j ++ ) {
-				if ( type[j] == SORT_TYPE_OTHER ) {
-					if ( HistoryTable[move[j]] > HistoryTable[move[i]] ) {
+				if ( type[j] == SORT_TYPE_GOOD_CAP ) {
+					const int vi = pos.MvvLva ( SRC(move[i]), DST(move[i]) );
+					const int vj = pos.MvvLva ( SRC(move[j]), DST(move[j]) );
+					if ( vi < vj ) {
 						SWAP ( move[i], move[j] );
 					}
 				}
@@ -98,20 +84,50 @@ int MoveSortStruct::InitAlphaBetaMove ( void ) {
 		}
 	}
 
-	// 7. 调试
-	if ( pos.nDistance == -1 ) {
-		PrintChessboard ();
-		for ( int i = 0; i < nMoveNum; i ++ ) {
-			pos.MakeMove ( move[i] );
-			if ( pos.checked ) {
-				PrintChessboard ();
+	// 7. 对Other类按历史表降序排序
+	for ( int i = 0; i < nMoveNum; i ++ ) {
+		if ( type[i] == SORT_TYPE_OTHER ) {
+			for ( int j = i + 1; j < nMoveNum; j ++ ) {
+				if ( type[j] == SORT_TYPE_OTHER ) {
+					if ( HistoryTable[move[i]] < HistoryTable[move[j]] ) {
+						SWAP ( move[i], move[j] );
+					}
+				}
 			}
-			//PrintChessboard ();
-			pos.UndoMakeMove ();
 		}
-		exit (0);
 	}
 
 	return nMoveNum;
 }
 
+// 将5, 士1, 象1, 马3, 车4, 炮3, 兵2
+const int SIMPLE_VALUE[7] = {5, 1, 1, 3, 4, 3, 2};
+
+// 吃子着法估分
+int PositionStruct::MvvLva ( const int src, const int dst ) const {
+	const int valSrc = Protected ( 1-player, dst ) ? SIMPLE_VALUE[PIECE_TYPE(square[src])] : 0;
+	const int valDst = SIMPLE_VALUE[PIECE_TYPE(square[dst])];
+	if ( valDst >= valSrc ) {
+		return valDst - valSrc + 1;
+	}
+	else if ( valDst >= 3 || IN_THIS_SIDE_BOARD(SIDE_TYPE(player), dst) ) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
+// 判断是否是好的吃子着法
+bool PositionStruct::GoodCapMove ( const int mv ) const {
+	const int xDst = square[DST(mv)];
+	if ( xDst == 0 ) {
+		return false;
+	}
+	if ( !Protected(1-player, DST(mv)) ) {
+		return true;
+	}
+	const int typeSrc = PIECE_TYPE ( square[SRC(mv)] );
+	const int typeDst = PIECE_TYPE ( square[DST(mv)] );
+	return SIMPLE_VALUE[typeDst] > SIMPLE_VALUE[typeSrc];
+}

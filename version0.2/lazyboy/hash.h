@@ -11,8 +11,9 @@ void InitZobrist ( void );
 void InitHashTable ( const int x );
 void DelHashTable ( void );
 void ClearHashTable ( void );
-void InsertHashTable ( const int depth, const int val, const int mv, const int type );
-int QueryValueInHashTable ( const int depth, const int alpha, const int beta );
-int QueryMoveInHashTable ( void );
+void InsertMoveToHashTable ( const int depth, const int bstmv, const int scdmv, const int bstval, const int scdval, const int type );
+int QueryBestValueInHashTable ( const int depth, const int alpha, const int beta );
+int QueryBestMoveInHashTable ( void );
+int QuerySecondMoveInHashTable ( void );
 
 #endif /* HASH_H_ */

@@ -1,6 +1,0 @@
-#include "debug.h"
-
-
-void MainDebug ( void ) {
-
-}

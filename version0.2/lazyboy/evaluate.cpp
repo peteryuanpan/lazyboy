@@ -132,7 +132,7 @@ void PositionStruct::PreEvaluate ( void ) {
 }
 
 // 打分，车的灵活性
-int PositionStruct::RookMobility ( void ) {
+int PositionStruct::RookMobility ( void ) const {
 	int value[2];
 	for ( int sd = 0; sd < 2; sd ++ ) {
 		value[sd] = 0;
@@ -153,7 +153,7 @@ int PositionStruct::RookMobility ( void ) {
 }
 
 // 打分，马的阻碍
-int PositionStruct::KnightTrap ( void ) {
+int PositionStruct::KnightTrap ( void ) const {
 	int value[2];
 	for ( int sd = 0; sd < 2; sd ++ ) {
 		value[sd] = 0;
@@ -165,9 +165,9 @@ int PositionStruct::KnightTrap ( void ) {
 				while ( KNIGHT_HIT[ piece[i+ST] ][k] != 0 ) {
 					int hit = KNIGHT_HIT[ piece[i+ST] ][k];
 					int pin = KNIGHT_PIN[ piece[i+ST] ][k];
-					if ( square[hit] == 0 && square[pin] == 0 ) {
+					if ( square[hit] == 0 && square[pin] == 0 && !Protected(1-sd, hit) ) {
 						if ( KNIGHT_TRAP[hit] == 0 ) {
-							nMovable ++; // 待改进：落子点还不能被对方吃掉
+							nMovable ++;
 							if ( nMovable > 1 ) {
 								break;
 							}
@@ -188,13 +188,13 @@ int PositionStruct::KnightTrap ( void ) {
 }
 
 // 给局面打分
-int PositionStruct::Evaluate ( const int alpha, const int beta ) {
+int PositionStruct::Evaluate ( const int alpha, const int beta ) const {
 	int value = 0;
 	// 1. 子力平衡评估
 	value += Material ();
 	// 2. 车的灵活性评估
 	value += RookMobility ();
 	// 3. 马的阻碍评估
-	//value += KnightTrap ();
+	value += KnightTrap ();
 	return value;
 }

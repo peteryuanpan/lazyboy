@@ -31,13 +31,15 @@ int HarmlessPruning ( void ) {
 // Alpha-Beta 搜索
 int AlphaBetaSearch ( int depth, int alpha, int beta ) {
 	int val;
-	int bestval = - MATE_VALUE;
-	int bestmv = 0;
+	int bstval = - MATE_VALUE;
+	int scdval = - MATE_VALUE;
+	int bstmv = 0;
+	int scdmv = 0;
 	int hash_type = HASH_TYPE_ALPHA;
 	MoveSortStruct mvsort;
 
 	if ( TimeOut(SEARCH_TOTAL_TIME) ) { // 超时
-		return bestval;
+		return bstval;
 	}
 
 	Search.nNode ++;
@@ -54,10 +56,10 @@ int AlphaBetaSearch ( int depth, int alpha, int beta ) {
 	}
 
 	// 3. 置换裁剪
-	val = QueryValueInHashTable ( depth, alpha, beta );
+	val = QueryBestValueInHashTable ( depth, alpha, beta );
 	if ( val != - MATE_VALUE ) {
 		if ( pos.nDistance == 0 ) {
-			Search.bmv = bestmv;
+			Search.bmv = bstmv;
 		}
 		return val;
 	}
@@ -73,32 +75,38 @@ int AlphaBetaSearch ( int depth, int alpha, int beta ) {
 		pos.UndoMakeMove ();
 
 		if ( TimeOut(SEARCH_TOTAL_TIME) ) { // 超时
-			return bestval;
+			return bstval;
 		}
 
-		if ( val > bestval ) {
-			bestval = val;
-			bestmv = mv;
-			if ( bestval >= beta ) {
+		if ( val > bstval ) {
+			scdval = bstval;
+			scdmv = bstmv;
+			bstval = val;
+			bstmv = mv;
+			if ( bstval >= beta ) {
 				Search.nBeta ++;
-				InsertKillerTable ( bestmv );
 				hash_type = HASH_TYPE_BETA;
 				break;
 			}
-			if ( bestval > alpha ) {
-				alpha = bestval;
+			if ( bstval > alpha ) {
+				alpha = bstval;
 				hash_type = HASH_TYPE_PV;
 			}
+		}
+		else if ( val > scdval ) {
+			scdval = val;
+			scdmv = mv;
 		}
 	}
 
 	// 6. 最后
-	if ( pos.nDistance == 0 && bestmv != 0 ) {
-		Search.bmv = bestmv;
+	InsertMoveToHashTable ( depth, bstmv, scdmv, bstval, scdval, hash_type );
+	InsertHistoryTable ( bstmv, depth * depth );
+	//InsertHistoryTable ( scdmv, depth );
+	if ( pos.nDistance == 0 && bstmv != 0 ) {
+		Search.bmv = bstmv;
 	}
-	InsertHashTable ( depth, bestval, bestmv, hash_type );
-	InsertHistoryTable ( bestmv, depth );
-	return bestval;
+	return bstval;
 }
 
 // 主搜索函数
@@ -122,11 +130,11 @@ int MainSearch ( void ) {
 		// 注意不要return
 	}
 
-	// 2. 大搜索
-	// 初始化时间器
+	// 2. 初始化
+	ClearHistoryTable ();
 	InitBeginTime ( SEARCH_TOTAL_TIME );
-	SetTimeLimit (10);
-	// 迭代加深
+
+	// 3. 迭代加深搜索
 	printf("depth   time    nNode  rBeta   value  bestmv\n");
 	fflush ( stdout );
 	int last_bvl = - MATE_VALUE, last_bmv = 0;
@@ -167,7 +175,7 @@ int MainSearch ( void ) {
 	printf( "totaltime: %.2fs\n", TimeCost(SEARCH_TOTAL_TIME) );
 	fflush ( stdout );
 
-	// 3. 输出最优着法
+	// 4. 输出最优着法
 	if ( Search.bmv == 0 || Search.bvl <= - BAN_VALUE ) {
 		printf ( "bestmove a0a1 resign\n" ); // 认输
 		fflush ( stdout );

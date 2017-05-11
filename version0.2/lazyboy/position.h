@@ -79,6 +79,10 @@ inline bool IN_BOARD ( const int p ) {
 	return ROW(p) >= 3 && ROW(p) <= 12 && COL(p) >= 3 && COL(p) <= 11;
 }
 
+inline bool IN_THIS_SIDE_BOARD ( const int x, const int p ) {
+	return ((x&BLACK_TYPE) && ROW(p) <= 7) || ((x&RED_TYPE) && ROW(p) > 7);
+}
+
 inline bool IN_OPP_SIDE_BOARD ( const int x, const int p ) {
 	return ((x&RED_TYPE) && ROW(p) <= 7) || ((x&BLACK_TYPE) && ROW(p) > 7);
 }
@@ -133,7 +137,6 @@ struct PositionStruct {
 	void UndoMakeMove ( void ); // 撤回走法
 
 	// 以下函数见move.cpp
-	bool CanHit ( const int pfrom, const int pto ) const; // 着法可行
 	bool Check ( void ) const; // 执棋方将军
 	bool Checked ( void ) const; // 执棋方被将军
 	bool KingFaceKing ( void ) const; // 将对将局面
@@ -141,15 +144,20 @@ struct PositionStruct {
 	void GenNonCapMove ( int *move, int &nMoveNum ) const; // 生成非吃子着法
 	void GenAllMove ( int *move, int &nMoveNum ) const; // 生成所有着法
 	void DelMeaningLessMove ( int *move, int &nMoveNum ); // 去除无意义着法
+	bool Protected ( const int sd, const int pos ) const; // 判断位置是否被保护
+
+	// 以下函数见movesort.cpp
+	int MvvLva ( const int src, const int dst ) const; // 吃子着法估分
+	bool GoodCapMove ( const int mv ) const; // 判断是否是好的吃子着法
 
 	// 以下函数见evaluate.cpp
 	void PreEvaluate ( void ); // 预评估，给 vlRed 及 vlBlk 赋值
-	int Material ( void ) { // 打分，子力平衡
+	int Material ( void ) const { // 打分，子力平衡
 		return SIDE_VALUE ( player, vlRed - vlBlk );
 	}
-	int RookMobility ( void ); // 打分，车的灵活性
-	int KnightTrap ( void ); // 打分，马的阻碍
-	int Evaluate ( const int alpha, const int beta ); // 给局面打分
+	int RookMobility ( void ) const; // 打分，车的灵活性
+	int KnightTrap ( void ) const; // 打分，马的阻碍
+	int Evaluate ( const int alpha, const int beta ) const; // 给局面打分
 };
 
 std::string MoveIntToStr ( const int mv );
