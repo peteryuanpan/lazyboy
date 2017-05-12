@@ -12,9 +12,9 @@ void ClearHistoryTable ( void ) {
 }
 
 // 更新历史表
-void InsertHistoryTable ( const int mv, const LL score ) {
+void InsertHistoryTable ( const int mv, const int depth ) {
 	if ( mv != 0 && !pos.GoodCapMove(mv) ) { // !
-		HistoryTable[mv] += score;
+		HistoryTable[mv] += depth * depth;
 	}
 }
 
@@ -31,7 +31,6 @@ int MoveSortStruct::InitAlphaBetaMove ( void ) {
 
 	// 3. 获得置换表着法
 	int bstmv = QueryBestMoveInHashTable ();
-	int scdmv = QuerySecondMoveInHashTable ();
 
 	// 4. 给着法分类赋值
 	int type[128];
@@ -39,9 +38,6 @@ int MoveSortStruct::InitAlphaBetaMove ( void ) {
 		type[i] = SORT_TYPE_OTHER;
 		if ( bstmv == move[i] ) {
 			type[i] = SORT_TYPE_BEST_MOVE;
-		}
-		else if ( scdmv == move[i] ) {
-			type[i] = SORT_TYPE_SECOND_MOVE;
 		}
 		else if ( pos.square[DST(move[i])] != 0 ) {
 			const int v = pos.MvvLva ( SRC(move[i]), DST(move[i]) );
@@ -100,13 +96,18 @@ int MoveSortStruct::InitAlphaBetaMove ( void ) {
 	return nMoveNum;
 }
 
+// 生成着法
+int MoveSortStruct::InitCutMove ( void ) {
+	return InitAlphaBetaMove ();
+}
+
 // 将5, 士1, 象1, 马3, 车4, 炮3, 兵2
 const int SIMPLE_VALUE[7] = {5, 1, 1, 3, 4, 3, 2};
 
 // 吃子着法估分
 int PositionStruct::MvvLva ( const int src, const int dst ) const {
-	const int valSrc = Protected ( 1-player, dst ) ? SIMPLE_VALUE[PIECE_TYPE(square[src])] : 0;
-	const int valDst = SIMPLE_VALUE[PIECE_TYPE(square[dst])];
+	const int valSrc = Protected ( 1-player, src, dst ) ? SIMPLE_VALUE[PIECE_TYPE[square[src]]] : 0;
+	const int valDst = SIMPLE_VALUE[PIECE_TYPE[square[dst]]];
 	if ( valDst >= valSrc ) {
 		return valDst - valSrc + 1;
 	}
@@ -124,10 +125,10 @@ bool PositionStruct::GoodCapMove ( const int mv ) const {
 	if ( xDst == 0 ) {
 		return false;
 	}
-	if ( !Protected(1-player, DST(mv)) ) {
+	if ( !Protected(1-player, SRC(mv), DST(mv)) ) {
 		return true;
 	}
-	const int typeSrc = PIECE_TYPE ( square[SRC(mv)] );
-	const int typeDst = PIECE_TYPE ( square[DST(mv)] );
+	const int typeSrc = PIECE_TYPE [ square[SRC(mv)] ];
+	const int typeDst = PIECE_TYPE [ square[DST(mv)] ];
 	return SIMPLE_VALUE[typeDst] > SIMPLE_VALUE[typeSrc];
 }

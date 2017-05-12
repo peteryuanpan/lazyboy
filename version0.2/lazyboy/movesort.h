@@ -5,8 +5,7 @@
 #include "position.h"
 
 // 着法分类
-const int SORT_TYPE_BEST_MOVE = 3;
-const int SORT_TYPE_SECOND_MOVE = 2;
+const int SORT_TYPE_BEST_MOVE = 2;
 const int SORT_TYPE_GOOD_CAP = 1;
 const int SORT_TYPE_OTHER = 0;
 const int MAX_SORT_TYPE = SORT_TYPE_BEST_MOVE;
@@ -15,7 +14,7 @@ const int MAX_SORT_TYPE = SORT_TYPE_BEST_MOVE;
 void ClearHistoryTable ( void );
 
 // 更新历史表
-void InsertHistoryTable ( const int mv, const LL score );
+void InsertHistoryTable ( const int mv, const int depth );
 
 // 着法排序结构体
 struct MoveSortStruct {
@@ -25,7 +24,7 @@ struct MoveSortStruct {
 
 	// 生成着法
 	int InitAlphaBetaMove ( void );
-	// ..
+	int InitCutMove ( void );
 
 	int NextMove ( void ) { // 提供下一个着法
 		if ( nMoveIndex < nMoveNum ) {

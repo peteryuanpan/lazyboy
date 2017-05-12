@@ -1,0 +1,26 @@
+ucci
+
+// 78 妙手献炮露帅杀 bmv f5b5
+setoption newgame
+position fen 4ka3/1n2a4/9/p1p5p/5RC2/P8/2P3r1P/N4A3/4K4/2BA4c w - - 0 1
+go time 10000
+
+// 79 沉车炮全盘控制 bmv f5b5
+setoption newgame
+position fen 4kab2/4a4/3cb3c/R3C3p/5C3/2P1r4/P4p2P/4B4/4A4/4KAB2 w - - 0 1
+go time 10000
+
+// 80 一车牵制车马炮 bmv c1b1
+setoption newgame
+position fen 1C2kab2/4a4/4b1n2/p4r2p/4p1p1c/3N5/P3P1PnP/2NCB4/2R1A4/1c2KAB2 w - - 0 1
+go time 10000
+
+// 81 全面封锁势壮观 bmv c5d5
+setoption newgame
+position fen r3kabr1/4a4/c1n1b2c1/p1p1p3p/2P4R1/3n5/P1C1P1p1P/N3C1N2/9/1RBAKAB2 w - - 0 1
+go time 10000
+
+// 82 打通中路控局面 bmv e4e5
+setoption newgame
+position fen 3akab2/9/2n1b1c2/p1N1p3p/1r3n1r1/2R1PR3/P7P/4C1N1B/9/2BAKA3 w - - 0 1
+go time 10000

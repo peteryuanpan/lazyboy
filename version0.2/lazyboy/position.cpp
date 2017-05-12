@@ -173,8 +173,6 @@ void PositionStruct::MakeMove ( const int mv ) {
 	roll.check[ nRollNum ] = check;
 	roll.checked[ nRollNum ] = checked;
 	roll.zobrist[ nRollNum ] = zobrist;
-	const int t = zobrist.first & rbHashMask;
-	RollBackHash[t] = 1;
 	nRollNum ++;
 
 	// 2. 修改走子方
@@ -211,17 +209,17 @@ void PositionStruct::MakeMove ( const int mv ) {
 	// 9. 修改vlRed及vlBlk
 	if ( sqDst != 0 ) {
 		if ( thisSide == 0 ) {
-			vlBlk -= vlPiece[OppSide][PIECE_TYPE(sqDst)][dst];
+			vlBlk -= vlPiece[OppSide][PIECE_TYPE[sqDst]][dst];
 		}
 		else {
-			vlRed -= vlPiece[OppSide][PIECE_TYPE(sqDst)][dst];
+			vlRed -= vlPiece[OppSide][PIECE_TYPE[sqDst]][dst];
 		}
 	}
 	if ( thisSide == 0 ) {
-		vlRed += vlPiece[thisSide][PIECE_TYPE(sqSrc)][dst] - vlPiece[thisSide][PIECE_TYPE(sqSrc)][src];;
+		vlRed += vlPiece[thisSide][PIECE_TYPE[sqSrc]][dst] - vlPiece[thisSide][PIECE_TYPE[sqSrc]][src];;
 	}
 	else {
-		vlBlk += vlPiece[thisSide][PIECE_TYPE(sqSrc)][dst] - vlPiece[thisSide][PIECE_TYPE(sqSrc)][src];;
+		vlBlk += vlPiece[thisSide][PIECE_TYPE[sqSrc]][dst] - vlPiece[thisSide][PIECE_TYPE[sqSrc]][src];;
 	}
 }
 
@@ -267,23 +265,21 @@ void PositionStruct::UndoMakeMove ( void ) {
 
 	// 8. 修改回滚着法表
 	roll.nRollNum --;
-	const int t = zobrist.first & rbHashMask;
-	RollBackHash[t] = 0;
 
 	// 9. 修改vlRed及vlBlk
 	if ( lastDstPiece != 0 ) {
 		if ( thisSide == 0 ) {
-			vlBlk += vlPiece[OppSide][PIECE_TYPE(lastDstPiece)][dst];
+			vlBlk += vlPiece[OppSide][PIECE_TYPE[lastDstPiece]][dst];
 		}
 		else {
-			vlRed += vlPiece[OppSide][PIECE_TYPE(lastDstPiece)][dst];
+			vlRed += vlPiece[OppSide][PIECE_TYPE[lastDstPiece]][dst];
 		}
 	}
 	if ( thisSide == 0 ) {
-		vlRed += vlPiece[thisSide][PIECE_TYPE(sqDst)][src] - vlPiece[thisSide][PIECE_TYPE(sqDst)][dst];
+		vlRed += vlPiece[thisSide][PIECE_TYPE[sqDst]][src] - vlPiece[thisSide][PIECE_TYPE[sqDst]][dst];
 	}
 	else {
-		vlBlk += vlPiece[thisSide][PIECE_TYPE(sqDst)][src] - vlPiece[thisSide][PIECE_TYPE(sqDst)][dst];
+		vlBlk += vlPiece[thisSide][PIECE_TYPE[sqDst]][src] - vlPiece[thisSide][PIECE_TYPE[sqDst]][dst];
 	}
 }
 

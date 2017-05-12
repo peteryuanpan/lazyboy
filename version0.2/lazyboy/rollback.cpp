@@ -3,9 +3,6 @@
 #include "search.h"
 #include "debug.h"
 
-// 回滚哈希
-bool RollBackHash [ rbHashNum + 100 ];
-
 // 初始化回滚结构体
 void RollBackListStruct::Init ( void ) {
 	nRollNum = 0;
@@ -16,18 +13,11 @@ void RollBackListStruct::Init ( void ) {
 		checked[i] = 0;
 		zobrist[i] = std::make_pair ( 0, 0 );
 	}
-	memset ( RollBackHash, 0, sizeof RollBackHash );
 }
 
 // 判断重复类型
 int RollBackListStruct::RepStatus ( void ) const {
-	// 1. 如果哈系表发现不存在，则直接返回
-	const int t = pos.zobrist.first & rbHashMask;
-	if ( RollBackHash[t] == 0 ) {
-		return REP_NONE;
-	}
-
-	// 2. 否则，逐个往回寻找
+	// 1. 逐个往回寻找
 	int ThisSideConCheck = ( nRollNum == 0 ) ? 0 : checked[ nRollNum - 1 ];
 	int OppSideConCheck = pos.checked;
 	int TurnThisSide = 1;

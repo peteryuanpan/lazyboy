@@ -8,12 +8,12 @@ const int HASH_TYPE_BETA = 1;
 const int HASH_TYPE_PV = 2;
 
 void InitZobrist ( void );
+
 void InitHashTable ( const int x );
 void DelHashTable ( void );
 void ClearHashTable ( void );
-void InsertMoveToHashTable ( const int depth, const int bstmv, const int scdmv, const int bstval, const int scdval, const int type );
+void InsertMoveToHashTable ( const int depth, const int bstmv, const int bstval, const int type );
 int QueryBestValueInHashTable ( const int depth, const int alpha, const int beta );
 int QueryBestMoveInHashTable ( void );
-int QuerySecondMoveInHashTable ( void );
 
 #endif /* HASH_H_ */

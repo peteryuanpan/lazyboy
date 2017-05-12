@@ -97,9 +97,7 @@ struct HashTableStruct {
 	ULL zorb1; // zobrist值1
 	ULL zorb2; // zobrist值2
 	int bstmv; // 最优着法
-	int scdmv; // 次优着法
 	int bstval; // 最优分值
-	int scdval; // 次优分值
 	int type; // 最优着法的节点类型
 };
 
@@ -125,14 +123,12 @@ void ClearHashTable ( void ) {
 		HashTable[i].zorb1 = 0;
 		HashTable[i].zorb2 = 0;
 		HashTable[i].bstmv = 0;
-		HashTable[i].scdmv = 0;
 		HashTable[i].bstval = 0;
-		HashTable[i].scdval = 0;
 		HashTable[i].type = -1;
 	}
 }
 
-void InsertMoveToHashTable ( const int depth, const int bstmv, const int scdmv, const int bstval, const int scdval, const int type ) {
+void InsertMoveToHashTable ( const int depth, const int bstmv, const int bstval, const int type ) {
 	const int t = pos.zobrist.first & HashTableMask;
 	if ( bstval > - BAN_VALUE ) {
 		if ( depth > HashTable[t].depth ) {
@@ -140,9 +136,7 @@ void InsertMoveToHashTable ( const int depth, const int bstmv, const int scdmv, 
 			HashTable[t].zorb1 = pos.zobrist.first;
 			HashTable[t].zorb2 = pos.zobrist.second;
 			HashTable[t].bstmv = bstmv;
-			HashTable[t].scdmv = scdmv;
 			HashTable[t].bstval = bstval;
-			HashTable[t].scdval = scdval;
 			HashTable[t].type = type;
 		}
 		else if ( depth == HashTable[t].depth ) {
@@ -150,16 +144,8 @@ void InsertMoveToHashTable ( const int depth, const int bstmv, const int scdmv, 
 				HashTable[t].zorb1 = pos.zobrist.first;
 				HashTable[t].zorb2 = pos.zobrist.second;
 				HashTable[t].bstmv = bstmv;
-				HashTable[t].scdmv = scdmv;
 				HashTable[t].bstval = bstval;
-				HashTable[t].scdval = scdval;
 				HashTable[t].type = type;
-			}
-			else if ( HashTable[t].zorb1 == pos.zobrist.first && HashTable[t].zorb2 == pos.zobrist.second ) {
-				if ( bstval > HashTable[t].scdval ) {
-					HashTable[t].scdmv = bstmv;
-					HashTable[t].scdval = bstval;
-				}
 			}
 		}
 	}
@@ -190,12 +176,3 @@ int QueryBestMoveInHashTable ( void ) {
 	}
 	return 0;
 }
-
-int QuerySecondMoveInHashTable ( void ) {
-	const int t = pos.zobrist.first & HashTableMask;
-	if ( HashTable[t].zorb1 == pos.zobrist.first && HashTable[t].zorb2 == pos.zobrist.second ) {
-		return HashTable[t].scdmv;
-	}
-	return 0;
-}
-

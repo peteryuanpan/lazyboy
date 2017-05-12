@@ -670,8 +670,8 @@ void PositionStruct::DelMeaningLessMove ( int *move, int &nMoveNum ) {
 }
 
 // 判断位置是否被保护
-bool PositionStruct::Protected ( const int sd, const int pos ) const {
-	int k, r, c, p;
+bool PositionStruct::Protected ( const int sd, const int src, const int dst ) const {
+	int k;
 	const int ST = SIDE_TYPE ( sd );
 
 	// 1. 被将保护
@@ -679,7 +679,7 @@ bool PositionStruct::Protected ( const int sd, const int pos ) const {
 		if ( piece[i+ST] ) {
 			k = 0;
 			while ( KING_HIT[ piece[i+ST] ][k] != 0 ) {
-				if ( KING_HIT[ piece[i+ST] ][k] == pos ) {
+				if ( KING_HIT[ piece[i+ST] ][k] == dst ) {
 					return true;
 				}
 				k ++;
@@ -692,7 +692,7 @@ bool PositionStruct::Protected ( const int sd, const int pos ) const {
 		if ( piece[i+ST] ) {
 			k = 0;
 			while ( ADVISOR_HIT[ piece[i+ST] ][k] != 0 ) {
-				if ( ADVISOR_HIT[ piece[i+ST] ][k] == pos ) {
+				if ( ADVISOR_HIT[ piece[i+ST] ][k] == dst ) {
 					return true;
 				}
 				k ++;
@@ -705,9 +705,9 @@ bool PositionStruct::Protected ( const int sd, const int pos ) const {
 		if ( piece[i+ST] ) {
 			k = 0;
 			while ( BISHOP_HIT[ piece[i+ST] ][k] != 0 ) {
-				if ( BISHOP_HIT[ piece[i+ST] ][k] == pos ) {
+				if ( BISHOP_HIT[ piece[i+ST] ][k] == dst ) {
 					int pin = BISHOP_PIN[ piece[i+ST] ][k];
-					if ( square[pin] == 0 ) {
+					if ( pin == src || square[pin] == 0 ) {
 						return true;
 					}
 				}
@@ -721,9 +721,9 @@ bool PositionStruct::Protected ( const int sd, const int pos ) const {
 		if ( piece[i+ST] ) {
 			k = 0;
 			while ( KNIGHT_HIT[ piece[i+ST] ][k] != 0 ) {
-				if ( KNIGHT_HIT[ piece[i+ST] ][k] == pos ) {
+				if ( KNIGHT_HIT[ piece[i+ST] ][k] == dst ) {
 					int pin = KNIGHT_PIN[ piece[i+ST] ][k];
-					if ( square[pin] == 0 ) {
+					if ( pin == src || square[pin] == 0 ) {
 						return true;
 					}
 				}
@@ -734,64 +734,52 @@ bool PositionStruct::Protected ( const int sd, const int pos ) const {
 
 	// 5. 被车保护
 	for ( int i = ROOK_FROM; i <= ROOK_TO; i ++ ) {
+		const int nLimit = 0;
 		if ( piece[i+ST] ) {
-			r = ROW ( piece[i+ST] );
-			c = COL ( piece[i+ST] );
-
-			p = LOWER_P[ bitCol[c] ][r][0];
-			p = piece[i+ST] - ( p << 4 );
-			if ( p == pos ) {
-				return true;
-			}
-
-			p = HIGHER_P[ bitCol[c] ][r][0];
-			p = piece[i+ST] + ( p << 4 );
-			if ( p == pos ) {
-				return true;
-			}
-
-			p = LOWER_P [ bitRow[r] ][c][0];
-			p = piece[i+ST] - p;
-			if ( p == pos ) {
-				return true;
-			}
-
-			p = HIGHER_P [ bitRow[r] ][c][0];
-			p = piece[i+ST] + p;
-			if ( p == pos ) {
-				return true;
+			for ( int j = 0; j < 4; j ++ ) {
+				int p = piece[i+ST];
+				int n = 0;
+				while ( true ) {
+					p = p + DIR[j];
+					if ( ! IN_BOARD(p) ) {
+						break;
+					}
+					if ( p == dst && n == nLimit ) {
+						return true;
+					}
+					if ( p == dst || (p != src && square[p] != 0) ) {
+						n ++;
+					}
+					if ( n > nLimit ) {
+						break;
+					}
+				}
 			}
 		}
 	}
 
 	// 6. 被炮保护
 	for ( int i = CANNON_FROM; i <= CANNON_TO; i ++ ) {
+		const int nLimit = 1;
 		if ( piece[i+ST] ) {
-			r = ROW ( piece[i+ST] );
-			c = COL ( piece[i+ST] );
-
-			p = LOWER_P[ bitCol[c] ][r][1];
-			p = piece[i+ST] - ( p << 4 );
-			if ( p == pos ) {
-				return true;
-			}
-
-			p = HIGHER_P[ bitCol[c] ][r][1];
-			p = piece[i+ST] + ( p << 4 );
-			if ( p == pos ) {
-				return true;
-			}
-
-			p = LOWER_P [ bitRow[r] ][c][1];
-			p = piece[i+ST] - p;
-			if ( p == pos ) {
-				return true;
-			}
-
-			p = HIGHER_P [ bitRow[r] ][c][1];
-			p = piece[i+ST] + p;
-			if ( p == pos ) {
-				return true;
+			for ( int j = 0; j < 4; j ++ ) {
+				int p = piece[i+ST];
+				int n = 0;
+				while ( true ) {
+					p = p + DIR[j];
+					if ( ! IN_BOARD(p) ) {
+						break;
+					}
+					if ( p == dst && n == nLimit ) {
+						return true;
+					}
+					if ( p == dst || (p != src && square[p] != 0) ) {
+						n ++;
+					}
+					if ( n > nLimit ) {
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -800,8 +788,8 @@ bool PositionStruct::Protected ( const int sd, const int pos ) const {
 	for ( int i = PAWN_FROM; i <= PAWN_TO; i ++ ) {
 		if ( piece[i+ST] ) {
 			k = 0;
-			while ( PAWN_HIT[ piece[i+ST] ][ST][k] != 0 ) {
-				if ( PAWN_HIT[ piece[i+ST] ][ST][k] == pos ) {
+			while ( PAWN_HIT[ piece[i+ST] ][sd][k] != 0 ) {
+				if ( PAWN_HIT[ piece[i+ST] ][sd][k] == dst ) {
 					return true;
 				}
 				k ++;

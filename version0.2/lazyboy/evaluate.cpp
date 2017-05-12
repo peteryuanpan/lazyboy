@@ -96,20 +96,22 @@ void PositionStruct::PreEvaluate ( void ) {
 
 		for ( int p = 0; p < 256; p ++ ) {
 			if ( IN_BOARD(p) ) {
-				// 将、兵
-				const int t1 = ( MIDGAME_VALUE * MIDGAME_ATTACKING_KING_PAWN[p] + ENDGAME_VALUE * ENDGAME_ATTACKING_KING_PAWN[p] ) / TOTAL_GAME_VALUE;
+				const int w = ( sd == 0 ) ? p : REVERSE_POS ( p );
+				// 将
+				vlPiece[sd][KING_TYPE][w] = ( MIDGAME_VALUE * MIDGAME_ATTACKING_KING_PAWN[p] + ENDGAME_VALUE * ENDGAME_ATTACKING_KING_PAWN[p] ) / TOTAL_GAME_VALUE;
+				// 兵
+				const int t1 = vlPiece[sd][KING_TYPE][w];
 				const int t2 = ( MIDGAME_VALUE * MIDGAME_ATTACKLESS_KING_PAWN[p] + ENDGAME_VALUE * ENDGAME_ATTACKLESS_KING_PAWN[p] ) / TOTAL_GAME_VALUE;
-				vlPiece[sd][KING_TYPE][p] = ( t1 * ATTACKING_VALUE + t2 * ATTACKLESS_VALUE ) / TOTAL_ATTACK_VALUE;
-				vlPiece[sd][PAWN_TYPE][p] = vlPiece[sd][KING_TYPE][p];
+				vlPiece[sd][PAWN_TYPE][w] = ( t1 * ATTACKING_VALUE + t2 * ATTACKLESS_VALUE ) / TOTAL_ATTACK_VALUE;
 				// 士、象
-				vlPiece[sd][ADVISOR_TYPE][p] = ( THREATENED_VALUE * THREATENED_ADVISOR_BISHOP[p] + THREATLESS_VALUE * THREATLESS_ADVISOR_BISHOP[p]) / TOTAL_ATTACK_VALUE;
-				vlPiece[sd][BISHOP_TYPE][p] = vlPiece[sd][ADVISOR_TYPE][p];
+				vlPiece[sd][ADVISOR_TYPE][w] = ( THREATENED_VALUE * THREATENED_ADVISOR_BISHOP[p] + THREATLESS_VALUE * THREATLESS_ADVISOR_BISHOP[p]) / TOTAL_ATTACK_VALUE;
+				vlPiece[sd][BISHOP_TYPE][w] = vlPiece[sd][ADVISOR_TYPE][w];
 				// 马
-				vlPiece[sd][KNIGHT_TYPE][p] = ( MIDGAME_VALUE * MIDGAME_KNIGHT[p] + ENDGAME_VALUE * ENDGAME_KNIGHT[p]) / TOTAL_GAME_VALUE;
+				vlPiece[sd][KNIGHT_TYPE][w] = ( MIDGAME_VALUE * MIDGAME_KNIGHT[p] + ENDGAME_VALUE * ENDGAME_KNIGHT[p]) / TOTAL_GAME_VALUE;
 				// 车
-				vlPiece[sd][ROOK_TYPE][p] = ( MIDGAME_VALUE * MIDGAME_ROOK[p] + ENDGAME_VALUE * ENDGAME_ROOK[p]) / TOTAL_GAME_VALUE;
+				vlPiece[sd][ROOK_TYPE][w] = ( MIDGAME_VALUE * MIDGAME_ROOK[p] + ENDGAME_VALUE * ENDGAME_ROOK[p]) / TOTAL_GAME_VALUE;
 				// 炮
-				vlPiece[sd][CANNON_TYPE][p] = ( MIDGAME_VALUE * MIDGAME_CANNON[p] + ENDGAME_VALUE * ENDGAME_CANNON[p]) / TOTAL_GAME_VALUE;
+				vlPiece[sd][CANNON_TYPE][w] = ( MIDGAME_VALUE * MIDGAME_CANNON[p] + ENDGAME_VALUE * ENDGAME_CANNON[p]) / TOTAL_GAME_VALUE;
 			}
 		}
 	}
@@ -118,15 +120,16 @@ void PositionStruct::PreEvaluate ( void ) {
 	// 调整不受威胁方少掉的士、象分值
 	this->vlRed = ADVISOR_BISHOP_ATTACKLESS_VALUE * ( TOTAL_ATTACK_VALUE - blkAttack ) / TOTAL_ATTACK_VALUE;
 	this->vlBlk = ADVISOR_BISHOP_ATTACKLESS_VALUE * ( TOTAL_ATTACK_VALUE - redAttack ) / TOTAL_ATTACK_VALUE;
+
 	// 再计算
 	for ( int i = 16; i < 32; i ++ ) {
 		if ( piece[i] ) {
-			this->vlRed += vlPiece[0][PIECE_TYPE(i)][piece[i]];
+			this->vlRed += vlPiece[0][PIECE_TYPE[i]][piece[i]];
 		}
 	}
 	for ( int i = 32; i < 48; i ++ ) {
 		if ( piece[i] ) {
-			this->vlBlk += vlPiece[1][PIECE_TYPE(i)][piece[i]];
+			this->vlBlk += vlPiece[1][PIECE_TYPE[i]][piece[i]];
 		}
 	}
 }
@@ -165,7 +168,7 @@ int PositionStruct::KnightTrap ( void ) const {
 				while ( KNIGHT_HIT[ piece[i+ST] ][k] != 0 ) {
 					int hit = KNIGHT_HIT[ piece[i+ST] ][k];
 					int pin = KNIGHT_PIN[ piece[i+ST] ][k];
-					if ( square[hit] == 0 && square[pin] == 0 && !Protected(1-sd, hit) ) {
+					if ( square[hit] == 0 && square[pin] == 0 && !Protected(1-sd, piece[i+ST], hit) ) {
 						if ( KNIGHT_TRAP[hit] == 0 ) {
 							nMovable ++;
 							if ( nMovable > 1 ) {
@@ -188,7 +191,7 @@ int PositionStruct::KnightTrap ( void ) const {
 }
 
 // 给局面打分
-int PositionStruct::Evaluate ( const int alpha, const int beta ) const {
+int PositionStruct::Evaluate ( void ) const {
 	int value = 0;
 	// 1. 子力平衡评估
 	value += Material ();

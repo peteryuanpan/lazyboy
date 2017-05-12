@@ -19,6 +19,10 @@
  							// C3  C4  C5  C6  C7  C8  C9  C10 C11
  */
 
+const int PIECE_TYPE[48] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6,
+							0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6};
+
 const int RED_TYPE = 16;
 const int BLACK_TYPE = 32;
 
@@ -91,10 +95,6 @@ inline int REVERSE_POS ( const int p ) {
 	return POS ( 15 - ROW(p), 14 - COL(p) );
 }
 
-inline int PIECE_TYPE ( const int x ) {
-	return x & 15;
-}
-
 inline int COLOR_TYPE ( const int x ) {
 	return x == 0 ? 0 : ( (x&RED_TYPE) ? RED_TYPE : BLACK_TYPE ) ;
 }
@@ -144,7 +144,7 @@ struct PositionStruct {
 	void GenNonCapMove ( int *move, int &nMoveNum ) const; // 生成非吃子着法
 	void GenAllMove ( int *move, int &nMoveNum ) const; // 生成所有着法
 	void DelMeaningLessMove ( int *move, int &nMoveNum ); // 去除无意义着法
-	bool Protected ( const int sd, const int pos ) const; // 判断位置是否被保护
+	bool Protected ( const int sd, const int src, const int dst ) const; // 判断位置是否被保护
 
 	// 以下函数见movesort.cpp
 	int MvvLva ( const int src, const int dst ) const; // 吃子着法估分
@@ -157,7 +157,7 @@ struct PositionStruct {
 	}
 	int RookMobility ( void ) const; // 打分，车的灵活性
 	int KnightTrap ( void ) const; // 打分，马的阻碍
-	int Evaluate ( const int alpha, const int beta ) const; // 给局面打分
+	int Evaluate ( void ) const; // 给局面打分
 };
 
 std::string MoveIntToStr ( const int mv );
