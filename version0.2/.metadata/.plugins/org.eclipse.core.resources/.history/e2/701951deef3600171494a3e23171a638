@@ -1,0 +1,204 @@
+#include "rollback.h"
+#include "evaluate.h"
+#include "search.h"
+#include "debug.h"
+
+// 初始化回滚结构体
+void RollBackListStruct::Init ( void ) {
+	nRollNum = 0;
+	for ( int i = 0; i < RBL_MAXN; i ++ ) {
+		move[i] = 0;
+		dstPiece[i] = 0;
+		check[i] = 0;
+		checked[i] = 0;
+		chased[i] = 0;
+		zobrist[i] = std::make_pair ( 0, 0 );
+	}
+}
+
+// 返回着法类型
+int GetMoveStatus ( const bool checked, const bool chased ) {
+	return checked ? 2 : ( chased ? 1 : 0 );
+}
+
+// 判断重复类型
+int RollBackListStruct::RepStatus ( void ) const {
+	if ( nRollNum == 0 ) {
+		return REP_NONE;
+	}
+	// 判断连将或者连捉
+	int ThisSideConCC = GetMoveStatus ( checked[nRollNum - 1], chased[nRollNum - 1] );
+	int OppSideConCC = GetMoveStatus ( pos.checked, pos.chased );
+	int TurnThisSide = 1;
+	for ( int i = nRollNum - 1; i >= 0; i -- ) {
+		if ( TurnThisSide ) {
+			TurnThisSide = 0;
+			ThisSideConCC &= GetMoveStatus ( checked[i], chased[i] );
+		}
+		else {
+			TurnThisSide = 1;
+			OppSideConCC &= GetMoveStatus ( checked[i], chased[i] );
+		}
+		if ( zobrist[i] == pos.zobrist ) {
+			return ThisSideConCC == OppSideConCC ? REP_DRAW : ( ThisSideConCC > OppSideConCC ? REP_LOSE : REP_WIN );
+		}
+	}
+
+	return REP_NONE;
+}
+
+// 返回重复打分值
+int RollBackListStruct::RepValue ( const int vRep ) const {
+	assert( vRep != REP_NONE );
+	switch ( vRep ) {
+		case REP_WIN:
+			return BAN_VALUE;
+		case REP_LOSE:
+			return -BAN_VALUE;
+		default: // REP_DRAW
+			return 0;
+	}
+	return 0;
+}
+
+// 被捉
+bool PositionStruct::Chased ( void ) const {
+	const int ST = SIDE_TYPE ( 1 - player );
+	int k, r, c, p;
+
+	// 1. 判断马捉子
+	for ( int i = KNIGHT_FROM; i <= KNIGHT_TO; i ++ ) {
+		if ( piece[i+ST] ) {
+			k = 0;
+			while ( KNIGHT_HIT[piece[i+ST]][k] != 0 ) {
+				int hit = KNIGHT_HIT[piece[i+ST]][k];
+				if ( square[hit] != 0 && COLOR_TYPE(square[hit]) != COLOR_TYPE(i+ST) ) {
+					int pin = KNIGHT_PIN[piece[i+ST]][k];
+					if ( square[pin] == 0 ) {
+						// 马捉马
+						if ( PIECE_TYPE(square[hit]) == KNIGHT_TYPE ) {
+							if ( !Protected(player, 0, hit) ) {
+								return true;
+							}
+						}
+						// 马捉车
+						if ( PIECE_TYPE(square[hit]) == ROOK_TYPE ) {
+							return true;
+						}
+						// 马捉炮
+						else if ( PIECE_TYPE(square[hit]) == CANNON_TYPE ) {
+							if ( !Protected(player, 0, hit) ) {
+								return true;
+							}
+						}
+						// 马捉兵
+						else if ( PIECE_TYPE(square[hit]) == PAWN_TYPE ) {
+							if ( !Protected(player, 0, hit) ) {
+								if ( IN_OPP_SIDE_BOARD(square[hit], hit) ) {
+									return true;
+								}
+							}
+						}
+					}
+				}
+				k ++;
+			}
+		}
+	}
+
+	// 2. 判断车捉子
+	for ( int i = ROOK_FROM; i <= ROOK_TO; i ++ ) {
+		if ( piece[i+ST] ) {
+			for ( int j = 0; j < 4; j ++ ) {
+				int p = piece[i+ST];
+				int n = 0;
+				while ( true ) {
+					p = p + DIR[j];
+					if ( ! IN_BOARD(p) ) {
+						break;
+					}
+					if ( square[p] != 0 ) {
+						n ++;
+					}
+					if ( n == 1 ) {
+						// 车捉马
+						if ( PIECE_TYPE(square[p]) == KNIGHT_TYPE ) {
+							if ( !Protected(player, 0, p) ) {
+								return true;
+							}
+						}
+						// 车捉车
+						else if ( PIECE_TYPE(square[p]) == ROOK_TYPE ) {
+							if ( !Protected(player, 0, p) ) {
+								return true;
+							}
+						}
+						// 车捉炮
+						else if ( PIECE_TYPE(square[p]) == CANNON_TYPE ) {
+							if ( !Protected(player, 0, p) ) {
+								return true;
+							}
+						}
+						// 车捉兵
+						else if ( PIECE_TYPE(square[p]) == PAWN_TYPE ) {
+							if ( !Protected(player, 0, p) ) {
+								if ( IN_OPP_SIDE_BOARD(square[p], p) ) {
+									return true;
+								}
+							}
+						}
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	// 3. 判断炮捉子
+	for ( int i = CANNON_FROM; i <= CANNON_TO; i ++ ) {
+		if ( piece[i+ST] ) {
+			for ( int j = 0; j < 4; j ++ ) {
+				int p = piece[i+ST];
+				int n = 0;
+				while ( true ) {
+					p = p + DIR[j];
+					if ( ! IN_BOARD(p) ) {
+						break;
+					}
+					if ( square[p] != 0 ) {
+						n ++;
+					}
+					if ( n == 2 ) {
+						// 炮捉马
+						if ( PIECE_TYPE(square[p]) == KNIGHT_TYPE ) {
+							if ( !Protected(player, 0, p) ) {
+								return true;
+							}
+						}
+						// 炮捉车
+						else if ( PIECE_TYPE(square[p]) == ROOK_TYPE ) {
+							return true;
+						}
+						// 炮捉炮
+						else if ( PIECE_TYPE(square[p]) == CANNON_TYPE ) {
+							if ( !Protected(player, 0, p) ) {
+								return true;
+							}
+						}
+						// 炮捉兵
+						else if ( PIECE_TYPE(square[p]) == PAWN_TYPE ) {
+							if ( !Protected(player, 0, p) ) {
+								if ( IN_OPP_SIDE_BOARD(square[p], p) ) {
+									return true;
+								}
+							}
+						}
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
+}

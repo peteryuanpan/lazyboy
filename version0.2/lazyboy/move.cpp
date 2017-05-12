@@ -799,3 +799,205 @@ bool PositionStruct::Protected ( const int sd, const int src, const int dst ) co
 
 	return false;
 }
+
+// 被捉
+bool PositionStruct::Chased ( void ) const {
+	const int ST = SIDE_TYPE ( 1 - player );
+	int k, r, c, p;
+
+	// 判断象捉子
+	for ( int i = BISHOP_FROM; i <= BISHOP_TO; i ++ ) {
+		if ( piece[i+ST] ) {
+			k = 0;
+			while ( BISHOP_HIT[piece[i+ST]][k] != 0 ) {
+				int hit = BISHOP_HIT[piece[i+ST]][k];
+				if ( square[hit] != 0 && COLOR_TYPE(square[hit]) != COLOR_TYPE(i+ST) ) {
+					int pin = BISHOP_PIN[piece[i+ST]][k];
+					if ( square[pin] == 0 ) {
+						// 象捉马
+						if ( PIECE_TYPE[square[hit]] == KNIGHT_TYPE ) {
+							return true;
+						}
+						// 象捉车
+						else if ( PIECE_TYPE[square[hit]] == ROOK_TYPE ) {
+							return true;
+						}
+						// 象捉炮
+						else if ( PIECE_TYPE[square[hit]] == CANNON_TYPE ) {
+							return true;
+						}
+						// 象捉兵
+						else if ( PIECE_TYPE[square[hit]] == PAWN_TYPE ) {
+							if ( !Protected(player, piece[i+ST], hit) ) {
+								if ( IN_OPP_SIDE_BOARD(square[hit], hit) ) {
+									return true;
+								}
+							}
+						}
+					}
+				}
+				k ++;
+			}
+		}
+	}
+
+	// 判断马捉子
+	for ( int i = KNIGHT_FROM; i <= KNIGHT_TO; i ++ ) {
+		if ( piece[i+ST] ) {
+			k = 0;
+			while ( KNIGHT_HIT[piece[i+ST]][k] != 0 ) {
+				int hit = KNIGHT_HIT[piece[i+ST]][k];
+				if ( square[hit] != 0 && COLOR_TYPE(square[hit]) != COLOR_TYPE(i+ST) ) {
+					int pin = KNIGHT_PIN[piece[i+ST]][k];
+					if ( square[pin] == 0 ) {
+						// 马捉马
+						if ( PIECE_TYPE[square[hit]] == KNIGHT_TYPE ) {
+							if ( !Protected(player, piece[i+ST], hit) ) {
+								return true;
+							}
+						}
+						// 马捉车
+						else if ( PIECE_TYPE[square[hit]] == ROOK_TYPE ) {
+							return true;
+						}
+						// 马捉炮
+						else if ( PIECE_TYPE[square[hit]] == CANNON_TYPE ) {
+							if ( !Protected(player, piece[i+ST], hit) ) {
+								return true;
+							}
+						}
+						// 马捉兵
+						else if ( PIECE_TYPE[square[hit]] == PAWN_TYPE ) {
+							if ( !Protected(player, piece[i+ST], hit) ) {
+								if ( IN_OPP_SIDE_BOARD(square[hit], hit) ) {
+									return true;
+								}
+							}
+						}
+					}
+				}
+				k ++;
+			}
+		}
+	}
+
+	// 判断车捉子
+	int RookHit[10];
+	int nRHit = 0;
+	for ( int i = ROOK_FROM; i <= ROOK_TO; i ++ ) {
+		if ( piece[i+ST] ) {
+			r = ROW ( piece[i+ST] );
+			c = COL ( piece[i+ST] );
+
+			p = LOWER_P[ bitCol[c] ][r][0];
+			p = piece[i+ST] - ( p << 4 );
+			RookHit[nRHit++] = p;
+
+			p = HIGHER_P[ bitCol[c] ][r][0];
+			p = piece[i+ST] + ( p << 4 );
+			RookHit[nRHit++] = p;
+
+			p = LOWER_P [ bitRow[r] ][c][0];
+			p = piece[i+ST] - p;
+			RookHit[nRHit++] = p;
+
+			p = HIGHER_P [ bitRow[r] ][c][0];
+			p = piece[i+ST] + p;
+			RookHit[nRHit++] = p;
+
+			for ( int j = 0; j < nRHit; j ++ ) {
+				p = RookHit[j];
+				if ( square[p] != 0 && piece[i+ST] != p ) {
+					if ( COLOR_TYPE(square[p]) != COLOR_TYPE(i+ST) ) {
+						// 车捉马
+						if ( PIECE_TYPE[square[p]] == KNIGHT_TYPE ) {
+							if ( !Protected(player, piece[i+ST], p) ) {
+								return true;
+							}
+						}
+						// 车捉车
+						else if ( PIECE_TYPE[square[p]] == ROOK_TYPE ) {
+							if ( !Protected(player, piece[i+ST], p) ) {
+								return true;
+							}
+						}
+						// 车捉炮
+						else if ( PIECE_TYPE[square[p]] == CANNON_TYPE ) {
+							if ( !Protected(player, piece[i+ST], p) ) {
+								return true;
+							}
+						}
+						// 车捉兵
+						else if ( PIECE_TYPE[square[p]] == PAWN_TYPE ) {
+							if ( !Protected(player, piece[i+ST], p) ) {
+								if ( IN_OPP_SIDE_BOARD(square[p], p) ) {
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// 判断炮捉子
+	int CannonHit[10];
+	int nCHit = 0;
+	for ( int i = CANNON_FROM; i <= CANNON_TO; i ++ ) {
+		if ( piece[i+ST] ) {
+			r = ROW ( piece[i+ST] );
+			c = COL ( piece[i+ST] );
+
+			p = LOWER_P[ bitCol[c] ][r][1];
+			p = piece[i+ST] - ( p << 4 );
+			CannonHit[nCHit++] = p;
+
+			p = HIGHER_P[ bitCol[c] ][r][1];
+			p = piece[i+ST] + ( p << 4 );
+			CannonHit[nCHit++] = p;
+
+			p = LOWER_P [ bitRow[r] ][c][1];
+			p = piece[i+ST] - p;
+			CannonHit[nCHit++] = p;
+
+			p = HIGHER_P [ bitRow[r] ][c][1];
+			p = piece[i+ST] + p;
+			CannonHit[nCHit++] = p;
+
+			for ( int j = 0; j < nCHit; j ++ ) {
+				p = CannonHit[j];
+				if ( square[p] != 0 && piece[i+ST] != p ) {
+					if ( COLOR_TYPE(square[p]) != COLOR_TYPE(i+ST) ) {
+						// 炮捉马
+						if ( PIECE_TYPE[square[p]] == KNIGHT_TYPE ) {
+							if ( !Protected(player, piece[i+ST], p) ) {
+								return true;
+							}
+						}
+						// 炮捉车
+						else if ( PIECE_TYPE[square[p]] == ROOK_TYPE ) {
+							return true;
+						}
+						// 炮捉炮
+						else if ( PIECE_TYPE[square[p]] == CANNON_TYPE ) {
+							if ( !Protected(player, piece[i+ST], p) ) {
+								return true;
+							}
+						}
+						// 炮捉兵
+						else if ( PIECE_TYPE[square[p]] == PAWN_TYPE ) {
+							if ( !Protected(player, piece[i+ST], p) ) {
+								if ( IN_OPP_SIDE_BOARD(square[p], p) ) {
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return false;
+}

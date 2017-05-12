@@ -30,185 +30,184 @@ int HarmlessPruning ( void ) {
 
 // 零窗口搜索
 int SearchCut ( int depth, int beta ) {
-	int val, mv;
-	int bstval = - MATE_VALUE;
-	int bstmv = 0;
+	int vl, mv;
+	int bvl = - MATE_VALUE;
+	int bmv = 0;
 	MoveSortStruct mvsort;
 
 	if ( TimeOut(SEARCH_TOTAL_TIME) ) { // 超时
-		return bstval;
+		return bvl;
 	}
 	Search.nNode ++;
-	Search.maxDistance = MAX ( Search.maxDistance, pos.nDistance );
 
-	// 1. 无害裁剪
-	val = HarmlessPruning ();
-	if ( val > - MATE_VALUE ) {
-		return val;
+	// 无害裁剪
+	vl = HarmlessPruning ();
+	if ( vl > - MATE_VALUE ) {
+		return vl;
 	}
 
-	// 2. 打分
-	if ( depth <= 0 ) {
-		return pos.Evaluate ();
-	}
-
-	// 3. 置换裁剪
-	val = QueryBestValueInHashTable ( depth, beta - 1, beta );
-	if ( val != - MATE_VALUE ) {
-		if ( pos.nDistance == 0 ) {
-			Search.bmv = bstmv;
+	// 达到极限深度
+	if ( depth <= 0 || pos.nDistance >= SEARCH_MAX_DEPTH ) {
+		// 选择性延伸
+		if ( pos.checked || pos.nDistance == 0 ) {
+			return SearchCut ( 1, beta );
 		}
-		return val;
-	}
-
-	// 4. 达到极限深度
-	if ( pos.nDistance >= SEARCH_MAX_DEPTH ) {
 		return pos.Evaluate ();
 	}
 
-	// 5. 空着裁剪 ????
+	// 置换裁剪
+	vl = QueryBestValueInHashTable ( depth, beta - 1, beta );
+	if ( vl != - MATE_VALUE ) {
+		return vl;
+	}
 
-	// 6. 生成着法
+	// 生成着法
 	int nMoveNum = mvsort.InitCutMove ();
 
-	// 7. 按照着法搜索
+	// 按照着法搜索
 	while ( (mv = mvsort.NextMove()) != 0 ) {
 		pos.MakeMove ( mv );
 
-		// 8. 尝试选择性延伸
+		// 尝试选择性延伸
 		int newDepth = ( pos.checked || nMoveNum == 1 ) ? depth : depth - 1;
 
-		// 9. 递归搜索
-		val = - SearchCut ( newDepth, 1 - beta );
+		// 递归搜索
+		vl = - SearchCut ( newDepth, 1 - beta );
 		pos.UndoMakeMove ();
 
 		if ( TimeOut(SEARCH_TOTAL_TIME) ) { // 超时
-			return bstval;
+			return bvl;
 		}
 
-		// 10. 边界
-		if ( val > bstval ) {
-			bstval = val;
-			bstmv = mv;
-			if ( bstval >= beta ) {
+		// 边界
+		if ( vl > bvl ) {
+			bvl = vl;
+			bmv = mv;
+			if ( vl >= beta ) {
 				Search.nBeta ++;
-				InsertMoveToHashTable ( depth, bstmv, bstval, HASH_TYPE_BETA );
-				InsertHistoryTable ( bstmv, depth );
-				return bstval;
+				InsertMoveToHashTable ( depth, bmv, bvl, HASH_TYPE_BETA );
+				InsertHistoryTable ( bmv, depth );
+				return vl;
 			}
 		}
 	}
 
-	// 11. 最后
-	InsertMoveToHashTable ( depth, bstmv, bstval, HASH_TYPE_ALPHA );
-	return bstval;
+	// 最后
+	InsertMoveToHashTable ( depth, bmv, bvl, HASH_TYPE_ALPHA );
+	return bvl;
 }
 
 // Alpha-Beta 搜索
 int SearchAlphaBeta ( int depth, int alpha, int beta ) {
-	int val, mv;
-	int bstval = - MATE_VALUE;
-	int bstmv = 0;
+	int vl, mv, mvHash, vlHash;
+	int bvl[nBest], bmv[nBest];
+	for ( int i = 0; i < nBest; i ++ ) {
+		bvl[i] = - MATE_VALUE;
+		bmv[i] = 0;
+	}
 	int hash_type = HASH_TYPE_ALPHA;
 	MoveSortStruct mvsort;
 
 	if ( TimeOut(SEARCH_TOTAL_TIME) ) { // 超时
-		return bstval;
+		return bvl[0];
 	}
 	Search.nNode ++;
-	Search.maxDistance = MAX ( Search.maxDistance, pos.nDistance );
 
-	// 1. 无害裁剪
-	val = HarmlessPruning ();
-	if ( val > - MATE_VALUE ) {
-		return val;
+	// 无害裁剪
+	vl = HarmlessPruning ();
+	if ( vl > - MATE_VALUE ) {
+		return vl;
 	}
 
-	// 2. 打分
-	if ( depth <= 0 ) {
+	// 达到极限深度
+	if ( depth <= 0 || pos.nDistance >= SEARCH_MAX_DEPTH ) {
+		// 选择性延伸
+		if ( pos.checked || pos.nDistance == 0 ) {
+			return SearchAlphaBeta ( 1, alpha, beta );
+		}
 		return pos.Evaluate ();
 	}
 
-	// 3. 置换裁剪
-	val = QueryBestValueInHashTable ( depth, alpha, beta );
-	if ( val != - MATE_VALUE ) {
-		if ( pos.nDistance == 0 ) {
-			Search.bmv = bstmv;
-		}
-		return val;
+	// 置换裁剪
+	vlHash = QueryBestValueInHashTable ( depth, alpha, beta );
+	if ( vlHash != - MATE_VALUE ) {
+		return vl;
 	}
 
-	// 4. 达到极限深度
-	if ( pos.nDistance >= SEARCH_MAX_DEPTH ) {
-		return pos.Evaluate ();
-	}
-
-	// 5. 内部迭代加深启发
-	mv = QueryBestMoveInHashTable ();
-	if ( depth > 2 && mv == 0 ) {
-		val = SearchAlphaBeta ( depth / 2, alpha, beta );
-		if ( val <= alpha ) {
-			val = SearchAlphaBeta ( depth / 2, - MATE_VALUE, beta );
-		}
-		if ( TimeOut(SEARCH_TOTAL_TIME) ) { // 超时
-			return bstval;
+	// 内部迭代加深启发
+	if ( depth > 2 ) {
+		mvHash = QueryBestMoveInHashTable ();
+		if ( mvHash == 0 ) {
+			SearchAlphaBeta ( depth / 2, alpha, beta );
+			if ( TimeOut(SEARCH_TOTAL_TIME) ) { // 超时
+				return bvl[0];
+			}
 		}
 	}
 
-	// 6. 生成着法
+	// 生成着法
 	int nMoveNum = mvsort.InitAlphaBetaMove ();
 
-	// 7. 按照着法搜索
+	// 大搜索
 	while ( (mv = mvsort.NextMove()) != 0 ) {
 		pos.MakeMove ( mv );
-
-		// 8. 尝试选择性延伸
 		int newDepth = ( pos.checked || nMoveNum == 1 ) ? depth : depth - 1;
-
-		// 9. 零窗口搜索、递归搜索
-		if ( bstval == - MATE_VALUE ) {
-			val = - SearchAlphaBeta ( newDepth, -beta, -alpha );
-		}
-		else {
-			val = - SearchCut ( newDepth, -alpha );
-			if ( val > alpha && val < beta ) {
-				val = - SearchAlphaBeta ( newDepth, -beta, -alpha );
-			}
+		int cutDepth = ( newDepth > 4 ? newDepth - 2 : newDepth );
+		vl = - SearchCut ( cutDepth, - alpha );
+		if ( vl > alpha && vl < beta ) {
+			vl = - SearchAlphaBeta ( newDepth, -beta, -alpha );
 		}
 		pos.UndoMakeMove ();
 
 		if ( TimeOut(SEARCH_TOTAL_TIME) ) { // 超时
-			return bstval;
+			return bvl[0];
 		}
 
-		// 10. 边界
-		if ( val > bstval ) {
-			bstval = val;
-			bstmv = mv;
-			if ( bstval >= beta ) {
-				Search.nBeta ++;
-				hash_type = HASH_TYPE_BETA;
-				break;
+		if ( pos.nDistance == 0 ) {
+			for ( int i = 0; i < nBest; i ++ ) {
+				if ( vl > bvl[i] ) {
+					for ( int j = nBest - 1; j > i; j -- ) {
+						bvl[j] = bvl[j-1];
+						bmv[j] = bmv[j-1];
+					}
+					bvl[i] = vl;
+					bmv[i] = mv;
+					break;
+				}
 			}
-			if ( bstval > alpha ) {
-				alpha = bstval;
-				hash_type = HASH_TYPE_PV;
-			}
+		}
+		else if ( vl > bvl[0] ) {
+			bvl[0] = vl;
+			bmv[0] = mv;
+		}
+
+		// 边界
+		if ( vl >= beta ) {
+			Search.nBeta ++;
+			hash_type = HASH_TYPE_BETA;
+			break;
+		}
+		if ( vl > alpha ) {
+			alpha = vl;
+			hash_type = HASH_TYPE_PV;
 		}
 	}
 
-	// 11. 最后
-	InsertMoveToHashTable ( depth, bstmv, bstval, hash_type );
-	InsertHistoryTable ( bstmv, depth );
-	if ( pos.nDistance == 0 && bstmv != 0 ) {
-		Search.bmv = bstmv;
+	// 最后
+	InsertMoveToHashTable ( depth, bmv[0], bvl[0], hash_type );
+	InsertHistoryTable ( bmv[0], depth );
+	if ( pos.nDistance == 0 ) {
+		for ( int i = 0; i < nBest; i ++ ) {
+			Search.bvl[i] = bvl[i];
+			Search.bmv[i] = bmv[i];
+		}
 	}
-	return bstval;
+	return bvl[0];
 }
 
 // 主搜索函数
 int SearchMain ( void ) {
-	// 1. 特殊情况
+	// 特殊情况
 	MoveSortStruct mvsort;
 	int nMoveNum = mvsort.InitAlphaBetaMove ();
 	if ( nMoveNum == 0 ) { // 无着法
@@ -227,62 +226,71 @@ int SearchMain ( void ) {
 		// 注意不要return
 	}
 
-	// 2. 初始化
+	// 初始化
 	ClearHistoryTable ();
 	InitBeginTime ( SEARCH_TOTAL_TIME );
 
-	// 3. 迭代加深搜索
-	printf("depth   time    nNode  rBeta   value  bestmv\n");
+	// 迭代加深搜索
+	printf("depth   time    nNode  rBeta");
+	for ( int i = 0; i < nBest; i ++ ) {
+		printf("   bvl[%d]  bmv[%d]", i, i);
+	}
+	printf("\n");
 	fflush ( stdout );
-	int last_bvl = - MATE_VALUE, last_bmv = 0;
+	int lastbvl[nBest], lastbmv[nBest];
+	for ( int i = 0; i < nBest; i ++ ) {
+		lastbvl[i] = - MATE_VALUE;
+		lastbmv[i] = 0;
+	}
 	for ( int depth = 1; /*depth <= ?*/; depth ++ ) {
 		InitBeginTime ( THIS_SEARCH_TIME );
-		Search.bmv = 0;
+		for ( int i = 0; i < nBest; i ++ ) {
+			Search.bvl[i] = - MATE_VALUE;
+			Search.bmv[i] = 0;
+		}
 		Search.nNode = Search.nBeta = 0;
-		Search.maxDistance = 0;
-		Search.bvl = SearchAlphaBeta ( depth, - MATE_VALUE, MATE_VALUE );
+		Search.depth = depth;
+
+		SearchAlphaBeta ( depth, - MATE_VALUE, MATE_VALUE );
 
 		if ( TimeOut(SEARCH_TOTAL_TIME) ) { // 超时
-			Search.bvl = last_bvl;
-			Search.bmv = last_bmv;
+			for ( int i = 0; i < nBest; i ++ ) {
+				Search.bvl[i] = lastbvl[i];
+				Search.bmv[i] = lastbmv[i];
+			}
 			break;
 		}
 		else {
-			last_bvl = Search.bvl;
-			last_bmv = Search.bmv;
+			for ( int i = 0; i < nBest; i ++ ) {
+				lastbvl[i] = Search.bvl[i];
+				lastbmv[i] = Search.bmv[i];
+			}
 		}
 
 		// 重要信息输出
-		double tc = TimeCost(THIS_SEARCH_TIME);
-		if ( tc < 10.0 ) {
-			printf( "%5d  %.2fs  %7d    %2.0f%%  %6d    %s\n",
-								depth, TimeCost(THIS_SEARCH_TIME), Search.nNode,
-								100.0*Search.nBeta/Search.nNode, Search.bvl, MoveIntToStr(Search.bmv).c_str() );
+		printf( "%5d  %.2fs  %7d    %2.0f%%", depth, TimeCost(THIS_SEARCH_TIME), Search.nNode, 100.0*Search.nBeta/Search.nNode);
+		for ( int i = 0; i < nBest; i ++ ) {
+			printf("   %6d    %s", Search.bvl[i], MoveIntToStr(Search.bmv[i]).c_str());
 		}
-		else {
-			printf( "%5d  %.1fs  %7d    %2.0f%%  %6d    %s\n",
-								depth, TimeCost(THIS_SEARCH_TIME), Search.nNode,
-								100.0*Search.nBeta/Search.nNode, Search.bvl, MoveIntToStr(Search.bmv).c_str() );
-		}
+		printf("\n");
 		fflush ( stdout );
 
-		if ( Search.bvl <= - BAN_VALUE || Search.bvl >= BAN_VALUE) {
+		if ( Search.bvl[0] <= - BAN_VALUE || Search.bvl[0] >= BAN_VALUE) {
 			break;
 		}
 	}
-	printf ( "maxDistance: %d\n", Search.maxDistance );
 	printf ( "totaltime: %.2fs\n", TimeCost(SEARCH_TOTAL_TIME) );
 	fflush ( stdout );
 
-	// 4. 输出最优着法
-	if ( Search.bmv == 0 || Search.bvl <= - BAN_VALUE ) {
+	// 输出最优着法
+	if ( Search.bmv[0] == 0 || Search.bvl[0] <= - BAN_VALUE ) {
 		printf ( "bestmove a0a1 resign\n" ); // 认输
 		fflush ( stdout );
 		return 0;
 	}
 	else {
-		printf ( "bestmove %s\n", MoveIntToStr(Search.bmv).c_str() );
+		printf ( "bestmove %s\n", MoveIntToStr(Search.bmv[0]).c_str() );
 		fflush ( stdout );
-		return Search.bmv;
+		return Search.bmv[0];
 	}
 }

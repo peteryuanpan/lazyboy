@@ -3,6 +3,8 @@
 #include "search.h"
 #include "debug.h"
 
+int RollBackHash [ rbHashNum ];
+
 // 初始化回滚结构体
 void RollBackListStruct::Init ( void ) {
 	nRollNum = 0;
@@ -11,28 +13,44 @@ void RollBackListStruct::Init ( void ) {
 		dstPiece[i] = 0;
 		check[i] = 0;
 		checked[i] = 0;
+		chased[i] = 0;
 		zobrist[i] = std::make_pair ( 0, 0 );
 	}
+	for ( int i = 0; i < rbHashNum; i ++ ) {
+		RollBackHash[i] = 0;
+	}
+}
+
+// 返回着法类型
+int GetMoveStatus ( const bool checked, const bool chased ) {
+	return checked ? 2 : ( chased ? 1 : 0 );
 }
 
 // 判断重复类型
 int RollBackListStruct::RepStatus ( void ) const {
-	// 1. 逐个往回寻找
-	int ThisSideConCheck = ( nRollNum == 0 ) ? 0 : checked[ nRollNum - 1 ];
-	int OppSideConCheck = pos.checked;
+	if ( nRollNum == 0 ) {
+		return REP_NONE;
+	}
+	const int t = pos.zobrist.first & rbHashMask;
+	if ( RollBackHash[t] == 0 ) {
+		return REP_NONE;
+	}
+
+	// 判断连将或者连捉
+	int ThisSideConCC = GetMoveStatus ( checked[nRollNum - 1], chased[nRollNum - 1] );
+	int OppSideConCC = GetMoveStatus ( pos.checked, pos.chased );
 	int TurnThisSide = 1;
 	for ( int i = nRollNum - 1; i >= 0; i -- ) {
 		if ( TurnThisSide ) {
 			TurnThisSide = 0;
-			ThisSideConCheck &= checked[i];
+			ThisSideConCC &= GetMoveStatus ( checked[i], chased[i] );
 		}
 		else {
 			TurnThisSide = 1;
-			OppSideConCheck &= checked[i];
+			OppSideConCC &= GetMoveStatus ( checked[i], chased[i] );
 		}
 		if ( zobrist[i] == pos.zobrist ) {
-			return ThisSideConCheck == OppSideConCheck ? REP_DRAW :
-					( ThisSideConCheck > OppSideConCheck ? REP_LOSE : REP_WIN );
+			return ThisSideConCC == OppSideConCC ? REP_DRAW : ( ThisSideConCC > OppSideConCC ? REP_LOSE : REP_WIN );
 		}
 	}
 

@@ -43,7 +43,7 @@ int main ( int argc, char *argv[] ) {
 					InitMove ();
 					InitHashTable ( 27 ); // 27 = 128MB
 					ClearHashTable ();
-					SetTimeLimit (10); // may changed
+					SetTimeLimit (30); // may changed
 				}
 			}
 			else if ( Order == e_CommPosition ) { // position [ startpos | fen ] moves ...

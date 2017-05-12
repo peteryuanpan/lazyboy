@@ -23,6 +23,9 @@ int SQStrToInt ( const std::string sq ) {
 }
 
 std::string MoveIntToStr ( const int mv ) {
+	if ( mv == 0 ) {
+		return "   0";
+	}
 	std::string s = "";
 	s += SQIntToStr ( SRC(mv) );
 	s += SQIntToStr ( DST(mv) );
@@ -147,9 +150,10 @@ void PositionStruct::Init ( const char *FenStr, const char *MoveStr, const int M
     // 6. 初始化nDistance
     nDistance = 0;
 
-   	// 7. 初始化check及checked
+   	// 7. 初始化check，checked，chased
     check = Check ();
     checked = Checked ();
+    chased = Chased ();
 
     // 8. 初始化vlRed及vlBlk
     PreEvaluate ();
@@ -172,8 +176,11 @@ void PositionStruct::MakeMove ( const int mv ) {
 	roll.dstPiece [ nRollNum ] = square[ DST(mv) ];
 	roll.check[ nRollNum ] = check;
 	roll.checked[ nRollNum ] = checked;
+	roll.chased[ nRollNum ] = chased;
 	roll.zobrist[ nRollNum ] = zobrist;
 	nRollNum ++;
+	const int t = zobrist.first & rbHashMask;
+	RollBackHash[t] ++;
 
 	// 2. 修改走子方
 	player = 1 - player;
@@ -205,6 +212,7 @@ void PositionStruct::MakeMove ( const int mv ) {
 	// 8. 修改check与checked
 	check = Check ();
 	checked = Checked ();
+	chased = Chased ();
 
 	// 9. 修改vlRed及vlBlk
 	if ( sqDst != 0 ) {
@@ -262,8 +270,11 @@ void PositionStruct::UndoMakeMove ( void ) {
 	// 7. 修改check与checked
 	check = roll.LastCheck ();
 	checked = roll.LastChecked ();
+	chased = roll.LastChased ();
 
 	// 8. 修改回滚着法表
+	const int t = roll.LastZobrist().first & rbHashMask;
+	RollBackHash[t] --;
 	roll.nRollNum --;
 
 	// 9. 修改vlRed及vlBlk

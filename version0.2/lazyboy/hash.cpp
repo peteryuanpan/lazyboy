@@ -96,8 +96,8 @@ struct HashTableStruct {
 	int depth; // 深度
 	ULL zorb1; // zobrist值1
 	ULL zorb2; // zobrist值2
-	int bstmv; // 最优着法
-	int bstval; // 最优分值
+	int bmv; // 最优着法
+	int bvl; // 最优分值
 	int type; // 最优着法的节点类型
 };
 
@@ -122,29 +122,29 @@ void ClearHashTable ( void ) {
 		HashTable[i].depth = 0;
 		HashTable[i].zorb1 = 0;
 		HashTable[i].zorb2 = 0;
-		HashTable[i].bstmv = 0;
-		HashTable[i].bstval = 0;
+		HashTable[i].bmv = 0;
+		HashTable[i].bvl = 0;
 		HashTable[i].type = -1;
 	}
 }
 
-void InsertMoveToHashTable ( const int depth, const int bstmv, const int bstval, const int type ) {
+void InsertMoveToHashTable ( const int depth, const int bmv, const int bvl, const int type ) {
 	const int t = pos.zobrist.first & HashTableMask;
-	if ( bstval > - BAN_VALUE ) {
+	if ( bvl > - BAN_VALUE ) {
 		if ( depth > HashTable[t].depth ) {
 			HashTable[t].depth = depth;
 			HashTable[t].zorb1 = pos.zobrist.first;
 			HashTable[t].zorb2 = pos.zobrist.second;
-			HashTable[t].bstmv = bstmv;
-			HashTable[t].bstval = bstval;
+			HashTable[t].bmv = bmv;
+			HashTable[t].bvl = bvl;
 			HashTable[t].type = type;
 		}
 		else if ( depth == HashTable[t].depth ) {
-			if ( bstval > HashTable[t].bstval ) {
+			if ( bvl > HashTable[t].bvl ) {
 				HashTable[t].zorb1 = pos.zobrist.first;
 				HashTable[t].zorb2 = pos.zobrist.second;
-				HashTable[t].bstmv = bstmv;
-				HashTable[t].bstval = bstval;
+				HashTable[t].bmv = bmv;
+				HashTable[t].bvl = bvl;
 				HashTable[t].type = type;
 			}
 		}
@@ -156,13 +156,13 @@ int QueryBestValueInHashTable ( const int depth, const int alpha, const int beta
 	if ( HashTable[t].zorb1 == pos.zobrist.first && HashTable[t].zorb2 == pos.zobrist.second ) {
 		if ( HashTable[t].depth >= depth ) {
 			if ( HashTable[t].type == HASH_TYPE_PV ) {
-				return HashTable[t].bstval;
+				return HashTable[t].bvl;
 			}
-			else if ( HashTable[t].type == HASH_TYPE_BETA && HashTable[t].bstval >= beta ) {
-				return HashTable[t].bstval;
+			else if ( HashTable[t].type == HASH_TYPE_BETA && HashTable[t].bvl >= beta ) {
+				return HashTable[t].bvl;
 			}
-			else if ( HashTable[t].type == HASH_TYPE_ALPHA && HashTable[t].bstval <= alpha ) {
-				return HashTable[t].bstval;
+			else if ( HashTable[t].type == HASH_TYPE_ALPHA && HashTable[t].bvl <= alpha ) {
+				return HashTable[t].bvl;
 			}
 		}
 	}
@@ -172,7 +172,7 @@ int QueryBestValueInHashTable ( const int depth, const int alpha, const int beta
 int QueryBestMoveInHashTable ( void ) {
 	const int t = pos.zobrist.first & HashTableMask;
 	if ( HashTable[t].zorb1 == pos.zobrist.first && HashTable[t].zorb2 == pos.zobrist.second ) {
-		return HashTable[t].bstmv;
+		return HashTable[t].bmv;
 	}
 	return 0;
 }

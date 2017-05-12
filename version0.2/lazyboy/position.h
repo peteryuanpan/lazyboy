@@ -122,6 +122,7 @@ struct PositionStruct {
 	int nDistance; // 搜索深度，初始值为0
 	bool check; // 将军态
 	bool checked; // 被将军态
+	bool chased; // 被捉态
 	int vlRed; // 红方子力值
 	int vlBlk; // 黑方子力值
 
@@ -145,6 +146,7 @@ struct PositionStruct {
 	void GenAllMove ( int *move, int &nMoveNum ) const; // 生成所有着法
 	void DelMeaningLessMove ( int *move, int &nMoveNum ); // 去除无意义着法
 	bool Protected ( const int sd, const int src, const int dst ) const; // 判断位置是否被保护
+	bool Chased ( void ) const; // 被捉
 
 	// 以下函数见movesort.cpp
 	int MvvLva ( const int src, const int dst ) const; // 吃子着法估分

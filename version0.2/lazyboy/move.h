@@ -60,7 +60,6 @@ const int KNIGHT_PIN_DIR[] = {-16, -16, +1, +1, +16, +16, -1, -1};
 const int RED_PAWN_DIR[] = {-16, +1, -1};
 const int BLACK_PAWN_DIR[] = {+16, +1, -1};
 
-
 extern int KING_HIT [256][10];
 extern int ADVISOR_HIT [256][10];
 extern int BISHOP_HIT [256][10];
