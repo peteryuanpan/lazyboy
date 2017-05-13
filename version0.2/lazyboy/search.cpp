@@ -272,6 +272,8 @@ int SearchMain ( void ) {
 
 	// 初始化
 	ClearHistoryTable ();
+	ClearHashTable ();
+	ClearHashTableTR ();
 	InitMyTreeStruct ();
 	InitBeginTime ( SEARCH_TOTAL_TIME );
 
