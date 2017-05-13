@@ -43,9 +43,7 @@ int main ( int argc, char *argv[] ) {
 					InitZobrist ();
 					InitMove ();
 					InitHashTable ( 28 ); // 256MB
-					ClearHashTable ();
 					InitHashTableTR ( 26 ); // 64MB
-					ClearHashTableTR ();
 
 					DEP_LIMIT = 6; // MyTree树剪枝起始深度
 					BVL_LIMIT = 5; // 着法分值剪枝
