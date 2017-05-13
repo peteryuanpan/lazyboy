@@ -2,30 +2,30 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="MID_DEPTH" key="selection"/>
+		<item value="HashTableTR" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="CUT_DEPTH"/>
-			<item value="SearchTree"/>
-			<item value="SmallTree"/>
-			<item value="timeout"/>
-			<item value="bstval"/>
-			<item value="bstmv"/>
-			<item value="KNIGHT"/>
-			<item value="nRHit"/>
+			<item value="HashTable"/>
+			<item value="TRE_LIMIT"/>
+			<item value="DISTN"/>
+			<item value="QueryMove"/>
+			<item value="update"/>
+			<item value="Update"/>
+			<item value="printf"/>
+			<item value="TREE_LIMIT"/>
 		</list>
 		<list key="replacehistory">
+			<item value="HashTableTR"/>
+			<item value="DEP_LIMIT"/>
+			<item value="LIMIT"/>
+			<item value="TRE_LIMIT"/>
+			<item value="TREE_LIMIT"/>
 			<item value="MID_DEPTH"/>
 			<item value="MyTree"/>
 			<item value="bvl"/>
-			<item value="bmv"/>
-			<item value="BISHOP"/>
-			<item value="nCHit"/>
-			<item value="CannonHit"/>
-			<item value="vl"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
