@@ -1,0 +1,98 @@
+#include "hash.h"
+#include "base.h"
+#include "search.h"
+#include "evaluate.h"
+
+HashTableStruct *HashTable;
+int HashTableNum;
+int HashTableMask;
+
+void InitHashTable ( const int x ) {
+	HashTableNum = ( 1<<x ) / sizeof ( HashTableStruct );
+	HashTableMask = HashTableNum - 1;
+	HashTable = new HashTableStruct[ HashTableNum ];
+}
+
+void DelHashTable ( void ) {
+	if ( HashTable ) {
+		delete HashTable;
+	}
+}
+
+void ClearHashTable ( void ) {
+	for ( int i = 0; i < HashTableNum; i ++ ) {
+		HashTable[i].depth = 0;
+		HashTable[i].zorb1 = 0;
+		HashTable[i].zorb2 = 0;
+		HashTable[i].bmv = 0;
+		HashTable[i].bvl = - MATE_VALUE;
+		HashTable[i].type = -1;
+	}
+}
+
+void InsertMoveToHashTable ( const int depth, const int bmv, const int bvl, const int type ) {
+	const int t = pos.zobrist.first & HashTableMask;
+	if ( bvl > - BAN_VALUE ) {
+		if ( depth > HashTable[t].depth ) {
+			HashTable[t].depth = depth;
+			HashTable[t].zorb1 = pos.zobrist.first;
+			HashTable[t].zorb2 = pos.zobrist.second;
+			HashTable[t].bmv = bmv;
+			HashTable[t].bvl = bvl;
+			HashTable[t].type = type;
+		}
+		else if ( depth == HashTable[t].depth ) {
+			if ( bvl > HashTable[t].bvl ) {
+				HashTable[t].zorb1 = pos.zobrist.first;
+				HashTable[t].zorb2 = pos.zobrist.second;
+				HashTable[t].bmv = bmv;
+				HashTable[t].bvl = bvl;
+				HashTable[t].type = type;
+			}
+		}
+	}
+}
+
+int QueryValueInHashTable ( const int depth, const int alpha, const int beta ) {
+	const int t = pos.zobrist.first & HashTableMask;
+	if ( HashTable[t].zorb1 == pos.zobrist.first && HashTable[t].zorb2 == pos.zobrist.second ) {
+		if ( HashTable[t].depth >= depth ) {
+			if ( HashTable[t].type == HASH_TYPE_PV ) {
+				return HashTable[t].bvl;
+			}
+			else if ( HashTable[t].type == HASH_TYPE_BETA && HashTable[t].bvl >= beta ) {
+				return HashTable[t].bvl;
+			}
+			else if ( HashTable[t].type == HASH_TYPE_ALPHA && HashTable[t].bvl <= alpha ) {
+				return HashTable[t].bvl;
+			}
+		}
+	}
+	return - MATE_VALUE;
+}
+
+int QueryMoveInHashTable  ( const int depth, const int alpha, const int beta ) {
+	const int t = pos.zobrist.first & HashTableMask;
+	if ( HashTable[t].zorb1 == pos.zobrist.first && HashTable[t].zorb2 == pos.zobrist.second ) {
+		if ( HashTable[t].depth >= depth ) {
+			if ( HashTable[t].type == HASH_TYPE_PV ) {
+				return HashTable[t].bmv;
+			}
+			else if ( HashTable[t].type == HASH_TYPE_BETA && HashTable[t].bvl >= beta ) {
+				return HashTable[t].bmv;
+			}
+			else if ( HashTable[t].type == HASH_TYPE_ALPHA && HashTable[t].bvl <= alpha ) {
+				return HashTable[t].bmv;
+			}
+		}
+	}
+	return 0;
+}
+
+int QueryMoveInHashTableWithoutLimit ( void ) {
+	const int t = pos.zobrist.first & HashTableMask;
+	if ( HashTable[t].zorb1 == pos.zobrist.first && HashTable[t].zorb2 == pos.zobrist.second ) {
+		return HashTable[t].bmv;
+	}
+	return 0;
+}

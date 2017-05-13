@@ -37,7 +37,7 @@ int RollBackListStruct::RepStatus ( void ) const {
 	}
 
 	// 判断连将或者连捉
-	int ThisSideConCC = GetMoveStatus ( checked[nRollNum - 1], chased[nRollNum - 1] );
+	int ThisSideConCC = GetMoveStatus ( checked[nRollNum-1], chased[nRollNum-1] );
 	int OppSideConCC = GetMoveStatus ( pos.checked, pos.chased );
 	int TurnThisSide = 1;
 	for ( int i = nRollNum - 1; i >= 0; i -- ) {
@@ -64,7 +64,7 @@ int RollBackListStruct::RepValue ( const int vRep ) const {
 		case REP_WIN:
 			return BAN_VALUE;
 		case REP_LOSE:
-			return -BAN_VALUE;
+			return - BAN_VALUE;
 		default: // REP_DRAW
 			return 0;
 	}

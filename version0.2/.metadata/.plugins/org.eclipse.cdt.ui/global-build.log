@@ -1,5 +1,40 @@
-19:11:52 **** Incremental Build of configuration Debug for project lazyboy ****
+17:15:33 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+Finished building: ../evaluate.cpp
+ 
+Building file: ../hash.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
+Finished building: ../hash.cpp
+ 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building file: ../move.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
+Finished building: ../move.cpp
+ 
+Building file: ../movesort.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
+Finished building: ../movesort.cpp
+ 
+Building file: ../position.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
+Finished building: ../position.cpp
+ 
+Building file: ../rollback.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
+ 
 Building file: ../search.cpp
 Invoking: GCC C++ Compiler
 g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
@@ -10,61 +45,13 @@ Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-19:11:55 **** Incremental Build of configuration Debug for project lazyboy ****
+17:17:11 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
 make: Nothing to be done for `all'.
-19:12:28 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-19:12:54 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-19:13:22 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-19:13:49 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-19:13:54 **** Incremental Build of configuration Debug for project lazyboy ****
+17:17:20 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
 make: Nothing to be done for `all'.
-19:14:02 **** Incremental Build of configuration Debug for project lazyboy ****
+17:18:31 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
 Building file: ../search.cpp
 Invoking: GCC C++ Compiler
@@ -76,7 +63,58 @@ Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-19:14:25 **** Incremental Build of configuration Debug for project lazyboy ****
+17:19:22 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+17:20:04 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+17:20:18 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+make: Nothing to be done for `all'.
+17:20:35 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+17:21:24 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+17:32:13 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
 Building file: ../evaluate.cpp
 Invoking: GCC C++ Compiler
@@ -123,7 +161,10 @@ Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-19:17:52 **** Incremental Build of configuration Debug for project lazyboy ****
+17:32:24 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+make: Nothing to be done for `all'.
+17:50:07 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
 Building file: ../search.cpp
 Invoking: GCC C++ Compiler
@@ -135,7 +176,7 @@ Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-19:18:08 **** Incremental Build of configuration Debug for project lazyboy ****
+18:20:44 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
 Building file: ../evaluate.cpp
 Invoking: GCC C++ Compiler
@@ -182,31 +223,7 @@ Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-19:21:17 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../lazyboy.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
-Finished building: ../lazyboy.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-19:22:49 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../position.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
-Finished building: ../position.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-19:23:26 **** Incremental Build of configuration Debug for project lazyboy ****
+18:24:06 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
 Building file: ../search.cpp
 Invoking: GCC C++ Compiler
@@ -218,19 +235,94 @@ Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-19:23:49 **** Incremental Build of configuration Debug for project lazyboy ****
+18:24:11 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
-Building file: ../position.cpp
+make: Nothing to be done for `all'.
+18:25:05 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../search.cpp
 Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
-Finished building: ../position.cpp
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
  
 Building target: lazyboy
 Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-19:24:36 **** Incremental Build of configuration Debug for project lazyboy ****
+18:25:16 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+18:26:57 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+18:29:24 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+18:31:28 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+18:32:51 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+18:34:45 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+18:37:57 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
 Building file: ../evaluate.cpp
 Invoking: GCC C++ Compiler
@@ -277,7 +369,7 @@ Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-19:27:31 **** Incremental Build of configuration Debug for project lazyboy ****
+18:39:18 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
 Building file: ../evaluate.cpp
 Invoking: GCC C++ Compiler
@@ -324,7 +416,209 @@ Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-19:33:22 **** Incremental Build of configuration Debug for project lazyboy ****
+18:40:40 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+Finished building: ../evaluate.cpp
+ 
+Building file: ../hash.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
+Finished building: ../hash.cpp
+ 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building file: ../move.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
+Finished building: ../move.cpp
+ 
+Building file: ../movesort.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
+Finished building: ../movesort.cpp
+ 
+Building file: ../position.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
+Finished building: ../position.cpp
+ 
+Building file: ../rollback.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
+ 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+18:43:45 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+Finished building: ../evaluate.cpp
+ 
+Building file: ../hash.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
+Finished building: ../hash.cpp
+ 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building file: ../move.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
+Finished building: ../move.cpp
+ 
+Building file: ../movesort.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
+Finished building: ../movesort.cpp
+ 
+Building file: ../position.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
+Finished building: ../position.cpp
+ 
+Building file: ../rollback.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
+ 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+18:46:14 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+../search.cpp:199:9: error: no member named 'a' in 'SearchStruct'
+        Search.a = a;
+        ~~~~~~ ^
+../search.cpp:203:3: error: use of undeclared identifier 'AddEdgeWithCondition'
+                AddEdgeWithCondition ( depth, Search.bmv, Search.bvl );
+                ^
+2 errors generated.
+make: *** [search.o] Error 1
+18:46:35 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+Finished building: ../evaluate.cpp
+ 
+Building file: ../hash.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
+Finished building: ../hash.cpp
+ 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building file: ../move.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
+Finished building: ../move.cpp
+ 
+Building file: ../movesort.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
+Finished building: ../movesort.cpp
+ 
+Building file: ../position.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
+Finished building: ../position.cpp
+ 
+Building file: ../rollback.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
+ 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+../search.cpp:203:3: error: no matching function for call to 'AddEdgeWithCondition'
+                AddEdgeWithCondition ( depth, Search.bmv, Search.bvl );
+                ^~~~~~~~~~~~~~~~~~~~
+../search.h:100:13: note: candidate function not viable: requires 4 arguments, but 3 were provided
+inline void AddEdgeWithCondition ( const int a, const int depth, const int *bmv, const int *bvl ) {
+            ^
+1 error generated.
+make: *** [search.o] Error 1
+18:46:59 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+Finished building: ../evaluate.cpp
+ 
+Building file: ../hash.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
+Finished building: ../hash.cpp
+ 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building file: ../move.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
+Finished building: ../move.cpp
+ 
+Building file: ../movesort.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
+Finished building: ../movesort.cpp
+ 
+Building file: ../position.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
+Finished building: ../position.cpp
+ 
+Building file: ../rollback.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
+ 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+18:47:59 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
 Building file: ../search.cpp
 Invoking: GCC C++ Compiler
@@ -336,7 +630,54 @@ Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-19:35:44 **** Incremental Build of configuration Debug for project lazyboy ****
+18:51:56 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+Finished building: ../evaluate.cpp
+ 
+Building file: ../hash.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
+Finished building: ../hash.cpp
+ 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building file: ../move.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
+Finished building: ../move.cpp
+ 
+Building file: ../movesort.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
+Finished building: ../movesort.cpp
+ 
+Building file: ../position.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
+Finished building: ../position.cpp
+ 
+Building file: ../rollback.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
+ 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+18:53:23 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
 Building file: ../search.cpp
 Invoking: GCC C++ Compiler
@@ -348,7 +689,107 @@ Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-19:39:31 **** Incremental Build of configuration Debug for project lazyboy ****
+18:54:17 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+18:54:21 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+make: Nothing to be done for `all'.
+18:56:47 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+19:01:35 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+19:10:31 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+In file included from ../evaluate.cpp:2:
+../search.h:101:27: error: use of undeclared identifier 'BVL_DISTN'
+                if ( bvl[0] - bvl[i] <= BVL_DISTN && bmv[i] != 0 && bvl[i] > - BAN_VALUE ) {
+                                        ^
+1 error generated.
+make: *** [evaluate.o] Error 1
+19:10:42 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+Finished building: ../evaluate.cpp
+ 
+Building file: ../hash.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
+Finished building: ../hash.cpp
+ 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building file: ../move.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
+Finished building: ../move.cpp
+ 
+Building file: ../movesort.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
+Finished building: ../movesort.cpp
+ 
+Building file: ../position.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
+Finished building: ../position.cpp
+ 
+Building file: ../rollback.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
+ 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+19:10:50 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+make: Nothing to be done for `all'.
+19:13:36 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
 Building file: ../lazyboy.cpp
 Invoking: GCC C++ Compiler
@@ -360,44 +801,221 @@ Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-19:50:35 **** Incremental Build of configuration Debug for project lazyboy ****
+19:17:59 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+19:22:27 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+19:26:47 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+19:26:58 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+19:30:41 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+19:31:02 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+19:34:57 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+20:19:14 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+Finished building: ../evaluate.cpp
+ 
+Building file: ../hash.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
+Finished building: ../hash.cpp
+ 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
 Building file: ../move.cpp
 Invoking: GCC C++ Compiler
 g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
 Finished building: ../move.cpp
  
+Building file: ../movesort.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
+Finished building: ../movesort.cpp
+ 
+Building file: ../position.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
+Finished building: ../position.cpp
+ 
+Building file: ../rollback.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
+ 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
 Building target: lazyboy
 Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-20:05:49 **** Incremental Build of configuration Debug for project lazyboy ****
+20:20:22 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+Finished building: ../evaluate.cpp
+ 
+Building file: ../hash.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
+Finished building: ../hash.cpp
+ 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
 Building file: ../move.cpp
 Invoking: GCC C++ Compiler
 g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
 Finished building: ../move.cpp
  
+Building file: ../movesort.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
+Finished building: ../movesort.cpp
+ 
+Building file: ../position.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
+Finished building: ../position.cpp
+ 
+Building file: ../rollback.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
+ 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
 Building target: lazyboy
 Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-20:12:47 **** Incremental Build of configuration Debug for project lazyboy ****
+20:21:10 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+Finished building: ../evaluate.cpp
+ 
+Building file: ../hash.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
+Finished building: ../hash.cpp
+ 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
 Building file: ../move.cpp
 Invoking: GCC C++ Compiler
 g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
 Finished building: ../move.cpp
  
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
+Building file: ../movesort.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
+Finished building: ../movesort.cpp
  
-20:21:08 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
+Building file: ../position.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
+Finished building: ../position.cpp
+ 
+Building file: ../rollback.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
+ 
 Building file: ../search.cpp
 Invoking: GCC C++ Compiler
 g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
@@ -408,60 +1026,12 @@ Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-20:23:15 **** Incremental Build of configuration Debug for project lazyboy ****
+20:28:18 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
-Building file: ../search.cpp
+Building file: ../lazyboy.cpp
 Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:23:56 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:26:33 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:27:42 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:29:10 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
  
 Building target: lazyboy
 Invoking: MacOS X C++ Linker
@@ -470,325 +1040,11 @@ Finished building target: lazyboy
  
 20:30:05 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:30:28 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:34:02 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:36:15 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:39:00 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:40:11 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:41:47 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:43:28 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:43:54 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:45:12 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:45:39 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:47:14 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:48:08 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:49:53 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:51:34 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-../search.cpp:69:14: error: subscripted value is not an array, pointer, or vector
-                        return bvl[0];
-                               ~~~^~
-1 error generated.
-make: *** [search.o] Error 1
-20:51:47 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:54:35 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:57:42 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:57:58 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-20:59:40 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-21:00:02 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-make: Nothing to be done for `all'.
-21:01:53 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-21:02:47 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-21:04:32 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../search.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
-Finished building: ../search.cpp
- 
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-21:05:41 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
 Building file: ../lazyboy.cpp
 Invoking: GCC C++ Compiler
 g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
 Finished building: ../lazyboy.cpp
  
-Building target: lazyboy
-Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
-Finished building target: lazyboy
- 
-21:10:39 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../evaluate.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
-Finished building: ../evaluate.cpp
- 
-Building file: ../hash.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
-Finished building: ../hash.cpp
- 
-Building file: ../lazyboy.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
-Finished building: ../lazyboy.cpp
- 
-Building file: ../move.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
-../move.cpp:805:8: error: use of undeclared identifier 'openChased'
-        if ( !openChased ) {
-              ^
-1 error generated.
-make: *** [move.o] Error 1
-21:11:03 **** Incremental Build of configuration Debug for project lazyboy ****
-make all 
-Building file: ../move.cpp
-Invoking: GCC C++ Compiler
-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
-Finished building: ../move.cpp
- 
 Building file: ../search.cpp
 Invoking: GCC C++ Compiler
 g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
@@ -799,7 +1055,7 @@ Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-21:18:40 **** Incremental Build of configuration Debug for project lazyboy ****
+20:35:38 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
 Building file: ../evaluate.cpp
 Invoking: GCC C++ Compiler
@@ -846,12 +1102,111 @@ Invoking: MacOS X C++ Linker
 g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  
-21:31:25 **** Incremental Build of configuration Debug for project lazyboy ****
+20:40:30 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+Finished building: ../evaluate.cpp
+ 
+Building file: ../hash.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
+Finished building: ../hash.cpp
+ 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building file: ../move.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
+Finished building: ../move.cpp
+ 
+Building file: ../movesort.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
+Finished building: ../movesort.cpp
+ 
+Building file: ../position.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
+Finished building: ../position.cpp
+ 
+Building file: ../rollback.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
+ 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+20:40:45 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+Finished building: ../evaluate.cpp
+ 
+Building file: ../hash.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
+Finished building: ../hash.cpp
+ 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building file: ../move.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
+Finished building: ../move.cpp
+ 
+Building file: ../movesort.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
+Finished building: ../movesort.cpp
+ 
+Building file: ../position.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
+Finished building: ../position.cpp
+ 
+Building file: ../rollback.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
+ 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+20:55:57 **** Incremental Build of configuration Debug for project lazyboy ****
 make all 
 Building file: ../hash.cpp
 Invoking: GCC C++ Compiler
 g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
 Finished building: ../hash.cpp
+ 
+Building file: ../hashTR.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hashTR.d" -MT"hashTR.o" -o "hashTR.o" "../hashTR.cpp"
+Finished building: ../hashTR.cpp
  
 Building file: ../lazyboy.cpp
 Invoking: GCC C++ Compiler
@@ -870,6 +1225,146 @@ Finished building: ../search.cpp
  
 Building target: lazyboy
 Invoking: MacOS X C++ Linker
-g++  -o "lazyboy"  ./evaluate.o ./hash.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./hashTR.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+21:04:36 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./hashTR.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+21:05:03 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./hashTR.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+21:08:19 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+Finished building: ../evaluate.cpp
+ 
+Building file: ../hash.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
+Finished building: ../hash.cpp
+ 
+Building file: ../hashTR.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hashTR.d" -MT"hashTR.o" -o "hashTR.o" "../hashTR.cpp"
+Finished building: ../hashTR.cpp
+ 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building file: ../move.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
+Finished building: ../move.cpp
+ 
+Building file: ../movesort.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
+Finished building: ../movesort.cpp
+ 
+Building file: ../position.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
+Finished building: ../position.cpp
+ 
+Building file: ../rollback.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
+ 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./hashTR.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+21:11:33 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../evaluate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"evaluate.d" -MT"evaluate.o" -o "evaluate.o" "../evaluate.cpp"
+Finished building: ../evaluate.cpp
+ 
+Building file: ../hash.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hash.d" -MT"hash.o" -o "hash.o" "../hash.cpp"
+Finished building: ../hash.cpp
+ 
+Building file: ../hashTR.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hashTR.d" -MT"hashTR.o" -o "hashTR.o" "../hashTR.cpp"
+Finished building: ../hashTR.cpp
+ 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building file: ../move.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"move.d" -MT"move.o" -o "move.o" "../move.cpp"
+Finished building: ../move.cpp
+ 
+Building file: ../movesort.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"movesort.d" -MT"movesort.o" -o "movesort.o" "../movesort.cpp"
+Finished building: ../movesort.cpp
+ 
+Building file: ../position.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"position.d" -MT"position.o" -o "position.o" "../position.cpp"
+Finished building: ../position.cpp
+ 
+Building file: ../rollback.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"rollback.d" -MT"rollback.o" -o "rollback.o" "../rollback.cpp"
+Finished building: ../rollback.cpp
+ 
+Building file: ../search.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"search.d" -MT"search.o" -o "search.o" "../search.cpp"
+Finished building: ../search.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./hashTR.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
+Finished building target: lazyboy
+ 
+21:18:11 **** Incremental Build of configuration Debug for project lazyboy ****
+make all 
+Building file: ../lazyboy.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lazyboy.d" -MT"lazyboy.o" -o "lazyboy.o" "../lazyboy.cpp"
+Finished building: ../lazyboy.cpp
+ 
+Building target: lazyboy
+Invoking: MacOS X C++ Linker
+g++  -o "lazyboy"  ./evaluate.o ./hash.o ./hashTR.o ./lazyboy.o ./move.o ./movesort.o ./position.o ./rollback.o ./search.o ./time.o ./ucci.o   
 Finished building target: lazyboy
  

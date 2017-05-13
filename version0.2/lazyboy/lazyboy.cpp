@@ -10,7 +10,7 @@
 
 int main ( int argc, char *argv[] ) {
 #ifndef _WIN32
-	freopen ( "/Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/data/middle_data.txt", "r", stdin );
+	freopen ( "/Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/data/long_data.txt", "r", stdin );
 #endif
 
 	if( BootLine() == e_CommUcci ) {
@@ -28,6 +28,7 @@ int main ( int argc, char *argv[] ) {
 			}
 			else if ( Order == e_CommQuit ) { // quit
 				DelHashTable ();
+				DelHashTableTR ();
 				printf( "bye\n" );
 				fflush( stdout );
 				break;
@@ -41,9 +42,15 @@ int main ( int argc, char *argv[] ) {
 					roll.Init ();
 					InitZobrist ();
 					InitMove ();
-					InitHashTable ( 27 ); // 27 = 128MB
+					InitHashTable ( 28 ); // 256MB
 					ClearHashTable ();
-					SetTimeLimit (30); // may changed
+					InitHashTableTR ( 26 ); // 64MB
+					ClearHashTableTR ();
+
+					DEP_LIMIT = 6; // MyTree树剪枝起始深度
+					BVL_LIMIT = 5; // 着法分值剪枝
+					SetTimeLimit ( SEARCH_TOTAL_TIME, 60 ); // 总时间上限
+					SetTimeLimit ( THIS_SEARCH_TIME, 30 ); // 单次搜索时间上限
 				}
 			}
 			else if ( Order == e_CommPosition ) { // position [ startpos | fen ] moves ...

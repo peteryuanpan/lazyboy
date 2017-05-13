@@ -2,12 +2,12 @@
 #include "base.h"
 #include <sys/time.h>
 
-double TimeLimit = 10.0; // 默认10秒
+double TimeLimit [100];
 double startT [100];
 
 // 设置时间限制
-void SetTimeLimit ( const double limit ) {
-	TimeLimit = limit;
+void SetTimeLimit ( const int x, const double limit ) {
+	TimeLimit[x] = limit;
 }
 
 // 现在的时间
@@ -24,7 +24,7 @@ void InitBeginTime ( const int x ) {
 
 // 已超时
 bool TimeOut ( const int x ) {
-	return ThisTime() - startT[x] >= TimeLimit;
+	return ThisTime() - startT[x] >= TimeLimit[x];
 }
 
 // 计算用时

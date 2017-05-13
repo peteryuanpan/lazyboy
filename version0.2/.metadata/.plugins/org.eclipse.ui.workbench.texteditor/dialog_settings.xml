@@ -2,30 +2,30 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="bstval" key="selection"/>
+		<item value="MID_DEPTH" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="value"/>
-			<item value="ROOK"/>
-			<item value="OppSideKingPos"/>
-			<item value="ADVISOR"/>
+			<item value="CUT_DEPTH"/>
+			<item value="SearchTree"/>
+			<item value="SmallTree"/>
+			<item value="timeout"/>
+			<item value="bstval"/>
+			<item value="bstmv"/>
 			<item value="KNIGHT"/>
-			<item value="LOWER_P"/>
-			<item value="HIGHER_P"/>
-			<item value="CAN_MOVE"/>
+			<item value="nRHit"/>
 		</list>
 		<list key="replacehistory">
-			<item value="bstval"/>
-			<item value="CANNON"/>
-			<item value="pos"/>
-			<item value="PAWN"/>
-			<item value="KING"/>
-			<item value="ADVISOR"/>
+			<item value="MID_DEPTH"/>
+			<item value="MyTree"/>
+			<item value="bvl"/>
+			<item value="bmv"/>
 			<item value="BISHOP"/>
-			<item value="LOWER_D"/>
+			<item value="nCHit"/>
+			<item value="CannonHit"/>
+			<item value="vl"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

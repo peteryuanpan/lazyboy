@@ -30,7 +30,7 @@ int MoveSortStruct::InitAlphaBetaMove ( void ) {
 	pos.DelMeaningLessMove ( move, nMoveNum );
 
 	// 3. 获得置换表着法
-	int bstmv = QueryBestMoveInHashTable ();
+	int bstmv = QueryMoveInHashTableWithoutLimit ();
 
 	// 4. 给着法分类赋值
 	int type[128];

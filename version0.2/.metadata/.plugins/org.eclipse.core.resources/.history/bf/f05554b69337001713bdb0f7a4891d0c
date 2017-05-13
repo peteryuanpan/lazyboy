@@ -1,0 +1,75 @@
+#ifndef SEARCH_H_
+#define SEARCH_H_
+
+#include "base.h"
+#include "position.h"
+#include "rollback.h"
+#include "evaluate.h"
+
+const int SEARCH_MAX_DEPTH = 80;
+
+extern PositionStruct pos; // 当前搜索局面
+extern RollBackListStruct roll; // 回滚着法表
+
+// 搜索结构体
+const int nBest = 128;
+struct SearchStruct {
+	int bmv[nBest]; // 最佳着法
+	int bvl[nBest]; // 最优得分
+	int nNode; // 总节点数
+	int nBeta; // beta点个数
+	int a;
+};
+extern SearchStruct Search;
+
+inline void InitSearchStruct ( void ) {
+	for ( int i = 0; i < nBest; i ++ ) {
+		Search.bmv[i] = 0;
+		Search.bvl[i] = - MATE_VALUE;
+	}
+	Search.nNode = 0;
+	Search.nBeta = 0;
+}
+
+// わたしの小さい搜索树
+const int NNODE = 1000010;
+struct MyTreeStruct {
+	int to;
+	int mv;
+	int next;
+};
+extern MyTreeStruct MyTree[NNODE];
+extern int head[NNODE];
+extern int nNode;
+extern int nEdge;
+
+inline void InitMyTreeStruct ( void ) {
+	for ( int i = 0; i < NNODE; i ++ ) {
+		head[i] = -1;
+		MyTree[i].to = 0;
+		MyTree[i].mv = 0;
+		MyTree[i].next = -1;
+	}
+	nNode = 1;
+	nEdge = 0;
+}
+
+inline void AddEdge ( const int a, const int b, const int mv ) {
+	if ( nEdge + 1 < NNODE ) {
+		for ( int i = head[a]; i != -1; i = MyTree[i].next ) {
+			if ( MyTree[i].mv == mv ) {
+				return;
+			}
+		}
+		int t = ++ nEdge;
+		MyTree[t].to = b;
+		MyTree[t].mv = mv;
+		MyTree[t].next = head[a];
+		head[a] = t;
+		printf ( "a = %d b = %d mv = %s\n", a, b, MoveIntToStr(mv).c_str() );
+	}
+}
+
+int SearchMain ( void );
+
+#endif /* SEARCH_H_ */
