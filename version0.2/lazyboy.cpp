@@ -10,7 +10,7 @@
 
 int main ( int argc, char *argv[] ) {
 #ifndef _WIN32
-	freopen ( "/Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/data/long_data.txt", "r", stdin );
+	freopen ( "/Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/data/data.txt", "r", stdin );
 #endif
 
 	if( BootLine() == e_CommUcci ) {
@@ -45,9 +45,10 @@ int main ( int argc, char *argv[] ) {
 					InitHashTable ( 28 ); // 256MB
 					InitHashTableTR ( 26 ); // 64MB
 
-					DEP_LIMIT = 6; // MyTree树剪枝起始深度
-					BVL_LIMIT = 5; // 着法分值剪枝
-					SetTimeLimit ( SEARCH_TOTAL_TIME, 60 ); // 总时间上限
+					DEP_LIMIT = 5; // MyTree树剪枝起始深度
+					BVL_LIMIT = 20; // 着法分值剪枝
+					NSN_LIMIT = 5; // 最小孩子数
+					SetTimeLimit ( SEARCH_TOTAL_TIME, 3600 ); // 总时间上限
 					SetTimeLimit ( THIS_SEARCH_TIME, 30 ); // 单次搜索时间上限
 				}
 			}

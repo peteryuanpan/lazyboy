@@ -19,6 +19,7 @@ int nEdge;
 
 int DEP_LIMIT;
 int BVL_LIMIT;
+int NSN_LIMIT;
 
 // 超时
 bool TimeOut ( void ) {
@@ -279,7 +280,7 @@ int SearchMain ( void ) {
 
 	// 迭代加深搜索
 	printf("depth   time    nNode  rBeta");
-	for ( int i = 0; i < MIN(nBest, 10); i ++ ) {
+	for ( int i = 0; i < 3; i ++ ) {
 		printf("   bvl[%d]  bmv[%d]", i, i);
 	}
 	printf("\n");
@@ -289,7 +290,9 @@ int SearchMain ( void ) {
 	for ( int depth = 1; /*depth <= ?*/; depth ++ ) {
 		InitBeginTime ( THIS_SEARCH_TIME );
 		InitSearchStruct ();
-		SearchMyTree ( 1, depth, - MATE_VALUE, MATE_VALUE );
+		ClearHashTableTR ();
+		SearchAlphaBeta ( depth, - MATE_VALUE, MATE_VALUE );
+		//SearchMyTree ( 1, depth, - MATE_VALUE, MATE_VALUE );
 
 		if ( TimeOut() ) {
 			CopyBmvBvl ( Search.bmv, Search.bvl, lastbmv, lastbvl );
@@ -300,7 +303,7 @@ int SearchMain ( void ) {
 		}
 
 		printf( "%5d  %.2fs  %7d    %2.0f%%", depth, TimeCost(THIS_SEARCH_TIME), Search.nNode, 100.0*Search.nBeta/Search.nNode);
-		for ( int i = 0; i < MIN(nBest, 10); i ++ ) {
+		for ( int i = 0; i < 3; i ++ ) {
 			printf("   %6d    %s", Search.bvl[i], MoveIntToStr(Search.bmv[i]).c_str());
 		}
 		printf("\n");

@@ -8,6 +8,7 @@
 
 extern int DEP_LIMIT;
 extern int BVL_LIMIT;
+extern int NSN_LIMIT;
 
 extern PositionStruct pos; // 当前搜索局面
 extern RollBackListStruct roll; // 回滚着法表
@@ -123,9 +124,17 @@ inline void DelEdge ( const int a, const int mv ) {
 
 inline void DelEdge ( const int a, const int depth, const int *bmv, const int *bvl ) {
 	const int d = MAX ( 2, BVL_LIMIT - ( depth - DEP_LIMIT ) );
-	for ( int i = 0; i < nBest; i ++ ) {
+	int nedge = 0;
+	for ( int i = head[a]; i != -1; i = MyTree[i].next ) {
+		nedge ++;
+	}
+	for ( int i = nBest - 1; i >= 0; i -- ) {
+		if ( nedge <= NSN_LIMIT ) {
+			break;
+		}
 		if ( bvl[0] - bvl[i] > d && bmv[i] != 0 && bvl[i] > - BAN_VALUE ) {
 			DelEdge ( a, bmv[i] );
+			nedge --;
 		}
 	}
 }
