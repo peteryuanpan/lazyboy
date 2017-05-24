@@ -291,8 +291,8 @@ int SearchMain ( void ) {
 		InitBeginTime ( THIS_SEARCH_TIME );
 		InitSearchStruct ();
 		ClearHashTableTR ();
-		SearchAlphaBeta ( depth, - MATE_VALUE, MATE_VALUE );
-		//SearchMyTree ( 1, depth, - MATE_VALUE, MATE_VALUE );
+		//SearchAlphaBeta ( depth, - MATE_VALUE, MATE_VALUE );
+		SearchMyTree ( 1, depth, - MATE_VALUE, MATE_VALUE );
 
 		if ( TimeOut() ) {
 			CopyBmvBvl ( Search.bmv, Search.bvl, lastbmv, lastbvl );
