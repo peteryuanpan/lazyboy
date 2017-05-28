@@ -10,10 +10,10 @@
 
 int main ( int argc, char *argv[] ) {
 #ifndef _WIN32
-	freopen ( "/Users/peteryuanpan/Desktop/毕业设计/lazyboy-master/version0.2/data/data.txt", "r", stdin );
+	freopen ( "/Users/peteryuanpan/Desktop/毕业/lazyboy-master/version0.2/data/data.txt", "r", stdin );
 #endif
 
-	if( BootLine() == e_CommUcci ) {
+	if ( BootLine() == e_CommUcci ) {
 		printf( "id name lazyboy\n" );
 		printf( "id version 0.2\n" );
 		printf( "id author panyuan\n" );

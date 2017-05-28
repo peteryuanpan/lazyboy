@@ -171,13 +171,13 @@ int SearchAlphaBeta ( int depth, int alpha, int beta ) {
 
 		UpdateBmvBvl ( bmv, bvl, mv, vl );
 
-		if ( vl >= beta ) {
+		if ( bvl[0] >= beta ) {
 			Search.nBeta ++;
 			hash_type = HASH_TYPE_BETA;
 			break;
 		}
-		if ( vl > alpha ) {
-			alpha = vl;
+		if ( bvl[0] > alpha ) {
+			alpha = bvl[0];
 			hash_type = HASH_TYPE_PV;
 		}
 	}
@@ -233,13 +233,13 @@ int SearchMyTree ( int a, int depth, int alpha, int beta ) {
 
 			UpdateBmvBvl ( bmv, bvl, MyTree[i].mv, vl );
 
-			if ( vl >= beta ) {
+			if ( bvl[0] >= beta ) {
 				Search.nBeta ++;
 				hash_type = HASH_TYPE_BETA;
 				break;
 			}
-			if ( vl > alpha ) {
-				alpha = vl;
+			if ( bvl[0] > alpha ) {
+				alpha = bvl[0];
 				hash_type = HASH_TYPE_PV;
 			}
 		}

@@ -3,50 +3,50 @@ ucci
 // 78 f5b5
 setoption newgame
 position fen 4ka3/1n2a4/9/p1p5p/5RC2/P8/2P3r1P/N4A3/4K4/2BA4c w - - 0 1
-go times 60000
+go time 1000
 
 // 79 f5b5
 setoption newgame
 position fen 4kab2/4a4/3cb3c/R3C3p/5C3/2P1r4/P4p2P/4B4/4A4/4KAB2 w - - 0 1
-go times 60000
+go time 1000
 
 // 80 c1b1
 setoption newgame
 position fen 1C2kab2/4a4/4b1n2/p4r2p/4p1p1c/3N5/P3P1PnP/2NCB4/2R1A4/1c2KAB2 w - - 0 1
-go times 60000
+go time 1000
 
 // 81 c5d5
 setoption newgame
 position fen r3kabr1/4a4/c1n1b2c1/p1p1p3p/2P4R1/3n5/P1C1P1p1P/N3C1N2/9/1RBAKAB2 w - - 0 1
-go times 60000
+go time 1000
 
 // 82 e4e5
 setoption newgame
 position fen 3akab2/9/2n1b1c2/p1N1p3p/1r3n1r1/2R1PR3/P7P/4C1N1B/9/2BAKA3 w - - 0 1
-go times 60000
+go time 1000
 
 // 83 e2e6
 setoption newgame
 position fen 3rkabn1/4a4/2c1b3c/pR2p1p1p/2p6/5NP2/P1n1P3P/2C1C4/9/1NBAKAB2 w - - 0 1
-go times 60000
+go time 1000
 
 // 84 b9b5
 setoption newgame
 position fen 1R1ak1b2/4a4/4b3n/2p6/3r1N1r1/2P1C4/P3P1P1P/4B4/4A1c2/3AKR3 w - - 0 1
-go times 60000
+go time 1000
 
 // 86 f4e6
 setoption newgame
 position fen 3rkab2/4a4/2c1b1n1c/1R2p1p1p/p1p6/5NP2/n1P1P3P/N3C4/2C6/2BAKAK2 w - - 0 1
-go times 60000
+go time 1000
 
 // 87 a6d6
 setoption newgame
 position fen 2bak4/4a4/n3b4/R8/P2N1r3/2P5p/3nP4/3NB4/4A4/2B1KA3 w - - 0 1
-go times 60000
+go time 1000
 
 // 88 h6h9
 setoption newgame
 position fen 2bak1b2/n3a4/4c4/p1P4Rp/9/9/P2rN3P/R3B4/4Cr3/3AKAB2 w - - 0 1
-go times 60000
+go time 1000
 

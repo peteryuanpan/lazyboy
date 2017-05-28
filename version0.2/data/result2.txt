@@ -1,9 +1,3 @@
-DEP_LIMIT = 5; // MyTree树剪枝起始深度
-BVL_LIMIT = 20; // 着法分值剪枝
-NSN_LIMIT = 5; // 最小孩子数
-SetTimeLimit ( SEARCH_TOTAL_TIME, 3600 ); // 总时间上限
-SetTimeLimit ( THIS_SEARCH_TIME, 30 ); // 单次搜索时间上限
-
 id name lazyboy
 id version 0.2
 id author panyuan
@@ -12,107 +6,109 @@ ucciok
 depth   time    nNode  rBeta   bvl[0]  bmv[0]   bvl[1]  bmv[1]   bvl[2]  bmv[2]
     1  0.02s        9    33%       33    a4a5       31    e1e0       29    f5f7
     2  0.02s       88    91%       -4    g5h5       -4    g5i5      -64    a4a5
-    3  0.06s      584    73%       26    c0e2       18    a4a5       17    e1e0
-    4  0.25s     4016    87%       25    f5b5       10    f5d5       10    c3c4
-    5  0.76s    13107    74%       30    c0e2       28    f5b5       28    g5h5
-    6  3.71s    87808    84%       17    f5b5       17    g5h5       17    f5d5
-    7  6.83s   137107    72%       30    f5b5       30    f5d5       30    c3c4
-totaltime: 41.66s
+    3  0.05s      579    74%       26    c0e2       18    a4a5       17    e1e0
+    4  0.27s     3919    87%       25    f5b5       10    f5d5       10    c3c4
+    5  0.74s    13385    75%       30    c0e2       28    f5b5       28    g5h5
+    6  3.72s    93223    85%       17    f5b5       17    g5h5       17    f5d5
+    7  6.59s   138141    71%       30    f5b5       30    g5h5       30    f5d5
+    8  29.60s   833163    88%       17    f5b5       17    g5h5       17    f5d5
+totaltime: 71.00s
 bestmove f5b5
 // 79 f5b5
 depth   time    nNode  rBeta   bvl[0]  bmv[0]   bvl[1]  bmv[1]   bvl[2]  bmv[2]
-    1  0.02s        5    40%        2    e6e8        1    a6a9       -8    c4c5
-    2  0.02s      123    89%      -58    e6g6      -58    e6h6      -59    a6a9
-    3  0.05s      553    71%       12    a6d6        8    c4c5        0    a6b6
-    4  0.32s     5165    90%      -16    e6f6      -16    i3i4      -18    e2c0
-    5  1.01s    18340    69%       11    a6d6       11    i3i4        9    e6h6
-    6  12.19s   218556    90%       -7    a6a9       -7    f5i5       -7    e6f6
-    7  7.63s   145740    71%       26    e6f6       13    a6c6       13    f5a5
-    8  28.84s   540653    92%      -13    a6b6      -13    a6c6      -13    f5a5
-totaltime: 80.08s
+    1  0.01s        5    40%        2    e6e8        1    a6a9       -8    c4c5
+    2  0.02s      121    89%      -58    e6g6      -58    e6h6      -59    a6a9
+    3  0.04s      563    71%       12    a6d6        8    c4c5        0    a6b6
+    4  0.30s     5107    90%      -16    e6f6      -16    i3i4      -18    a6a9
+    5  0.99s    18044    69%       11    a6d6       11    i3i4        9    e6h6
+    6  11.79s   216789    90%       -7    a6a9       -7    e6g6       -7    f5i5
+    7  7.27s   144633    70%       26    e6f6       13    a6c6       13    f5a5
+    8  29.53s   544951    92%      -13    a6b6      -13    a6c6      -13    f5a5
+totaltime: 79.95s
 bestmove a6b6
 // 80 c1b1
 depth   time    nNode  rBeta   bvl[0]  bmv[0]   bvl[1]  bmv[1]   bvl[2]  bmv[2]
     1  0.02s        1     0%       -1    b9f9       -2    c2b4       -8    c1d1
     2  0.02s       44    82%      -43    e1f2      -43    c1d1      -44    c2a1
-    3  0.10s      611    68%       16    c2a1        9    c1d1        3    i3i4
-    4  0.31s     2549    82%      -28    c2a1      -29    d2d1      -30    e0d0
-    5  1.88s    14513    78%       31    c2a1       31    e1f2       31    b9b7
-    6  25.76s   235268    87%       28    c1b1       26    d4c6       24    d4b5
-totaltime: 58.08s
+    3  0.08s      608    68%       16    c2a1        9    c1d1        3    i3i4
+    4  0.30s     2589    82%      -28    c2a1      -29    d2d1      -30    e0d0
+    5  2.00s    15639    78%       31    c2a1       31    e1f2       31    b9b7
+    6  24.03s   231000    87%       28    c1b1       26    d4c6       24    d4b5
+    7  28.77s   323689    89%       28    c1b1       28    d4c6       27    d2d3
+totaltime: 85.22s
 bestmove c1b1
 // 81 c5d5
 depth   time    nNode  rBeta   bvl[0]  bmv[0]   bvl[1]  bmv[1]   bvl[2]  bmv[2]
     1  0.02s        2    50%       84    h5h7       33    c3g3       14    c5c6
-    2  0.02s       53    89%      -66    c3g3      -76    c5c6      -80    c3c6
-    3  0.07s      226    74%       37    c3g3       14    b0b4       13    c5c6
-    4  0.38s     2204    91%      -22    c3g3      -23    g2e1      -25    h5h4
-    5  1.91s     9828    79%       49    c3g3       42    g2i1       42    g2h0
-    6  4.82s    33402    84%      -28    c3g3      -28    g2i1      -28    g2h0
-    7  22.08s   142964    85%       58    c3g3       58    g2i1       58    g2h0
-totaltime: 59.30s
+    2  0.03s       53    89%      -66    c3g3      -76    c5c6      -80    c3c6
+    3  0.06s      226    74%       37    c3g3       14    b0b4       13    c5c6
+    4  0.38s     2208    90%      -22    c3g3      -23    g2e1      -25    h5h4
+    5  1.85s     9814    79%       49    c3g3       42    g2i1       42    g2h0
+    6  4.47s    31832    84%      -28    c3g3      -28    g2i1      -28    g2h0
+    7  22.41s   147298    85%       58    c3g3       58    g2i1       58    g2h0
+totaltime: 59.22s
 bestmove c3g3
 // 82 e4e5
 depth   time    nNode  rBeta   bvl[0]  bmv[0]   bvl[1]  bmv[1]   bvl[2]  bmv[2]
-    1  0.02s        2    50%      101    f4f5       20    c6e7       20    e4e5
+    1  0.01s        2    50%      101    f4f5       20    c6e7       20    e4e5
     2  0.02s       56    82%        1    e2e6       -7    g2e3      -12    f0e1
-    3  0.11s      514    83%       80    c6b4       80    c6a7       68    e4e5
-    4  0.44s     2978    86%       23    e2e6       17    i2g0       17    d0e1
-    5  2.44s    16733    82%       69    e4e5       69    c4a4       68    f4i4
-    6  10.13s    79222    87%      -19    e4e5      -19    c4a4      -19    f4i4
-    7  23.06s   152992    82%       70    c4c2       70    f4f3       69    f4f1
-totaltime: 66.22s
-bestmove c4c2
+    3  0.10s      517    84%       80    c6b4       80    c6a7       68    e4e5
+    4  0.43s     2986    86%       23    e2e6       17    i2g0       17    d0e1
+    5  2.27s    16407    82%       69    e4e5       69    c4a4       68    f4i4
+    6  9.77s    77907    87%      -19    e4e5      -19    c4a4      -19    f4i4
+    7  23.20s   163139    83%       68    f0e1       40    g2e3       40    f4f1
+totaltime: 65.81s
+bestmove f0e1
 // 83 e2e6
 depth   time    nNode  rBeta   bvl[0]  bmv[0]   bvl[1]  bmv[1]   bvl[2]  bmv[2]
     1  0.02s        1     0%       10    g4g5        7    f4e6        7    e2e6
     2  0.02s       44    89%       -6    e2e6      -10    a3a4      -11    d0e1
-    3  0.06s      156    69%       19    e2e6        7    f0e1        6    g4g5
-    4  0.20s     1578    93%       -9    e2e6       -9    f0e1       -9    b6b8
-    5  1.87s     8300    76%       42    e2e6       39    e2f2       38    e2e1
-    6  6.62s    56368    90%       -5    e2e6       -5    e2f2       -5    e2e1
-totaltime: 38.78s
+    3  0.06s      157    69%       19    e2e6        7    f0e1        6    g4g5
+    4  0.20s     1707    93%       -9    e2e6       -9    f0e1       -9    b6b8
+    5  1.75s     8414    76%       42    e2e6       39    e2f2       38    e2e1
+    6  6.85s    60482    90%       -5    e2e6       -5    e2f2       -5    e2e1
+totaltime: 38.89s
 bestmove e2e6
 // 84 b9b5
 depth   time    nNode  rBeta   bvl[0]  bmv[0]   bvl[1]  bmv[1]   bvl[2]  bmv[2]
-    1  0.02s        2    50%       65    f5e7       41    e4e8       38    c4c5
+    1  0.01s        2    50%       65    f5e7       41    e4e8       38    c4c5
     2  0.02s       49    90%      -43    f5e7      -53    e4e8      -57    c4c5
-    3  0.07s      600    81%       49    e2g0       34    c4c5       31    e4g4
-    4  0.33s     4444    81%      -25    e4e8      -25    b9d9      -26    c4c5
-    5  1.17s    15768    77%       25    e4g4       25    f5d4       24    f5h4
-    6  3.52s    46909    80%       -9    f0g0       -9    f0i0      -19    f5h6
-    7  8.38s   116849    80%        5    f0g0        5    f5h6        5    f0i0
-totaltime: 43.50s
+    3  0.06s      598    81%       49    e2g0       34    c4c5       31    e4g4
+    4  0.30s     4373    81%      -25    e4e8      -25    b9d9      -26    c4c5
+    5  1.13s    16153    77%       25    e4g4       25    f5d4       24    f5h4
+    6  3.04s    41956    82%       -9    f0g0       -9    f0i0      -30    e4g4
+    7  6.92s   104908    80%        5    f0g0        5    f0i0        5    e4d4
+totaltime: 41.49s
 bestmove f0g0
 // 86 f4e6
 depth   time    nNode  rBeta   bvl[0]  bmv[0]   bvl[1]  bmv[1]   bvl[2]  bmv[2]
     1  0.02s        1     0%       18    c1c5       16    e2e6       14    g4g5
     2  0.02s       51    90%       -5    f4g6       -5    c1e1       -5    c1f1
     3  0.06s      250    76%       59    b6b3       23    f4g6       23    c1a1
-    4  0.38s     2607    91%      -14    b6b7      -14    f4e6      -14    b6b2
-    5  1.77s     8532    72%       64    f4g6       64    b6b3       64    g4g5
-    6  9.39s    86100    93%      -13    f4g6      -13    b6b3      -13    g4g5
-totaltime: 41.64s
+    4  0.34s     2637    91%      -14    b6b7      -14    f4e6      -14    b6b2
+    5  1.60s     8446    72%       64    f4g6       64    g4g5       64    f4g2
+    6  9.01s    87041    93%      -13    f4g6      -13    g4g5      -13    f4g2
+totaltime: 41.04s
 bestmove f4g6
 // 87 a6d6
 depth   time    nNode  rBeta   bvl[0]  bmv[0]   bvl[1]  bmv[1]   bvl[2]  bmv[2]
-    1  0.02s        1     0%      122    a6a7       72    d5e7       57    c4c5
+    1  0.01s        1     0%      122    a6a7       72    d5e7       57    c4c5
     2  0.02s       36    75%       12    d5c3        3    d5c7        0    d5b6
-    3  0.02s      189    77%       95    c4c5       68    d5c7       68    d5f6
-    4  0.07s     1076    83%       27    d5e7       27    d5f6       23    d5b6
-    5  0.26s     4067    79%       78    d5e7       77    d5f6       74    d5c3
-    6  0.74s    14343    85%       41    d5e7       41    d5f6       41    d5c3
-    7  2.08s    40284    82%      115    a6d6       95    d5c7       88    d5f6
-    8  6.34s   135535    85%       42    d5f6       42    d5c7       42    a6d6
-    9  16.78s   325205    80%      116    a6d6      106    d5c7       93    d5f6
-totaltime: 56.33s
+    3  0.02s      188    77%       95    c4c5       68    d5c7       68    d5f6
+    4  0.06s     1071    83%       27    d5e7       27    d5f6       23    d5b6
+    5  0.22s     4000    79%       78    d5e7       77    d5f6       74    d5c3
+    6  0.55s    12293    85%       41    d5e7       41    d5f6       41    d5c3
+    7  1.66s    34474    81%      115    a6d6       95    d5c7       88    d5f6
+    8  6.08s   140888    86%       42    d5f6       42    d5c7       42    a6d6
+    9  15.47s   319151    80%      116    a6d6      106    d5c7      101    d5f6
+totaltime: 54.09s
 bestmove a6d6
 // 88 h6h9
 depth   time    nNode  rBeta   bvl[0]  bmv[0]   bvl[1]  bmv[1]   bvl[2]  bmv[2]
-    1  0.02s        1     0%       50    a2d2       49    a2b2       44    a2c2
+    1  0.01s        1     0%       50    a2d2       49    a2b2       44    a2c2
     2  0.02s       73    78%      -50    a2b2      -55    e3g4      -55    a2c2
-    3  0.09s      584    85%       42    e3g4       37    h6e6       31    e3g2
-    4  0.55s     5583    84%       22    e3g4       22    h6h4       21    a2c2
-    5  4.94s    57957    84%       48    h6e6       48    h6d6       48    e3d5
-totaltime: 35.62s
+    3  0.09s      583    85%       42    e3g4       37    h6e6       31    e3g2
+    4  0.50s     5585    84%       22    e3g4       22    h6h4       21    a2c2
+    5  4.66s    56084    84%       48    h6e6       48    h6d6       48    e3d5
+totaltime: 35.29s
 bestmove h6e6
