@@ -28,7 +28,7 @@ int main ( int argc, char *argv[] ) {
 			}
 			else if ( Order == e_CommQuit ) { // quit
 				DelHashTable ();
-				DelHashTableTR ();
+				DelHashTableQC ();
 				printf( "bye\n" );
 				fflush( stdout );
 				break;
@@ -43,13 +43,10 @@ int main ( int argc, char *argv[] ) {
 					InitZobrist ();
 					InitMove ();
 					InitHashTable ( 28 ); // 256MB
-					InitHashTableTR ( 26 ); // 64MB
+					InitHashTableQC ( 26 ); // 128MB
 
-					DEP_LIMIT = 5; // MyTree树剪枝起始深度
-					BVL_LIMIT = 20; // 着法分值剪枝
-					NSN_LIMIT = 5; // 最小孩子数
-					SetTimeLimit ( SEARCH_TOTAL_TIME, 3600 ); // 总时间上限
-					SetTimeLimit ( THIS_SEARCH_TIME, 30 ); // 单次搜索时间上限
+					SetTimeLimit ( SEARCH_TOTAL_TIME, 60 ); // 总时间上限
+					SetTimeLimit ( THIS_SEARCH_TIME, 20 ); // 单次搜索时间上限
 				}
 			}
 			else if ( Order == e_CommPosition ) { // position [ startpos | fen ] moves ...

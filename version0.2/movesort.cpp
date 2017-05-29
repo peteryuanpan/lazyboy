@@ -19,7 +19,7 @@ void InsertHistoryTable ( const int mv, const int depth ) {
 }
 
 // 生成着法
-int MoveSortStruct::InitAlphaBetaMove ( void ) {
+int MoveSortStruct::InitMove ( void ) {
 	// 1. 初始化
 	memset ( move, 0, sizeof move );
 	nMoveIndex = 0;
@@ -96,9 +96,41 @@ int MoveSortStruct::InitAlphaBetaMove ( void ) {
 	return nMoveNum;
 }
 
-// 生成着法
-int MoveSortStruct::InitCutMove ( void ) {
-	return InitAlphaBetaMove ();
+// 生成好的吃子着法
+int MoveSortStruct::InitGoodCapMove ( void ) {
+	// 1. 初始化
+	memset ( move, 0, sizeof move );
+	nMoveIndex = 0;
+	nMoveNum = 0;
+
+	// 2. 生成所有吃子着法
+	pos.GenCapMove ( move, nMoveNum );
+	pos.DelMeaningLessMove ( move, nMoveNum );
+
+	// 3. 获得每个着法的得分
+	int vl[128];
+	for ( int i = 0; i < nMoveNum; i ++ ) {
+		vl[i] = pos.MvvLva ( SRC(move[i]), DST(move[i]) );
+	}
+
+	// 4. 将着法按照得分降序排序
+	for ( int i = 0; i < nMoveNum; i ++ ) {
+		for ( int j = i + 1; j < nMoveNum; j ++ ) {
+			if ( vl[i] < vl[j] ) {
+				SWAP ( move[i], move[j] );
+				SWAP ( vl[i], vl[j] );
+			}
+		}
+	}
+
+	// 5. 去除得分非正的吃子着法
+	for ( int i = nMoveNum - 1; i >= 0; i -- ) {
+		if ( vl[i] <= 0 ) {
+			nMoveNum --;
+		}
+	}
+
+	return nMoveNum;
 }
 
 // 将5, 士1, 象1, 马3, 车4, 炮3, 兵2

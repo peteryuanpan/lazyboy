@@ -111,6 +111,10 @@ inline int OPP_SIDE_TYPE ( const int player ) {
 	return 32 - ( player << 4 );
 }
 
+const int NULLOKAY_MARGIN = 200;
+const int NULLSAFE_MARGIN = 400;
+const int NULL_DEPTH = 2;
+
 struct PositionStruct {
 	// 基本成员
 	int player;	// 轮到哪方走，0表示红方，1表示黑方
@@ -136,6 +140,14 @@ struct PositionStruct {
 	bool IsDraw ( void ) const; // 判断和局
 	void MakeMove ( const int mv ); // 走一步棋
 	void UndoMakeMove ( void ); // 撤回走法
+	void NullMove ( void ); // 走一步空着
+	void UndoNullMove ( void ); // 撤回空着
+	bool NullOkay ( void ) {
+		return ( player == 0 ? vlRed : vlBlk ) > NULLOKAY_MARGIN;
+	}
+	bool NullSafe ( void ) {
+		return ( player == 0 ? vlRed : vlBlk ) > NULLSAFE_MARGIN;
+	}
 
 	// 以下函数见move.cpp
 	bool Check ( void ) const; // 执棋方将军

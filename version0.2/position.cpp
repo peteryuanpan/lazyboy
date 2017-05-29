@@ -2,6 +2,7 @@
 #include "search.h"
 #include "rollback.h"
 #include "evaluate.h"
+#include "hash.h"
 
 /* 以下是初始化棋盘部分 */
 const int DDSQ1 [] = { 0, 0, 0, +6, +4, +2, 0, -2, -4, -6, -8, -10, -12 };
@@ -209,7 +210,7 @@ void PositionStruct::MakeMove ( const int mv ) {
 	// 7. 修改搜索深度
 	nDistance ++;
 
-	// 8. 修改check与checked
+	// 8. 修改check，checked及chased
 	check = Check ();
 	checked = Checked ();
 	chased = Chased ();
@@ -272,12 +273,7 @@ void PositionStruct::UndoMakeMove ( void ) {
 	checked = roll.LastChecked ();
 	chased = roll.LastChased ();
 
-	// 8. 修改回滚着法表
-	const int t = roll.LastZobrist().first & rbHashMask;
-	RollBackHash[t] --;
-	roll.nRollNum --;
-
-	// 9. 修改vlRed及vlBlk
+	// 8. 修改vlRed及vlBlk
 	if ( lastDstPiece != 0 ) {
 		if ( thisSide == 0 ) {
 			vlBlk += vlPiece[OppSide][PIECE_TYPE[lastDstPiece]][dst];
@@ -292,6 +288,62 @@ void PositionStruct::UndoMakeMove ( void ) {
 	else {
 		vlBlk += vlPiece[thisSide][PIECE_TYPE[sqDst]][src] - vlPiece[thisSide][PIECE_TYPE[sqDst]][dst];
 	}
+
+	// 9. 修改回滚着法表
+	const int t = roll.LastZobrist().first & rbHashMask;
+	RollBackHash[t] --;
+	roll.nRollNum --;
+}
+
+// 走一步空着
+void PositionStruct::NullMove ( void ) {
+	// 1. 记录回滚着法表
+	int & nRollNum = roll.nRollNum;
+	roll.move[ nRollNum ] = 0;
+	roll.dstPiece[ nRollNum ] = 0;
+	roll.check[ nRollNum ] = check;
+	roll.checked[ nRollNum ] = checked;
+	roll.chased[ nRollNum ] = chased;
+	roll.zobrist[ nRollNum ] = zobrist;
+	nRollNum ++;
+	const int t = zobrist.first & rbHashMask;
+	RollBackHash[t] ++;
+
+	// 2. 修改走子方
+	player = 1 - player;
+
+	// 3. 修改zobrist
+	zobrist.first &= ZobristPlayer_1;
+	zobrist.second &= ZobristPlayer_2;
+
+	// 4. 修改nDistance
+	nDistance ++;
+
+	// 5. 修改check，checked及chased
+	SWAP ( check, checked );
+	chased = Chased ();
+}
+
+// 撤回空着
+void PositionStruct::UndoNullMove ( void ) {
+	// 1. 修改走子方
+	player = 1 - player;
+
+	// 2. 修改zobrist
+	zobrist = roll.LastZobrist ();
+
+	// 3. 修改nDistance
+	nDistance --;
+
+	// 4. 修改check，checked及chased
+	check = roll.LastCheck ();
+	checked = roll.LastChecked ();
+	chased = roll.LastChased ();
+
+	// 5. 修改回滚着法表
+	const int t = roll.LastZobrist().first & rbHashMask;
+	RollBackHash[t] --;
+	roll.nRollNum --;
 }
 
 // 判断和局

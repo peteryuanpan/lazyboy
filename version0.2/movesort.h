@@ -22,9 +22,8 @@ struct MoveSortStruct {
 	int nMoveIndex;	// 索引下标
 	int nMoveNum;	// 着法表长度
 
-	// 生成着法
-	int InitAlphaBetaMove ( void );
-	int InitCutMove ( void );
+	int InitMove ( void ); // 生成着法
+	int InitGoodCapMove ( void ); // 生成好的吃子着法
 
 	int NextMove ( void ) { // 提供下一个着法
 		if ( nMoveIndex < nMoveNum ) {
