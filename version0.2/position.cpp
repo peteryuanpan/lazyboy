@@ -355,3 +355,15 @@ bool PositionStruct::IsDraw ( void ) const {
 	}
 	return true;
 }
+
+const int NULLOKAY_MARGIN = 200;
+const int NULLSAFE_MARGIN = 400;
+
+bool PositionStruct::NullOkay ( void ) const {
+	return ( player == 0 ? vlRed : vlBlk ) > NULLOKAY_MARGIN;
+}
+
+bool PositionStruct::NullSafe ( void ) const {
+	return ( player == 0 ? vlRed : vlBlk ) > NULLSAFE_MARGIN;
+}
+

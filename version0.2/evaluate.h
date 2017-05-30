@@ -7,12 +7,28 @@
 const int MATE_VALUE = 10000;
 const int BAN_VALUE = MATE_VALUE - 100;
 
+const int EVAL_MARGIN1 = 160;
+const int EVAL_MARGIN2 = 80;
+const int EVAL_MARGIN3 = 40;
+const int EVAL_MARGIN4 = 20;
+
 const int ROOK_GAME_VALUE = 6;
 const int KNIGHT_CANNON_GAME_VALUE = 3;
 const int OTHER_GAME_VALUE = 1;
 const int TOTAL_GAME_VALUE = ROOK_GAME_VALUE * 4 + KNIGHT_CANNON_GAME_VALUE * 8 + OTHER_GAME_VALUE * 18;
+const int TOTAL_ADVANCED_VALUE = 4;
 const int TOTAL_ATTACK_VALUE = 8;
 const int ADVISOR_BISHOP_ATTACKLESS_VALUE = 80;
+const int TOTAL_ADVISOR_LEAKAGE = 80;
+
+struct EvaluateStruct {
+	int vlAdvanced;
+	int vlRedAdvisorLeakage, vlBlkAdvisorLeakage;
+	int vlHollowThreat[16], vlCentralThreat[16];
+	int vlRedBottomThreat[16], vlBlkBottomThreat[16];
+
+};
+extern EvaluateStruct Evl;
 
 // 不同棋子在不同位置的价值
 extern int vlPiece[2][7][256];
@@ -275,6 +291,21 @@ const int KNIGHT_TRAP[256] = {
 	  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+};
+
+// 空头炮的威胁分值，指标是对红方来说的行号，黑方要用15去减，大体上空头炮位置越高威胁越大。进入残局时，该值要相应减少
+const int cvlHollowThreat[16] = {
+		0, 0, 0, 0, 0, 0, 60, 65, 70, 75, 80, 80, 80, 0, 0, 0
+};
+
+// 炮镇窝心马的威胁分值，指标同上，大体上高度越低威胁越大，没有窝心马时可取四分之一。进入残局时，取值似乎不应变化
+const int cvlCentralThreat[16] = {
+		0, 0, 0, 0, 0, 0, 50, 45, 40, 35, 30, 30, 30, 0, 0, 0
+};
+
+// 沉底炮的威胁分值，指标是列号，大体上越靠近边线威胁越大。威胁减少时，该值要相应减少
+const int cvlBottomThreat[16] = {
+		0, 0, 0, 40, 30, 0, 0, 0, 0, 0, 30, 40, 0, 0, 0, 0
 };
 
 #endif /* EVALUATE_H_ */

@@ -1,0 +1,39 @@
+无牵制
+value = -363
+value = -293
+value = -317
+value = -351
+value = 0
+value = -196
+value = -45
+value = 55
+value = 4
+value = -9
+value = -20
+value = -2
+value = -10
+value = -5
+value = 32
+value = -1
+value = 39
+value = 39
+
+有牵制
+value = -363
+value = -293
+value = -317
+value = -351
+value = -8
+value = -200
+value = -81
+value = 47
+value = 4
+value = -9
+value = -20
+value = 34
+value = -10
+value = -5
+value = 32
+value = -1
+value = 39
+value = 39

@@ -40,12 +40,12 @@ int main ( int argc, char *argv[] ) {
 			else if ( Order == e_CommSetOption ) {
 				if( Command.Option.Type == e_NewGame ) { // setoption newgame
 					roll.Init ();
-					InitZobrist ();
 					InitMove ();
+					InitZobrist ();
 					InitHashTable ( 28 ); // 256MB
-					InitHashTableQC ( 26 ); // 128MB
+					InitHashTableQC ( 27 ); // 128MB
 
-					SetTimeLimit ( SEARCH_TOTAL_TIME, 60 ); // 总时间上限
+					SetTimeLimit ( SEARCH_TOTAL_TIME, 30 ); // 总时间上限
 					SetTimeLimit ( THIS_SEARCH_TIME, 20 ); // 单次搜索时间上限
 				}
 			}

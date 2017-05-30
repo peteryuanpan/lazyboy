@@ -11,8 +11,8 @@ int KNIGHT_HIT [256][10];
 int KNIGHT_PIN [256][10];
 int PAWN_HIT [256][2][10];
 
-int LOWER_P [1<<16][16][2]; 	// 2进制数 第i个1 低位方向的 第j+1个1 所在的相对位置
-int HIGHER_P [1<<16][16][2]; 	// 2进制数 第i个1 高位方向的 第j+1个1 所在的相对位置
+int LOWER_P [1<<16][16][3]; 	// 2进制数 第i个1 低位方向的 第j+1个1 所在的相对位置
+int HIGHER_P [1<<16][16][3]; 	// 2进制数 第i个1 高位方向的 第j+1个1 所在的相对位置
 
 void InitMove ( void ) {
 	int p = STA_POS;
@@ -103,7 +103,7 @@ void InitMove ( void ) {
 	// 2.1 初始化
 	for ( int i = 0; i < (1<<16); i ++ ) {
 		for ( int j = 0; j < 16; j ++ ) {
-			for ( int k = 0; k < 2; k ++ ) {
+			for ( int k = 0; k < 3; k ++ ) {
 				LOWER_P [i][j][k] = 0;
 				HIGHER_P [i][j][k] = 0;
 			}
@@ -113,13 +113,14 @@ void InitMove ( void ) {
 	for ( int i = 0; i < (1<<16); i ++ ) {
 		for ( int j = 0; j < 16; j ++ ) {
 			if ( i & (1<<j) ) {
-				int t = 0;
+				int t;
+				t = 0;
 				for ( int k = j - 1; k >= 0; k -- ) {
 					if ( i & (1<<k) ) {
 						LOWER_P [i][j][t] = j - k;
 						t ++;
 					}
-					if ( t > 1 ) {
+					if ( t > 2 ) {
 						break;
 					}
 				}
@@ -130,7 +131,7 @@ void InitMove ( void ) {
 						HIGHER_P [i][j][t] = k - j;
 						t ++;
 					}
-					if ( t > 1 ) {
+					if ( t > 2 ) {
 						break;
 					}
 				}
@@ -142,8 +143,8 @@ void InitMove ( void ) {
 
 // 执棋方将军
 bool PositionStruct::Check ( void ) const {
-	const int ST = SIDE_TYPE (player);
-	const int OppSideKingPos = piece [ KING_FROM + OPP_SIDE_TYPE(player) ];
+	const int ST = SIDE_TAG (player);
+	const int OppSideKingPos = piece [ KING_FROM + OPP_SIDE_TAG(player) ];
 	int k, r, c, p;
 
 	// 1. 判断马将军
@@ -244,8 +245,8 @@ bool PositionStruct::Check ( void ) const {
 
 // 执棋方被将军
 bool PositionStruct::Checked ( void ) const {
-	const int ST = OPP_SIDE_TYPE ( player );
-	const int ThisSideKingPos = piece [ KING_FROM + SIDE_TYPE(player) ];
+	const int ST = OPP_SIDE_TAG ( player );
+	const int ThisSideKingPos = piece [ KING_FROM + SIDE_TAG(player) ];
 	int k, r, c, p;
 
 	// 1. 判断被马将军
@@ -378,7 +379,7 @@ bool PositionStruct::KingFaceKing ( void ) const {
 
 // 生成吃子着法
 void PositionStruct::GenCapMove ( int *move, int &nMoveNum ) const {
-	int ST = SIDE_TYPE ( player );
+	int ST = SIDE_TAG ( player );
 	int k, r, c, p;
 
 	// 1. 生成将的吃子着法
@@ -524,7 +525,7 @@ void PositionStruct::GenCapMove ( int *move, int &nMoveNum ) const {
 
 // 生成非吃子着法
 void PositionStruct::GenNonCapMove ( int *move, int &nMoveNum ) const {
-	int ST = SIDE_TYPE ( player );
+	int ST = SIDE_TAG ( player );
 	int k;
 
 	// 1. 生成将的非吃子着法
@@ -670,9 +671,146 @@ void PositionStruct::DelMeaningLessMove ( int *move, int &nMoveNum ) {
 }
 
 // 判断位置是否被保护
-bool PositionStruct::Protected ( const int sd, const int src, const int dst ) const {
+bool PositionStruct::Protected ( const int sd, const int dst, const int ban ) const {
+	int k, p, r, c, t;
+	const int ST = SIDE_TAG ( sd );
+
+	// 1. 被将保护
+	for ( int i = KING_FROM; i <= KING_TO; i ++ ) {
+		if ( piece[i+ST] && piece[i+ST] != ban ) {
+			k = 0;
+			while ( KING_HIT[ piece[i+ST] ][k] != 0 ) {
+				if ( KING_HIT[ piece[i+ST] ][k] == dst ) {
+					return true;
+				}
+				k ++;
+			}
+		}
+	}
+
+	// 2. 被士保护
+	for ( int i = ADVISOR_FROM; i <= ADVISOR_TO; i ++ ) {
+		if ( piece[i+ST] && piece[i+ST] != ban ) {
+			k = 0;
+			while ( ADVISOR_HIT[ piece[i+ST] ][k] != 0 ) {
+				if ( ADVISOR_HIT[ piece[i+ST] ][k] == dst ) {
+					return true;
+				}
+				k ++;
+			}
+		}
+	}
+
+	// 3. 被象保护
+	for ( int i = BISHOP_FROM; i <= BISHOP_TO; i ++ ) {
+		if ( piece[i+ST] && piece[i+ST] != ban ) {
+			k = 0;
+			while ( BISHOP_HIT[ piece[i+ST] ][k] != 0 ) {
+				if ( BISHOP_HIT[ piece[i+ST] ][k] == dst ) {
+					int pin = BISHOP_PIN[ piece[i+ST] ][k];
+					if ( square[pin] == 0 ) {
+						return true;
+					}
+				}
+				k ++;
+			}
+		}
+	}
+
+	// 4. 被马保护
+	for ( int i = KNIGHT_FROM; i <= KNIGHT_TO; i ++ ) {
+		if ( piece[i+ST] && piece[i+ST] != ban ) {
+			k = 0;
+			while ( KNIGHT_HIT[ piece[i+ST] ][k] != 0 ) {
+				if ( KNIGHT_HIT[ piece[i+ST] ][k] == dst ) {
+					int pin = KNIGHT_PIN[ piece[i+ST] ][k];
+					if ( square[pin] == 0 ) {
+						return true;
+					}
+				}
+				k ++;
+			}
+		}
+	}
+
+	// 5. 被车保护
+	for ( int i = ROOK_FROM; i <= ROOK_TO; i ++ ) {
+		p = piece[i+ST];
+		if ( p != ban ) {
+			r = ROW (p);
+			c = COL (p);
+
+			t = LOWER_P[bitCol[c]][r][0];
+			if ( t != 0 && p - (t<<4) == dst ) {
+				return true;
+			}
+
+			t = HIGHER_P[bitCol[c]][r][0];
+			if ( t != 0 && p + (t<<4) == dst ) {
+				return true;
+			}
+
+			t = LOWER_P[bitRow[r]][c][0];
+			if ( t != 0 && p - t == dst ) {
+				return true;
+			}
+
+			t = HIGHER_P[bitRow[r]][c][0];
+			if ( t != 0 && p + t == dst ) {
+				return true;
+			}
+		}
+	}
+
+	// 6. 被炮保护
+	for ( int i = CANNON_FROM; i <= CANNON_TO; i ++ ) {
+		p = piece[i+ST];
+		if ( p != ban ) {
+			r = ROW (p);
+			c = COL (p);
+
+			t = LOWER_P[bitCol[c]][r][1];
+			if ( t != 0 && p - (t<<4) == dst ) {
+				return true;
+			}
+
+			t = HIGHER_P[bitCol[c]][r][1];
+			if ( t != 0 && p + (t<<4) == dst ) {
+				return true;
+			}
+
+			t = LOWER_P[bitRow[r]][c][1];
+			if ( t != 0 && p - t == dst ) {
+				return true;
+			}
+
+			t = HIGHER_P[bitRow[r]][c][1];
+			if ( t != 0 && p + t == dst ) {
+				return true;
+			}
+		}
+	}
+
+	// 7. 被兵保护
+	for ( int i = PAWN_FROM; i <= PAWN_TO; i ++ ) {
+		if ( piece[i+ST] && piece[i+ST] != ban ) {
+			k = 0;
+			while ( PAWN_HIT[ piece[i+ST] ][sd][k] != 0 ) {
+				if ( PAWN_HIT[ piece[i+ST] ][sd][k] == dst ) {
+					return true;
+				}
+				k ++;
+			}
+		}
+	}
+
+	return false;
+}
+
+// 判断位置是否被保护
+bool PositionStruct::Protected2 ( const int sd, const int src, const int dst ) const {
 	int k;
-	const int ST = SIDE_TYPE ( sd );
+	const int ST = SIDE_TAG ( sd );
 
 	// 1. 被将保护
 	for ( int i = KING_FROM; i <= KING_TO; i ++ ) {
@@ -802,7 +940,7 @@ bool PositionStruct::Protected ( const int sd, const int src, const int dst ) co
 
 // 被捉
 bool PositionStruct::Chased ( void ) const {
-	const int ST = SIDE_TYPE ( 1 - player );
+	const int ST = SIDE_TAG ( 1 - player );
 	int k, r, c, p;
 
 	// 判断象捉子
@@ -828,7 +966,7 @@ bool PositionStruct::Chased ( void ) const {
 						}
 						// 象捉兵
 						else if ( PIECE_TYPE[square[hit]] == PAWN_TYPE ) {
-							if ( !Protected(player, piece[i+ST], hit) ) {
+							if ( !Protected2(player, piece[i+ST], hit) ) {
 								if ( IN_OPP_SIDE_BOARD(square[hit], hit) ) {
 									return true;
 								}
@@ -852,7 +990,7 @@ bool PositionStruct::Chased ( void ) const {
 					if ( square[pin] == 0 ) {
 						// 马捉马
 						if ( PIECE_TYPE[square[hit]] == KNIGHT_TYPE ) {
-							if ( !Protected(player, piece[i+ST], hit) ) {
+							if ( !Protected2(player, piece[i+ST], hit) ) {
 								return true;
 							}
 						}
@@ -862,13 +1000,13 @@ bool PositionStruct::Chased ( void ) const {
 						}
 						// 马捉炮
 						else if ( PIECE_TYPE[square[hit]] == CANNON_TYPE ) {
-							if ( !Protected(player, piece[i+ST], hit) ) {
+							if ( !Protected2(player, piece[i+ST], hit) ) {
 								return true;
 							}
 						}
 						// 马捉兵
 						else if ( PIECE_TYPE[square[hit]] == PAWN_TYPE ) {
-							if ( !Protected(player, piece[i+ST], hit) ) {
+							if ( !Protected2(player, piece[i+ST], hit) ) {
 								if ( IN_OPP_SIDE_BOARD(square[hit], hit) ) {
 									return true;
 								}
@@ -911,25 +1049,25 @@ bool PositionStruct::Chased ( void ) const {
 					if ( COLOR_TYPE(square[p]) != COLOR_TYPE(i+ST) ) {
 						// 车捉马
 						if ( PIECE_TYPE[square[p]] == KNIGHT_TYPE ) {
-							if ( !Protected(player, piece[i+ST], p) ) {
+							if ( !Protected2(player, piece[i+ST], p) ) {
 								return true;
 							}
 						}
 						// 车捉车
 						else if ( PIECE_TYPE[square[p]] == ROOK_TYPE ) {
-							if ( !Protected(player, piece[i+ST], p) ) {
+							if ( !Protected2(player, piece[i+ST], p) ) {
 								return true;
 							}
 						}
 						// 车捉炮
 						else if ( PIECE_TYPE[square[p]] == CANNON_TYPE ) {
-							if ( !Protected(player, piece[i+ST], p) ) {
+							if ( !Protected2(player, piece[i+ST], p) ) {
 								return true;
 							}
 						}
 						// 车捉兵
 						else if ( PIECE_TYPE[square[p]] == PAWN_TYPE ) {
-							if ( !Protected(player, piece[i+ST], p) ) {
+							if ( !Protected2(player, piece[i+ST], p) ) {
 								if ( IN_OPP_SIDE_BOARD(square[p], p) ) {
 									return true;
 								}
@@ -971,7 +1109,7 @@ bool PositionStruct::Chased ( void ) const {
 					if ( COLOR_TYPE(square[p]) != COLOR_TYPE(i+ST) ) {
 						// 炮捉马
 						if ( PIECE_TYPE[square[p]] == KNIGHT_TYPE ) {
-							if ( !Protected(player, piece[i+ST], p) ) {
+							if ( !Protected2(player, piece[i+ST], p) ) {
 								return true;
 							}
 						}
@@ -981,13 +1119,13 @@ bool PositionStruct::Chased ( void ) const {
 						}
 						// 炮捉炮
 						else if ( PIECE_TYPE[square[p]] == CANNON_TYPE ) {
-							if ( !Protected(player, piece[i+ST], p) ) {
+							if ( !Protected2(player, piece[i+ST], p) ) {
 								return true;
 							}
 						}
 						// 炮捉兵
 						else if ( PIECE_TYPE[square[p]] == PAWN_TYPE ) {
-							if ( !Protected(player, piece[i+ST], p) ) {
+							if ( !Protected2(player, piece[i+ST], p) ) {
 								if ( IN_OPP_SIDE_BOARD(square[p], p) ) {
 									return true;
 								}

@@ -138,12 +138,12 @@ const int SIMPLE_VALUE[7] = {5, 1, 1, 3, 4, 3, 2};
 
 // 吃子着法估分
 int PositionStruct::MvvLva ( const int src, const int dst ) const {
-	const int valSrc = Protected ( 1-player, src, dst ) ? SIMPLE_VALUE[PIECE_TYPE[square[src]]] : 0;
+	const int valSrc = Protected2( 1-player, src, dst ) ? SIMPLE_VALUE[PIECE_TYPE[square[src]]] : 0;
 	const int valDst = SIMPLE_VALUE[PIECE_TYPE[square[dst]]];
 	if ( valDst >= valSrc ) {
 		return valDst - valSrc + 1;
 	}
-	else if ( valDst >= 3 || IN_THIS_SIDE_BOARD(SIDE_TYPE(player), dst) ) {
+	else if ( valDst >= 3 || IN_THIS_SIDE_BOARD(SIDE_TAG(player), dst) ) {
 		return 1;
 	}
 	else {
@@ -157,7 +157,7 @@ bool PositionStruct::GoodCapMove ( const int mv ) const {
 	if ( xDst == 0 ) {
 		return false;
 	}
-	if ( !Protected(1-player, SRC(mv), DST(mv)) ) {
+	if ( !Protected2(1-player, SRC(mv), DST(mv)) ) {
 		return true;
 	}
 	const int typeSrc = PIECE_TYPE [ square[SRC(mv)] ];

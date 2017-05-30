@@ -1,0 +1,6 @@
+ucci
+
+// 5
+setoption newgame
+position fen 1C2ka1r1/4a4/9/2R1n1r2/9/6N2/4c1R2/4C4/4A4/1cnAK3N w - - 0 1
+go time 1000

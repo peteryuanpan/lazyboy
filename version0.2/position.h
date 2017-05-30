@@ -99,21 +99,17 @@ inline int COLOR_TYPE ( const int x ) {
 	return x == 0 ? 0 : ( (x&RED_TYPE) ? RED_TYPE : BLACK_TYPE ) ;
 }
 
-inline int SIDE_VALUE ( const int sd, const int val ) {
-	return sd == 0 ? val : - val;
+inline int SIDE_VALUE ( const int player, const int val ) {
+	return player == 0 ? val : - val;
 }
 
-inline int SIDE_TYPE ( const int player ) {
+inline int SIDE_TAG ( const int player ) {
 	return 16 + ( player << 4 );
 }
 
-inline int OPP_SIDE_TYPE ( const int player ) {
+inline int OPP_SIDE_TAG ( const int player ) {
 	return 32 - ( player << 4 );
 }
-
-const int NULLOKAY_MARGIN = 200;
-const int NULLSAFE_MARGIN = 400;
-const int NULL_DEPTH = 2;
 
 struct PositionStruct {
 	// 基本成员
@@ -142,12 +138,8 @@ struct PositionStruct {
 	void UndoMakeMove ( void ); // 撤回走法
 	void NullMove ( void ); // 走一步空着
 	void UndoNullMove ( void ); // 撤回空着
-	bool NullOkay ( void ) {
-		return ( player == 0 ? vlRed : vlBlk ) > NULLOKAY_MARGIN;
-	}
-	bool NullSafe ( void ) {
-		return ( player == 0 ? vlRed : vlBlk ) > NULLSAFE_MARGIN;
-	}
+	bool NullOkay ( void ) const; // 空着条件
+	bool NullSafe ( void ) const; // 空着条件2
 
 	// 以下函数见move.cpp
 	bool Check ( void ) const; // 执棋方将军
@@ -157,7 +149,8 @@ struct PositionStruct {
 	void GenNonCapMove ( int *move, int &nMoveNum ) const; // 生成非吃子着法
 	void GenAllMove ( int *move, int &nMoveNum ) const; // 生成所有着法
 	void DelMeaningLessMove ( int *move, int &nMoveNum ); // 去除无意义着法
-	bool Protected ( const int sd, const int src, const int dst ) const; // 判断位置是否被保护
+	bool Protected ( const int sd, const int p, const int ban = 0 ) const; // 判断位置是否被保护
+	bool Protected2 ( const int sd, const int src, const int dst ) const; // 判断位置是否被保护
 	bool Chased ( void ) const; // 被捉
 
 	// 以下函数见movesort.cpp
@@ -166,11 +159,11 @@ struct PositionStruct {
 
 	// 以下函数见evaluate.cpp
 	void PreEvaluate ( void ); // 预评估，给 vlRed 及 vlBlk 赋值
-	int Material ( void ) const { // 打分，子力平衡
-		return SIDE_VALUE ( player, vlRed - vlBlk );
-	}
-	int RookMobility ( void ) const; // 打分，车的灵活性
-	int KnightTrap ( void ) const; // 打分，马的阻碍
+	int Material ( void ) const; // 子力平衡
+	int AdvisorShape ( void ) const; // 特殊棋形
+	int StringHold ( void ) const; // 牵制
+	int RookMobility ( void ) const; // 车的灵活性
+	int KnightTrap ( void ) const; // 马的阻碍
 	int Evaluate ( void ) const; // 给局面打分
 };
 

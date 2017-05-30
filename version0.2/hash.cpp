@@ -22,7 +22,7 @@ void InitZobrist_sub ( ULL ZobristSP [][48], ULL &ZobristPlayer ) {
 	}
 
 	for ( int player = 0; player <= 1; player ++ ) {
-		int ST = SIDE_TYPE ( player );
+		int ST = SIDE_TAG ( player );
 		int p = STA_POS;
 		while ( p != 0 ) {
 			ZobristSP[p][ ST + KING_FROM ] 	= rand64 ();

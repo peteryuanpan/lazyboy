@@ -68,8 +68,8 @@ extern int KNIGHT_HIT [256][10];
 extern int KNIGHT_PIN [256][10];
 extern int PAWN_HIT [256][2][10];
 
-extern int LOWER_P [1<<16][16][2];
-extern int HIGHER_P [1<<16][16][2];
+extern int LOWER_P [1<<16][16][3];
+extern int HIGHER_P [1<<16][16][3];
 
 void InitMove ( void );
 

@@ -25,7 +25,7 @@ int HarmlessPruning ( void ) {
 	}
 
 	// 2. 路径重复
-	int vRep = roll.RepStatus ();
+	const int vRep = roll.RepStatus ();
 	if ( vRep != REP_NONE ) {
 		return roll.RepValue ( vRep );
 	}
@@ -313,7 +313,7 @@ int SearchMain ( void ) {
 			CopyBmvBvl ( lastbmv, lastbvl, Search.bmv, Search.bvl );
 		}
 
-		printf( "%5d  %.2fs  %7d    %2.0f%%", depth, TimeCost(THIS_SEARCH_TIME), Search.nNode, 100.0*Search.nBeta/Search.nNode);
+		printf( "%5d  %.2fs  %7d    %2.0f%%", depth, TimeCost(SEARCH_TOTAL_TIME), Search.nNode, 100.0*Search.nBeta/Search.nNode);
 		for ( int i = 0; i < 3; i ++ ) {
 			printf("   %6d    %s", Search.bvl[i], MoveIntToStr(Search.bmv[i]).c_str());
 		}

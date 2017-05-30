@@ -1,5 +1,45 @@
 ucci
 
+// 1
+setoption newgame
+position fen 3a1a1r1/4k4/9/9/4P4/9/4c4/4C4/4A2n1/1cnAK3R w - - 0 1
+go time 1000
+
+// 2
+setoption newgame
+position fen 1C2ka1r1/4a4/9/9/9/9/4c4/4C4/4A1cn1/2nAK3R w - - 0 1
+go time 1000
+
+// 3
+setoption newgame
+position fen 1C2ka1r1/4a4/9/9/9/9/4c4/4C4/4A2n1/1cnAK3R w - - 0 1
+go time 1000
+
+// 4
+setoption newgame
+position fen 1C2ka1r1/4a4/9/9/9/9/4c4/4C4/4A2n1/1cnAK3N w - - 0 1
+go time 1000
+
+// 5
+setoption newgame
+position fen 1C2ka1r1/4a4/9/2R1n1r2/9/6N2/4c1R2/4C4/4A4/1cnAK3N w - - 0 1
+go time 1000
+
+// 6
+setoption newgame
+position fen 4ka1r1/4a4/9/1Cp1n1r2/9/6N2/P8/1c1AC1R2/9/2nAKNBc1 w - - 0 1
+go time 1000
+
+// 7
+setoption newgame
+position fen 4k4/9/9/7r1/4n4/2n1c2C1/4C4/4N2R1/9/4K4 w - - 0 1
+go time 1000
+
+// 8
+setoption newgame
+position fen 4k4/9/9/7r1/4n4/2p1c2C1/4C4/4N2R1/9/4K4 w - - 0 1
+go time 1000
+
 // 78 f5b5
 setoption newgame
 position fen 4ka3/1n2a4/9/p1p5p/5RC2/P8/2P3r1P/N4A3/4K4/2BA4c w - - 0 1

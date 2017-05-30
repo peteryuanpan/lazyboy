@@ -9,6 +9,8 @@
 extern PositionStruct pos; // 当前搜索局面
 extern RollBackListStruct roll; // 回滚着法表
 
+const int NULL_DEPTH = 2; // 空着裁剪减少的深度
+
 // 搜索结构体
 const int nBest = 128;
 struct SearchStruct {
