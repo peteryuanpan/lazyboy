@@ -45,7 +45,7 @@ int main ( int argc, char *argv[] ) {
 					InitHashTable ( 28 ); // 256MB
 					InitHashTableQC ( 27 ); // 128MB
 
-					SetTimeLimit ( SEARCH_TOTAL_TIME, 30 ); // 总时间上限
+					SetTimeLimit ( SEARCH_TOTAL_TIME, 20 ); // 总时间上限
 					SetTimeLimit ( THIS_SEARCH_TIME, 20 ); // 单次搜索时间上限
 				}
 			}
@@ -53,7 +53,8 @@ int main ( int argc, char *argv[] ) {
 				pos.Init ( Command.Position.FenStr, Command.Position.MoveStr, Command.Position.MoveNum );
 			}
 			else if ( Order == e_CommGo || Order == e_CommGoPonder ) { // go ...
-				SearchMain ();
+				int bmv = SearchMain ();
+				pos.MakeMove (bmv);
 			}
 		}
 	}
