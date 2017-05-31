@@ -53,8 +53,7 @@ int main ( int argc, char *argv[] ) {
 				pos.Init ( Command.Position.FenStr, Command.Position.MoveStr, Command.Position.MoveNum );
 			}
 			else if ( Order == e_CommGo || Order == e_CommGoPonder ) { // go ...
-				int bmv = SearchMain ();
-				pos.MakeMove (bmv);
+				SearchMain ();
 			}
 		}
 	}
