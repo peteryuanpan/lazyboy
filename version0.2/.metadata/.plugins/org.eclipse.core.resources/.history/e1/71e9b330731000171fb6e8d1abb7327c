@@ -1,3 +1,0 @@
-lazyboy.o: ../lazyboy.cpp ../lazyboy.h
-
-../lazyboy.h:

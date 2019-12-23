@@ -1,3 +1,0 @@
-PositionStruct.o: ../PositionStruct.cpp ../PositionStruct.h
-
-../PositionStruct.h:

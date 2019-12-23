@@ -1,6 +1,0 @@
-#include "evaluate.h"
-
-// 给局面打分
-int Evaluate ( void ) {
-	return Search.pos.player == 0 ? -MATE_VALUE : MATE_VALUE;
-}

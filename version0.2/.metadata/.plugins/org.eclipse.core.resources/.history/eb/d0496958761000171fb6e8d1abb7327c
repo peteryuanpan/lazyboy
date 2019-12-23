@@ -1,7 +1,0 @@
-
-#include <iostream>
-
-int main () {
-	std::cout << "is it ok ?" << std::endl;
-	return 0;
-}
